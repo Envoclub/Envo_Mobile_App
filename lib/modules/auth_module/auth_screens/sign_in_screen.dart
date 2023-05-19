@@ -1,0 +1,144 @@
+import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+
+import '../../../utils/meta_assets.dart';
+import '../../../utils/meta_colors.dart';
+import '../../../utils/validators.dart';
+import 'auth_helper_widgets.dart';
+
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key, required this.pageController});
+  final PageController pageController;
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Container(
+          child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Scaffold(
+            appBar: AppBar(),
+            body: Container(
+              child: SingleChildScrollView(
+                  child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: SubtitleWidget(
+                    //       title: "Enter your Email and Password to Sign In"),
+                    // ),
+                    SizedBox(height: MediaQuery.of(context).size.height * .05),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            MetaAssets.logo,
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        TitleWidget(
+                          title: "envo",
+                          isLogo: true,
+                        )
+                      ],
+                    ),
+                    SubtitleWidget(title: "Help Earth, Get Rewarded"),
+                    SizedBox(height: MediaQuery.of(context).size.height * .1),
+                    FormFieldWidget(
+                      enabled: !AuthController.to.authLoading.value,
+                      textController: emailController,
+                      label: "Email Address",
+                      validator: validateEmail,
+                    ),
+
+                    FormFieldWidget(
+                      enabled: !AuthController.to.authLoading.value,
+                      textController: passwordController,
+                      label: "Password",
+                      obscureText: true,
+                      validator: validatePassword,
+                    ),
+
+                    CustomButton(
+                      loading: AuthController.to.authLoading.value,
+                      label: "Sign In",
+                      handler: () {
+                        if (!_formKey.currentState!.validate()) return;
+                        AuthController.to.signIn(emailController.text.trim(),
+                            passwordController.text.trim());
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                            onTap: () {
+                              widget.pageController.jumpToPage(2);
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w600),
+                            )),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            widget.pageController.jumpToPage(4);
+                          },
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "Jump to Onboarding UI? ",
+                                  style: TextStyle(
+                                      color: MetaColors.tertiaryTextColor,
+                                      fontFamily: "Poppins",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                  children: [
+                                TextSpan(
+                                    text: "Click Here.",
+                                    style:
+                                        TextStyle(color: MetaColors.primaryColor))
+                              ])),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+            ),
+          ),
+        ),
+      )),
+    );
+  }
+}
