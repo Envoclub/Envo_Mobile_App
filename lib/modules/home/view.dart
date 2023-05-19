@@ -16,6 +16,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../utils/custom_painter.dart';
 import '../../utils/custom_slider.dart';
 import '../posts_module/view.dart';
+import '../profile_module/view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -25,34 +26,6 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-          leadingWidth: 0,
-          title: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundColor: MetaColors.primaryColor,
-                  radius: 15,
-                ),
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: "Hi ",
-                      style: GoogleFonts.sourceCodePro(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: MetaColors.secondaryColor),
-                      children: [
-                    TextSpan(
-                        text: "Saransh",
-                        style: GoogleFonts.sourceCodePro(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                            color: MetaColors.secondaryColor))
-                  ])),
-            ],
-          )),
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),
       body: Obx(
         () {
@@ -60,7 +33,11 @@ class HomeView extends GetView<HomeController> {
               ? Center(
                   child: Container(child: PostsView()),
                 )
-              : Center(child: FootPrintsScreen());
+              : HomeController.to.currentIndex.value == 1
+                  ? Center(child: FootPrintsScreen())
+                  : Center(
+                      child: ProfileView(),
+                    );
         },
       ),
     );
@@ -99,14 +76,185 @@ class _FootPrintsScreenState extends State<FootPrintsScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        appBar: AppBar(),
         body: Center(
           child: svg == null
               ? Loader()
               : Container(
-                  height: 600,
-                  width: 600,
-                  child: CustomPaint(
-                    painter: CurvePainter(svg!),
+                  child: Stack(
+                    children: [
+                      CustomPaint(
+                        size: MediaQuery.of(context).size,
+                        painter: CurvePainter(svg!),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: MetaColors.primaryColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SizedBox(
+                                          height: 80,
+                                          width: 80,
+                                          child: CircularProgressIndicator(
+                                            color: MetaColors.primaryColor,
+                                            value: 0.8,
+                                          ),
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "6",
+                                              style: TextStyle(fontSize: 30),
+                                            ),
+                                            Text(
+                                              "Level",
+                                              style: TextStyle(
+                                                  color: MetaColors
+                                                      .secondaryColor),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    height: 100,
+                                    child: VerticalDivider(
+                                      thickness: 1,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Meatless Mondays",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
+                                    ),
+                                    Text(
+                                      "Eliminate meat for a week",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0)
+                                          .copyWith(left: 0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                "5 / 7 Days",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white),
+                                          ),
+                                          Container(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 4,
+                                                    backgroundImage: AssetImage(
+                                                      MetaAssets.logo,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    "30",
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white),
+                                          ),
+                                          Container(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                "#Food",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color:
+                                                        MetaColors.primaryColor,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
         ),

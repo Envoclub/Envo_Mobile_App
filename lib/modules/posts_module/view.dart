@@ -16,18 +16,52 @@ class PostsView extends GetView<PostsController> {
     // TODO: implement build
 
     return Obx(
-      () => controller.loading.value!
+      () => !controller.loading.value!
           ? Center(
               child: Loader(),
             )
-          : PageView(
-              controller: controller.pageController,
-              scrollDirection: Axis.vertical,
-              children: [
-                PostTile(),
-                PostTile(),
-                PostTile(),
-              ],
+          : Scaffold(
+              appBar: AppBar(
+                  leadingWidth: 0,
+                  title: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundColor: MetaColors.primaryColor,
+                          radius: 15,
+                        ),
+                      ),
+                      RichText(
+                          text: TextSpan(
+                              text: "Hi ",
+                              style: GoogleFonts.sourceCodePro(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: MetaColors.secondaryColor),
+                              children: [
+                            TextSpan(
+                                text: "Saransh",
+                                style: GoogleFonts.sourceCodePro(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                    color: MetaColors.secondaryColor))
+                          ])),
+                    ],
+                  )),
+              body: Padding(
+                padding: const EdgeInsets.only(bottom: 80),
+                child: PageView(
+                  padEnds: false,
+                  controller: controller.pageController,
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    PostTile(),
+                    PostTile(),
+                    PostTile(),
+                  ],
+                ),
+              ),
             ),
     );
   }

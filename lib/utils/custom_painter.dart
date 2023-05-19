@@ -13,7 +13,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.translate(size.width,size.height);
-    for (var i = 0; i < 10; i += 1) {
+    for (var i = 0; i < 20; i += 1) {
       int j = 0;
       if (i < 10) {
         j += 6;
@@ -27,7 +27,7 @@ class CurvePainter extends CustomPainter {
             canvas.rotate((j) * (math.pi / 180));
       canvas.drawPicture(svg.picture);
 
-      canvas.translate(-80, -80);
+      canvas.translate(-50, -50);
     }
 
     // canvas.drawLine(Offset(10, 10), Offset(10, 30), Paint());
