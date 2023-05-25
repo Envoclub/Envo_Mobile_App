@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
 import 'package:envo_mobile/modules/home/controller.dart';
+import 'package:envo_mobile/modules/leaderboard_module/view.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:envo_mobile/utils/meta_colors.dart';
@@ -17,6 +18,7 @@ import '../../utils/custom_painter.dart';
 import '../../utils/custom_slider.dart';
 import '../posts_module/view.dart';
 import '../profile_module/view.dart';
+import '../rewards_module/view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -26,6 +28,10 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.camera_alt_outlined),
+      ),
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),
       body: Obx(
         () {
@@ -34,10 +40,12 @@ class HomeView extends GetView<HomeController> {
                   child: Container(child: PostsView()),
                 )
               : HomeController.to.currentIndex.value == 1
-                  ? Center(child: FootPrintsScreen())
-                  : Center(
-                      child: ProfileView(),
-                    );
+                  ? RewardsView()
+                  : HomeController.to.currentIndex.value == 2
+                      ? Center(child: LeaderBoardView())
+                      : Center(
+                          child: ProfileView(),
+                        );
         },
       ),
     );

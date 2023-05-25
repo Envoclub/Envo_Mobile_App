@@ -1,4 +1,5 @@
 import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:envo_mobile/modules/home/binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../utils/meta_assets.dart';
 import '../../../utils/meta_colors.dart';
 import '../../../utils/validators.dart';
+import '../../home/view.dart';
 import 'auth_helper_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    HomeBinding().dependencies();
     return Obx(
       () => Container(
           child: Form(
@@ -113,7 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            widget.pageController.jumpToPage(4);
+                            Get.to(HomeView());
                           },
                           child: RichText(
                               text: TextSpan(
@@ -126,8 +129,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   children: [
                                 TextSpan(
                                     text: "Click Here.",
-                                    style:
-                                        TextStyle(color: MetaColors.primaryColor))
+                                    style: TextStyle(
+                                        color: MetaColors.primaryColor))
                               ])),
                         ),
                       ),

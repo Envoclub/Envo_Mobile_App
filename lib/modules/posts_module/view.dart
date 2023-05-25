@@ -144,7 +144,43 @@ class _PostTileState extends State<PostTile>
                                 fontWeight: FontWeight.w600),
                           ),
                         ],
-                      )
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(colors: [
+                                  Colors.white,
+                                  Colors.white,
+                                  // MetaColors.secondaryGradient
+                                ])),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "planted a tree",
+                                    style: GoogleFonts.sourceCodePro(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    CupertinoIcons.tree,
+                                    color: MetaColors.secondaryGradient,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -171,7 +207,7 @@ class _PostTileState extends State<PostTile>
                         child: Row(
                           children: [
                             Icon(
-                              CupertinoIcons.hand_draw_fill,
+                              CupertinoIcons.hand_thumbsup_fill,
                               color: Colors.amberAccent,
                             ),
                             Padding(
@@ -187,50 +223,51 @@ class _PostTileState extends State<PostTile>
                           ],
                         ),
                       ),
-                      Obx(() => Expanded(
-                              child: SliderTheme(
-                            data: Get.theme.sliderTheme
-                                .copyWith(thumbShape: SliderThumbImage()),
-                            child: Slider(
-                                activeColor: MetaColors.primaryColor,
-                                thumbColor: MetaColors.primaryColor,
-                                value: value.value!,
-                                onChanged: (val) {
-                                  if (enabled.value) value.value = val;
-                                }),
-                          )))
+
+                      // Obx(() => Expanded(
+                      //         child: SliderTheme(
+                      //       data: Get.theme.sliderTheme
+                      //           .copyWith(thumbShape: SliderThumbImage()),
+                      //       child: Slider(
+                      //           activeColor: MetaColors.primaryColor,
+                      //           thumbColor: MetaColors.primaryColor,
+                      //           value: value.value!,
+                      //           onChanged: (val) {
+                      //             if (enabled.value) value.value = val;
+                      //           }),
+                      //     )))
                     ],
                   ),
                 ),
               ),
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12)),
-                    gradient: LinearGradient(colors: [
-                      Colors.white,
-                      Colors.white,
-                      MetaColors.secondaryGradient
-                    ])),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        CupertinoIcons.tree,
-                        color: MetaColors.secondaryGradient,
-                      ),
-                      Text(
-                        "Planted a tree",
-                        style: GoogleFonts.sourceCodePro(
-                            fontSize: 18, fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: double.maxFinite,
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.only(
+              //           bottomLeft: Radius.circular(12),
+              //           bottomRight: Radius.circular(12)),
+              //       gradient: LinearGradient(colors: [
+              //         Colors.white,
+              //         Colors.white,
+              //         MetaColors.secondaryGradient
+              //       ])),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Row(
+              //       children: [
+              //         Icon(
+              //           CupertinoIcons.tree,
+              //           color: MetaColors.secondaryGradient,
+              //         ),
+              //         Text(
+              //           "Planted a tree",
+              //           style: GoogleFonts.sourceCodePro(
+              //               fontSize: 18, fontWeight: FontWeight.w700),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           )),
         ),
