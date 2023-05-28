@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
+import 'package:envo_mobile/modules/create_post/binding.dart';
+import 'package:envo_mobile/modules/create_post/view.dart';
 import 'package:envo_mobile/modules/home/controller.dart';
 import 'package:envo_mobile/modules/leaderboard_module/view.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
@@ -29,7 +31,9 @@ class HomeView extends GetView<HomeController> {
       extendBody: true,
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => CreatePostView(), binding: CreatePostBinding());
+        },
         child: Icon(Icons.camera_alt_outlined),
       ),
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),
