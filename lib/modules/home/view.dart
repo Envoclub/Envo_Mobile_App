@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:ui';
+import 'dart:math' as math;
 
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
 import 'package:envo_mobile/modules/create_post/binding.dart';
@@ -31,6 +32,7 @@ class HomeView extends GetView<HomeController> {
       extendBody: true,
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: MetaColors.primaryColor,
         onPressed: () {
           Get.to(() => CreatePostView(), binding: CreatePostBinding());
         },
@@ -297,7 +299,7 @@ class CustomBottomNav extends StatelessWidget {
             height: 60,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: MetaColors.primaryColor.withOpacity(0.7)),
+                color: MetaColors.primaryColor),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -308,11 +310,12 @@ class CustomBottomNav extends StatelessWidget {
                     onTap: () {
                       HomeController.to.currentIndex.value = index;
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AnimatedContainer(
-                        curve: Curves.bounceInOut,
-                        duration: Duration(milliseconds: 200),
+                    child: AnimatedContainer(
+                      curve: Curves.bounceInOut,
+                      duration: Duration(milliseconds: 200),
+                     
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: SvgPicture.asset(
                           icons[index],
                           height: HomeController.to.currentIndex.value == index

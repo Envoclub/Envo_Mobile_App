@@ -23,7 +23,7 @@ class LeaderBoardView extends GetView {
         children: [
           TopThreeWidget(),
           SizedBox(
-            height: 30,
+            height: 8,
           ),
           MyRankTile(),
           Expanded(
@@ -294,11 +294,11 @@ class TopThreeWidget extends StatelessWidget {
             border: Border.all(color: Colors.white),
             boxShadow: [
               BoxShadow(
-                  offset: Offset(5, 10),
+                  offset: Offset(5, 5),
                   color: MetaColors.primaryColor.withOpacity(0.1),
                   blurRadius: 10)
             ],
-            color: MetaColors.primaryColor.withOpacity(0.1),
+            color:Colors.white,
             borderRadius: BorderRadius.circular(16)),
         width: double.maxFinite,
         height: MediaQuery.of(context).size.height * .2,

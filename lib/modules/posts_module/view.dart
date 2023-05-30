@@ -102,174 +102,351 @@ class _PostTileState extends State<PostTile>
           CurvedAnimation(parent: _animationController!, curve: Curves.easeIn),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: MetaColors.primaryColor.withOpacity(0.1),
-                    spreadRadius: 5,
-                    offset: Offset(0, 5),
-                    blurRadius: 10)
-              ]),
-          child: Center(
-              child: Column(
-            children: [
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: MetaColors.primaryColor,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Saransh",
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            "Level 2",
-                            style: GoogleFonts.montserrat(
-                                color: MetaColors.tertiaryTextColor,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Padding(
+        child: InkWell(
+          onTap: () {
+            Get.to(() => PostEnlargedView());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: MetaColors.primaryColor.withOpacity(0.1),
+                      spreadRadius: 5,
+                      offset: Offset(0, 5),
+                      blurRadius: 10)
+                ]),
+            child: Center(
+                child: Column(
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                gradient: LinearGradient(colors: [
-                                  Colors.white,
-                                  Colors.white,
-                                  // MetaColors.secondaryGradient
-                                ])),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "planted a tree",
-                                    style: GoogleFonts.sourceCodePro(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.tree,
-                                    color: MetaColors.secondaryGradient,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: MetaColors.primaryColor,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(child: Image.asset(MetaAssets.tourOne)),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(5, 10),
-                            color: MetaColors.secondaryColor.withOpacity(0.1),
-                            blurRadius: 10)
-                      ],
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                          color: MetaColors.secondaryColor.withOpacity(0.2))),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              CupertinoIcons.hand_thumbsup_fill,
-                              color: Colors.amberAccent,
+                            Text(
+                              "Saransh",
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0)
-                                  .copyWith(top: 0, bottom: 0),
-                              child: Text(
-                                "45k",
-                                style: GoogleFonts.monoton(
-                                    color: MetaColors.secondaryColor,
-                                    fontSize: 20),
-                              ),
-                            )
+                            Text(
+                              "Level 2",
+                              style: GoogleFonts.montserrat(
+                                  color: MetaColors.tertiaryTextColor,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ],
                         ),
-                      ),
-
-                      // Obx(() => Expanded(
-                      //         child: SliderTheme(
-                      //       data: Get.theme.sliderTheme
-                      //           .copyWith(thumbShape: SliderThumbImage()),
-                      //       child: Slider(
-                      //           activeColor: MetaColors.primaryColor,
-                      //           thumbColor: MetaColors.primaryColor,
-                      //           value: value.value!,
-                      //           onChanged: (val) {
-                      //             if (enabled.value) value.value = val;
-                      //           }),
-                      //     )))
-                    ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  gradient: LinearGradient(colors: [
+                                    Colors.white,
+                                    Colors.white,
+                                    // MetaColors.secondaryGradient
+                                  ])),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "planted a tree",
+                                      style: GoogleFonts.sourceCodePro(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      CupertinoIcons.tree,
+                                      color: MetaColors.secondaryGradient,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+                Expanded(child: Image.asset(MetaAssets.tourOne)),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(5, 10),
+                              color: MetaColors.secondaryColor.withOpacity(0.1),
+                              blurRadius: 10)
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                            color: MetaColors.secondaryColor.withOpacity(0.2))),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.hand_thumbsup_fill,
+                                color: Colors.amberAccent,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0)
+                                    .copyWith(top: 0, bottom: 0),
+                                child: Text(
+                                  "45k",
+                                  style: GoogleFonts.monoton(
+                                      color: MetaColors.secondaryColor,
+                                      fontSize: 20),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+
+                        // Obx(() => Expanded(
+                        //         child: SliderTheme(
+                        //       data: Get.theme.sliderTheme
+                        //           .copyWith(thumbShape: SliderThumbImage()),
+                        //       child: Slider(
+                        //           activeColor: MetaColors.primaryColor,
+                        //           thumbColor: MetaColors.primaryColor,
+                        //           value: value.value!,
+                        //           onChanged: (val) {
+                        //             if (enabled.value) value.value = val;
+                        //           }),
+                        //     )))
+                      ],
+                    ),
+                  ),
+                ),
+                // Container(
+                //   width: double.maxFinite,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.only(
+                //           bottomLeft: Radius.circular(12),
+                //           bottomRight: Radius.circular(12)),
+                //       gradient: LinearGradient(colors: [
+                //         Colors.white,
+                //         Colors.white,
+                //         MetaColors.secondaryGradient
+                //       ])),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Row(
+                //       children: [
+                //         Icon(
+                //           CupertinoIcons.tree,
+                //           color: MetaColors.secondaryGradient,
+                //         ),
+                //         Text(
+                //           "Planted a tree",
+                //           style: GoogleFonts.sourceCodePro(
+                //               fontSize: 18, fontWeight: FontWeight.w700),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            )),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PostEnlargedView extends GetView {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+             
+              color: Colors.black,
+          
               ),
-              // Container(
-              //   width: double.maxFinite,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.only(
-              //           bottomLeft: Radius.circular(12),
-              //           bottomRight: Radius.circular(12)),
-              //       gradient: LinearGradient(colors: [
-              //         Colors.white,
-              //         Colors.white,
-              //         MetaColors.secondaryGradient
-              //       ])),
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Row(
-              //       children: [
-              //         Icon(
-              //           CupertinoIcons.tree,
-              //           color: MetaColors.secondaryGradient,
-              //         ),
-              //         Text(
-              //           "Planted a tree",
-              //           style: GoogleFonts.sourceCodePro(
-              //               fontSize: 18, fontWeight: FontWeight.w700),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
-          )),
+        child: Padding(
+          padding: const EdgeInsets.all(0).copyWith(top: kToolbarHeight),
+          child: Center(
+                child: Column(
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: MetaColors.primaryColor,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Saransh",
+                              style: GoogleFonts.montserrat(color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              "Level 2",
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.maxFinite,
+                             
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "planted a tree",
+                                      style: GoogleFonts.sourceCodePro(
+                                          fontSize: 12,color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      child: Icon(
+                                        CupertinoIcons.tree,
+                                        color: MetaColors.secondaryGradient,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(child: Image.asset(MetaAssets.tourOne)),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(5, 10),
+                              color: MetaColors.secondaryColor.withOpacity(0.1),
+                              blurRadius: 10)
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                            color: MetaColors.secondaryColor.withOpacity(0.2))),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.hand_thumbsup_fill,
+                                color: Colors.amberAccent,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0)
+                                    .copyWith(top: 0, bottom: 0),
+                                child: Text(
+                                  "45k",
+                                  style: GoogleFonts.monoton(
+                                      color: MetaColors.secondaryColor,
+                                      fontSize: 20),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+
+                        // Obx(() => Expanded(
+                        //         child: SliderTheme(
+                        //       data: Get.theme.sliderTheme
+                        //           .copyWith(thumbShape: SliderThumbImage()),
+                        //       child: Slider(
+                        //           activeColor: MetaColors.primaryColor,
+                        //           thumbColor: MetaColors.primaryColor,
+                        //           value: value.value!,
+                        //           onChanged: (val) {
+                        //             if (enabled.value) value.value = val;
+                        //           }),
+                        //     )))
+                      ],
+                    ),
+                  ),
+                ),
+                // Container(
+                //   width: double.maxFinite,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.only(
+                //           bottomLeft: Radius.circular(12),
+                //           bottomRight: Radius.circular(12)),
+                //       gradient: LinearGradient(colors: [
+                //         Colors.white,
+                //         Colors.white,
+                //         MetaColors.secondaryGradient
+                //       ])),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Row(
+                //       children: [
+                //         Icon(
+                //           CupertinoIcons.tree,
+                //           color: MetaColors.secondaryGradient,
+                //         ),
+                //         Text(
+                //           "Planted a tree",
+                //           style: GoogleFonts.sourceCodePro(
+                //               fontSize: 18, fontWeight: FontWeight.w700),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            )),
         ),
       ),
     );

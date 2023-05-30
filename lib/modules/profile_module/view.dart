@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
+import 'package:envo_mobile/modules/posts_module/view.dart';
 import 'package:envo_mobile/modules/profile_module/controller.dart';
+import 'package:envo_mobile/modules/settings_module/view.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -21,11 +24,16 @@ class ProfileView extends GetView<ProfileController> {
               slivers: [
                 SliverAppBar(
                   actions: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(MetaAssets.dummProfile),
-                        backgroundColor: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => SettingsView());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(MetaAssets.dummProfile),
+                          backgroundColor: Colors.white,
+                        ),
                       ),
                     )
                   ],
@@ -33,7 +41,7 @@ class ProfileView extends GetView<ProfileController> {
                   snap: true,
                   elevation: 0,
                   // pinned: true,
-                  backgroundColor: Colors.white,
+                  backgroundColor: MetaColors.primaryColor,
                   stretch: true,
 
                   // bottom: PreferredSize(
@@ -74,27 +82,18 @@ class ProfileView extends GetView<ProfileController> {
                     title: SizedBox(
                       height: 60,
                       child: ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                        child: Container(
                           child: Padding(
                             padding:
                                 const EdgeInsets.all(3.0).copyWith(bottom: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text("Saransh Hasija",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                ),
-                              ),
+                            child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text("Saransh Hasija",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  )),
                             ),
                           ),
                         ),
@@ -102,7 +101,12 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     background: DecoratedBox(
                         position: DecorationPosition.foreground,
-                        decoration: BoxDecoration(),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                stops: [0.01, .5],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                colors: [Colors.black, Colors.transparent])),
                         child: Image.asset(
                           MetaAssets.dummProfile,
                           fit: BoxFit.cover,
@@ -120,39 +124,55 @@ class ProfileView extends GetView<ProfileController> {
                         padding: const EdgeInsets.all(18.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: MetaColors.primaryColor,
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: Offset(5, 10),
-                                  color: MetaColors.secondaryColor
-                                      .withOpacity(0.1),
-                                  blurRadius: 10)
-                            ],
-                          ),
+                              // color: MetaColors.primaryColor,
+                              // borderRadius: BorderRadius.circular(25),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //       offset: Offset(5, 10),
+                              //       color: MetaColors.secondaryColor
+                              //           .withOpacity(0.1),
+                              //       blurRadius: 10)
+                              // ],
+                              ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "10000",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: MetaColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(25),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(5, 10),
+                                            color: MetaColors.secondaryColor
+                                                .withOpacity(0.1),
+                                            blurRadius: 10)
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "10000",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "My Coins",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "My Coins",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -162,24 +182,40 @@ class ProfileView extends GetView<ProfileController> {
                                     color: Colors.white.withOpacity(0.7),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "42K",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: MetaColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(25),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(5, 10),
+                                            color: MetaColors.secondaryColor
+                                                .withOpacity(0.1),
+                                            blurRadius: 10)
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "42K",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "Eco Actions",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "Eco Actions",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -189,24 +225,40 @@ class ProfileView extends GetView<ProfileController> {
                                     color: Colors.white.withOpacity(0.7),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "1kG",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: MetaColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(25),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(5, 10),
+                                            color: MetaColors.secondaryColor
+                                                .withOpacity(0.1),
+                                            blurRadius: 10)
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "1kG",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Text(
+                                            "cO2 saved",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "cO2 saved",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -232,11 +284,120 @@ class ProfileView extends GetView<ProfileController> {
                       itemBuilder: (context, index, value) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: MetaColors.levelTwoColor,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(child: Text("Image")),
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(() => PostEnlargedView());
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: MetaColors.primaryColor
+                                            .withOpacity(0.1),
+                                        spreadRadius: 5,
+                                        offset: Offset(0, 5),
+                                        blurRadius: 10)
+                                  ],
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Center(
+                                  child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: double.maxFinite,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          gradient: LinearGradient(colors: [
+                                            Colors.white,
+                                            Colors.white,
+                                            // MetaColors.secondaryGradient
+                                          ])),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                "planted a tree",
+                                                style:
+                                                    GoogleFonts.sourceCodePro(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              CupertinoIcons.tree,
+                                              color:
+                                                  MetaColors.secondaryGradient,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Image.asset(MetaAssets.tourThree)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                offset: Offset(5, 10),
+                                                color: MetaColors.secondaryColor
+                                                    .withOpacity(0.1),
+                                                blurRadius: 10)
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color: MetaColors.secondaryColor
+                                                  .withOpacity(0.2))),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons
+                                                      .hand_thumbsup_fill,
+                                                  color: Colors.amberAccent,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0)
+                                                          .copyWith(
+                                                              top: 0,
+                                                              bottom: 0),
+                                                  child: Text(
+                                                    "45k",
+                                                    style: GoogleFonts.monoton(
+                                                        color: MetaColors
+                                                            .secondaryColor,
+                                                        fontSize: 13),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                            ),
                           ),
                         );
                       },
