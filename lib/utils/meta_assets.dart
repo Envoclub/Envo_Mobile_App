@@ -8,7 +8,8 @@ class MetaAssets {
   static const String tourThree = 'assets/tour_three.png';
   static const String userDetailsBackground =
       'assets/user_details_background.png';
-      static const String rewardImage='assets/reward_one.png';
+  static const String rewardImage = 'assets/reward_one.png';
+  static const String splashVideo = 'assets/waterfall.mp4';
 
   //bottom icons
 
@@ -18,5 +19,5 @@ class MetaAssets {
   static const String footprint = 'assets/footprint.svg';
   static const String activeFeet = 'assets/footprint_image.svg';
   static const String inActiveFeet = 'assets/inactive_feet.svg';
-  static const String crownAsset='assets/green_crown.json';
+  static const String crownAsset = 'assets/green_crown.json';
 }

@@ -28,9 +28,7 @@ class AuthRepository {
   login(String email, String password) async {
     var params = {"email": email, "password": password};
     var headers = {
-      // "Authorization": "Bearer " + accessToken!,
-      // "Access-Control-Allow-Origin": "*",
-      'Accept': 'application/json',
+ 
       "Content-Type": "application/json"
     };
     try {

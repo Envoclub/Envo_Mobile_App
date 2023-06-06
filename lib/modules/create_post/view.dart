@@ -19,13 +19,13 @@ class CreatePostView extends GetView<CreatePostController> {
         child: Obx(() => Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                Container(
+                Container(color: Colors.black,
                   height: double.maxFinite,
                   width: double.maxFinite,
                   child: controller.image.value != null
                       ? Image.file(
                           File(controller.image.value!.path),
-                          fit: BoxFit.fill,
+                        
                         )
                       : SizedBox.shrink(),
                 ),
