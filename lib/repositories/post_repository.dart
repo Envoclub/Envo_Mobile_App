@@ -61,6 +61,33 @@ class PostRepository {
       rethrow;
     }
   }
+  Future<List<Post>> getMyPosts() async {
+    try {
+      var headers = {
+        "Authorization": "Token " + authRepository.accessToken!,
+        "Content-type": "application/json"
+      };
+      log(headers.toString());
+      try {
+        String url = MetaStrings.baseUrl + MetaStrings.getMyPosts;
+
+        var response = await http.get(Uri.parse(url), headers: headers);
+
+        if (response.statusCode == 200) {
+          return (jsonDecode(response.body) as List)
+              .map((e) => Post.fromJson(e))
+              .toList();
+        } else {
+          throw jsonDecode(response.body)["detail"];
+        }
+      } catch (e) {
+        rethrow;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
   like(Post post) async {
     try {

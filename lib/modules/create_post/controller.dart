@@ -18,6 +18,7 @@ class CreatePostController extends GetxController {
   static CreatePostController to = Get.find<CreatePostController>();
   PostRepository postRepository = HomeController.to.postRepository;
   ImagePicker picker = ImagePicker();
+  Rxn<bool> pickVideo = Rxn(false);
   Rxn<XFile?> image = Rxn();
   Rxn<bool> loading = Rxn(false);
   Rxn<PostActions?> selectedAction = Rxn();
@@ -28,6 +29,8 @@ class CreatePostController extends GetxController {
 
   getImage() async {
     try {
+  
+
       image.value = await picker.pickImage(source: ImageSource.camera);
       if (image.value != null) {
         selectedAction.value = await Get.dialog<PostActions>(Material(
@@ -131,8 +134,9 @@ class CreatePostController extends GetxController {
           postUrl: File(image.value!.path),
           description: "",
           action: selectedAction.value!.id!));
-            await PostsController.to.getPosts();    loading.value = false;
-    
+      await PostsController.to.getPosts();
+      loading.value = false;
+
       handleSuccess();
     } catch (e) {
       loading.value = false;
@@ -142,8 +146,8 @@ class CreatePostController extends GetxController {
 }
 
 handleSuccess() {
- 
-  Get.back(); showSnackBar("Success", isError: false);
+  Get.back();
+  showSnackBar("Success", isError: false);
 }
 
 class Action {

@@ -23,7 +23,6 @@ class _TourViewState extends State<TourView> {
   Widget build(BuildContext context) {
     TourController controller = TourController.to;
     return Scaffold(
-      appBar: AppBar(),
       body: !start
           ? Container(
               child: Stack(
@@ -110,100 +109,106 @@ class _TourViewState extends State<TourView> {
               physics: NeverScrollableScrollPhysics(),
               itemCount: controller.tourPages.value!.length,
               itemBuilder: (context, pageIndex) {
-                return Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                controller.tourPages.value![pageIndex].title,
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.w700),
-                              ),
-                              Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(30.0),
-                                    child: Image.asset(controller
-                                        .tourPages.value![pageIndex].imageUrl),
-                                  )),
-                              Obx(
-                                () => Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0).copyWith(bottom: 20),
-                                    child: Text(
-                                      controller.tourPages.value![pageIndex]
-                                          .survey.value!.question,
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w600),
+                return Scaffold(
+                  appBar: AppBar(),
+                  body: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  controller.tourPages.value![pageIndex].title,
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Expanded(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: Image.asset(controller
+                                      .tourPages.value![pageIndex].imageUrl),
+                                )),
+                                Obx(
+                                  () => Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0)
+                                          .copyWith(bottom: 20),
+                                      child: Text(
+                                        controller.tourPages.value![pageIndex]
+                                            .survey.value!.question,
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w600),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Obx(
-                                () => Column(
-                                    children: List.generate(
-                                        controller.tourPages.value![pageIndex]
-                                            .survey.value!.options.length,
-                                        (index) => InkWell(
-                                              onTap: () {
-                                                controller
-                                                    .tourPages
-                                                    .value![pageIndex]
-                                                    .survey
-                                                    .value!
-                                                    .selectionIndex = index;
-                                                setState(() {});
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Radio(
-                                                    fillColor: MaterialStateColor
-                                                        .resolveWith((states) =>
-                                                            MetaColors
-                                                                .primaryColor),
-                                                    value: index,
-                                                    groupValue: controller
-                                                        .tourPages
-                                                        .value![pageIndex]
-                                                        .survey
-                                                        .value!
-                                                        .selectionIndex,
-                                                    onChanged: (selectedIndex) {
+                                Obx(
+                                  () => Column(
+                                      children: List.generate(
+                                          controller.tourPages.value![pageIndex]
+                                              .survey.value!.options.length,
+                                          (index) => InkWell(
+                                                onTap: () {
+                                                  controller
+                                                      .tourPages
+                                                      .value![pageIndex]
+                                                      .survey
+                                                      .value!
+                                                      .selectionIndex = index;
+                                                  setState(() {});
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Radio(
+                                                      fillColor: MaterialStateColor
+                                                          .resolveWith((states) =>
+                                                              MetaColors
+                                                                  .primaryColor),
+                                                      value: index,
+                                                      groupValue: controller
+                                                          .tourPages
+                                                          .value![pageIndex]
+                                                          .survey
+                                                          .value!
+                                                          .selectionIndex,
+                                                      onChanged:
+                                                          (selectedIndex) {
+                                                        controller
+                                                                .tourPages
+                                                                .value![pageIndex]
+                                                                .survey
+                                                                .value!
+                                                                .selectionIndex =
+                                                            selectedIndex!;
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                    Text(
                                                       controller
-                                                              .tourPages
-                                                              .value![pageIndex]
-                                                              .survey
-                                                              .value!
-                                                              .selectionIndex =
-                                                          selectedIndex!;
-                                                      setState(() {});
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    controller
-                                                        .tourPages
-                                                        .value![pageIndex]
-                                                        .survey
-                                                        .value!
-                                                        .options[index],
-                                                    style:
-                                                        TextStyle(fontSize: 15),
-                                                  ),
-                                                ],
-                                              ),
-                                            ))),
-                              )
-                            ],
+                                                          .tourPages
+                                                          .value![pageIndex]
+                                                          .survey
+                                                          .value!
+                                                          .options[index],
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ))),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        CustomButton(
-                            handler: controller.handleNext, label: "Next")
-                      ],
+                          CustomButton(
+                              handler: controller.handleNext, label: "Next")
+                        ],
+                      ),
                     ),
                   ),
                 );

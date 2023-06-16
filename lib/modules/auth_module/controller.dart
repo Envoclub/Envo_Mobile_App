@@ -87,7 +87,7 @@ showSnackBar(String message, {bool isError = true}) {
   Get.showSnackbar(GetSnackBar(
     duration: Duration(seconds: 3),
     backgroundColor: isError ? Colors.red : Colors.green,
-    title: "Oops!",
+    title: isError ? "Oops!" : "Success",
     message: message,
   ));
 }

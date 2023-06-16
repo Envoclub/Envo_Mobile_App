@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
 import 'package:envo_mobile/modules/posts_module/view.dart';
 import 'package:envo_mobile/modules/profile_module/controller.dart';
 import 'package:envo_mobile/modules/settings_module/view.dart';
+import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:envo_mobile/utils/meta_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../home/controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   @override
@@ -279,130 +283,202 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SliverPadding(
                   padding: EdgeInsets.all(8),
-                  sliver: SliverAnimatedGrid(
-                      initialItemCount: 20,
-                      itemBuilder: (context, index, value) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              // Get.to(() => PostEnlargedView());
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: MetaColors.primaryColor
-                                            .withOpacity(0.1),
-                                        spreadRadius: 5,
-                                        offset: Offset(0, 5),
-                                        blurRadius: 10)
-                                  ],
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Center(
-                                  child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: double.maxFinite,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          gradient: LinearGradient(colors: [
-                                            Colors.white,
-                                            Colors.white,
-                                            // MetaColors.secondaryGradient
-                                          ])),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                "planted a tree",
-                                                style:
-                                                    GoogleFonts.sourceCodePro(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700),
+                  sliver: Obx(
+                    () => controller.loading.value!
+                        ? Center(
+                            child: Loader(),
+                          )
+                        : SliverAnimatedGrid(
+                            initialItemCount: controller.posts.value!.length,
+                            itemBuilder: (context, index, value) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.to(() => PostEnlargedView(
+                                        controller.posts.value![index]));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: MetaColors.primaryColor
+                                                  .withOpacity(0.1),
+                                              spreadRadius: 5,
+                                              offset: Offset(0, 5),
+                                              blurRadius: 10)
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Center(
+                                        child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            width: double.maxFinite,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                gradient:
+                                                    LinearGradient(colors: [
+                                                  Colors.white,
+                                                  Colors.white,
+                                                  // MetaColors.secondaryGradient
+                                                ])),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      HomeController
+                                                              .to.actions.value
+                                                              ?.firstWhereOrNull(
+                                                                  (element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      controller
+                                                                          .posts
+                                                                          .value![
+                                                                              index]
+                                                                          .action)
+                                                              ?.action ??
+                                                          '',
+                                                      style: GoogleFonts
+                                                          .sourceCodePro(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  HomeController
+                                                              .to.actions.value
+                                                              ?.firstWhereOrNull(
+                                                                  (element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      controller
+                                                                          .posts
+                                                                          .value![
+                                                                              index]
+                                                                          .action) !=
+                                                          null
+                                                      ? CircleAvatar(
+                                                          radius: 7,
+                                                          backgroundImage: CachedNetworkImageProvider(
+                                                              HomeController
+                                                                  .to
+                                                                  .actions
+                                                                  .value!
+                                                                  .firstWhere((element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      controller
+                                                                          .posts
+                                                                          .value![
+                                                                              index]
+                                                                          .action)
+                                                                  .image!),
+                                                        )
+                                                      : Icon(
+                                                          CupertinoIcons.tree,
+                                                          color: MetaColors
+                                                              .secondaryGradient,
+                                                        ),
+                                                ],
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Icon(
-                                              CupertinoIcons.tree,
-                                              color:
-                                                  MetaColors.secondaryGradient,
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Image.asset(MetaAssets.tourThree)),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                offset: Offset(5, 10),
-                                                color: MetaColors.secondaryColor
-                                                    .withOpacity(0.1),
-                                                blurRadius: 10)
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(
-                                              color: MetaColors.secondaryColor
-                                                  .withOpacity(0.2))),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                        Expanded(
+                                            child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                              child: CachedNetworkImage(
+                                            imageUrl: controller
+                                                .posts.value![index].postUrl!,
+                                            fit: BoxFit.cover,
+                                            width: double.maxFinite,
+                                          )),
+                                        )),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      offset: Offset(5, 10),
+                                                      color: MetaColors
+                                                          .secondaryColor
+                                                          .withOpacity(0.1),
+                                                      blurRadius: 10)
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                border: Border.all(
+                                                    color: MetaColors
+                                                        .secondaryColor
+                                                        .withOpacity(0.2))),
                                             child: Row(
                                               children: [
-                                                Icon(
-                                                  CupertinoIcons
-                                                      .hand_thumbsup_fill,
-                                                  color: Colors.amberAccent,
-                                                ),
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.all(8.0)
-                                                          .copyWith(
-                                                              top: 0,
-                                                              bottom: 0),
-                                                  child: Text(
-                                                    "45k",
-                                                    style: GoogleFonts.monoton(
-                                                        color: MetaColors
-                                                            .secondaryColor,
-                                                        fontSize: 13),
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        CupertinoIcons
+                                                            .hand_thumbsup_fill,
+                                                        color:
+                                                            Colors.amberAccent,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .all(8.0)
+                                                                .copyWith(
+                                                                    top: 0,
+                                                                    bottom: 0),
+                                                        child: Text(
+                                                          controller
+                                                              .posts
+                                                              .value![index]
+                                                              .likeCount
+                                                              .toString(),
+                                                          style: GoogleFonts.monoton(
+                                                              color: MetaColors
+                                                                  .secondaryColor,
+                                                              fontSize: 13),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      ],
+                                    )),
                                   ),
-                                ],
-                              )),
-                            ),
-                          ),
-                        );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 0.8, crossAxisCount: 2)),
+                                ),
+                              );
+                            },
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.8, crossAxisCount: 2)),
+                  ),
                 )
               ],
             )));

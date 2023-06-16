@@ -224,6 +224,7 @@ class SettingsView extends GetView {
               ),
               CustomButton(handler: () {
                 AuthController.to.logout();
+                Get.back();
               }, label: "Log Out")
             ],
           ),

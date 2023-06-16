@@ -111,30 +111,30 @@ class _SignInScreenState extends State<SignInScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Align(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Get.to(HomeView());
-                          },
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "Jump to Onboarding UI? ",
-                                  style: TextStyle(
-                                      color: MetaColors.tertiaryTextColor,
-                                      fontFamily: "Poppins",
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                  children: [
-                                TextSpan(
-                                    text: "Click Here.",
-                                    style: TextStyle(
-                                        color: MetaColors.primaryColor))
-                              ])),
-                        ),
-                      ),
-                    )
+                    // Align(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: InkWell(
+                    //       onTap: () {
+                    //         Get.to(HomeView());
+                    //       },
+                    //       child: RichText(
+                    //           text: TextSpan(
+                    //               text: "Jump to Onboarding UI? ",
+                    //               style: TextStyle(
+                    //                   color: MetaColors.tertiaryTextColor,
+                    //                   fontFamily: "Poppins",
+                    //                   fontSize: 12,
+                    //                   fontWeight: FontWeight.w500),
+                    //               children: [
+                    //             TextSpan(
+                    //                 text: "Click Here.",
+                    //                 style: TextStyle(
+                    //                     color: MetaColors.primaryColor))
+                    //           ])),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               )),
