@@ -6,4 +6,5 @@ class MetaStrings {
   static const String getPosts = '/activities/';
   static const String likePost = '/activities/like/';
   static const String unLikePost = '/activities/unlike/';
+  static const String getPostActions='/game/sustainable-actions/';
 }

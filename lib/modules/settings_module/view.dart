@@ -1,3 +1,4 @@
+import 'package:envo_mobile/modules/auth_module/controller.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -221,7 +222,9 @@ class SettingsView extends GetView {
                   ),
                 ),
               ),
-              CustomButton(handler: () {}, label: "Log Out")
+              CustomButton(handler: () {
+                AuthController.to.logout();
+              }, label: "Log Out")
             ],
           ),
         ),

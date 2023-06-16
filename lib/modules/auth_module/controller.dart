@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:envo_mobile/modules/home/binding.dart';
 import 'package:envo_mobile/modules/tour/binding.dart';
 import 'package:envo_mobile/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class AuthController extends GetxController {
       if (token != null) {
         UserModel? userModel = await authRepository.getUserDetails();
         user.value = userModel;
+        HomeBinding().dependencies();
       } else {
         user.value = null;
       }

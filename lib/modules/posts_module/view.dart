@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:envo_mobile/models/posts.dart';
+import 'package:envo_mobile/modules/home/controller.dart';
 import 'package:envo_mobile/modules/posts_module/controller.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../utils/custom_slider.dart';
 import '../../utils/meta_assets.dart';
 import '../../utils/meta_colors.dart';
+import '../auth_module/controller.dart';
 
 class PostsView extends GetView<PostsController> {
   @override
@@ -16,7 +22,7 @@ class PostsView extends GetView<PostsController> {
     // TODO: implement build
 
     return Obx(
-      () => !controller.loading.value!
+      () => controller.loading.value!
           ? Center(
               child: Loader(),
             )
@@ -28,6 +34,7 @@ class PostsView extends GetView<PostsController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(AuthController.to.user.value!.photoUrl),
                           backgroundColor: MetaColors.primaryColor,
                           radius: 15,
                         ),
@@ -41,7 +48,8 @@ class PostsView extends GetView<PostsController> {
                                   color: MetaColors.secondaryColor),
                               children: [
                             TextSpan(
-                                text: "Saransh",
+                                text:
+                                    "${AuthController.to.user.value!.username ?? ''}",
                                 style: GoogleFonts.sourceCodePro(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 16,
@@ -51,15 +59,14 @@ class PostsView extends GetView<PostsController> {
                   )),
               body: Padding(
                 padding: const EdgeInsets.only(bottom: 80),
-                child: PageView(
+                child: PageView.builder(
                   padEnds: false,
                   controller: controller.pageController,
                   scrollDirection: Axis.vertical,
-                  children: [
-                    PostTile(),
-                    PostTile(),
-                    PostTile(),
-                  ],
+                  itemCount: controller.posts.value!.length,
+                  itemBuilder: (context, index) {
+                    return PostTile(post: controller.posts.value![index]);
+                  },
                 ),
               ),
             ),
@@ -68,10 +75,8 @@ class PostsView extends GetView<PostsController> {
 }
 
 class PostTile extends StatefulWidget {
-  const PostTile({
-    super.key,
-  });
-
+  const PostTile({super.key, required this.post});
+  final Post post;
   @override
   State<PostTile> createState() => _PostTileState();
 }
@@ -103,8 +108,12 @@ class _PostTileState extends State<PostTile>
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: InkWell(
+          onDoubleTap: () {
+            log("Liked");
+            PostsController.to.likePost(widget.post);
+          },
           onTap: () {
-            Get.to(() => PostEnlargedView());
+            Get.to(() => PostEnlargedView(widget.post));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -128,6 +137,7 @@ class _PostTileState extends State<PostTile>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(widget.post.photoUrl),
                             radius: 15,
                             backgroundColor: MetaColors.primaryColor,
                           ),
@@ -136,12 +146,12 @@ class _PostTileState extends State<PostTile>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Saransh",
+                              widget.post.myUsername ?? '',
                               style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              "Level 2",
+                              widget.post.description ?? '',
                               style: GoogleFonts.montserrat(
                                   color: MetaColors.tertiaryTextColor,
                                   fontSize: 11,
@@ -167,7 +177,12 @@ class _PostTileState extends State<PostTile>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "planted a tree",
+                                      HomeController.to.actions.value
+                                              ?.firstWhereOrNull((element) =>
+                                                  element.id ==
+                                                  widget.post.action)
+                                              ?.action ??
+                                          '',
                                       style: GoogleFonts.sourceCodePro(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700),
@@ -175,10 +190,26 @@ class _PostTileState extends State<PostTile>
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Icon(
-                                      CupertinoIcons.tree,
-                                      color: MetaColors.secondaryGradient,
-                                    ),
+                                    HomeController.to.actions.value
+                                                ?.firstWhereOrNull((element) =>
+                                                    element.id ==
+                                                    widget.post.action) !=
+                                            null
+                                        ? CircleAvatar(
+                                            radius: 10,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    HomeController
+                                                        .to.actions.value!
+                                                        .firstWhere((element) =>
+                                                            element.id ==
+                                                            widget.post.action)
+                                                        .image!),
+                                          )
+                                        : Icon(
+                                            CupertinoIcons.tree,
+                                            color: MetaColors.secondaryGradient,
+                                          ),
                                   ],
                                 ),
                               ),
@@ -189,7 +220,16 @@ class _PostTileState extends State<PostTile>
                     ),
                   ),
                 ),
-                Expanded(child: Image.asset(MetaAssets.tourOne)),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                      child: CachedNetworkImage(
+                    imageUrl: widget.post.postUrl!,
+                    fit: BoxFit.cover,
+                    width: double.maxFinite,
+                  )),
+                )),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Container(
@@ -206,25 +246,37 @@ class _PostTileState extends State<PostTile>
                             color: MetaColors.secondaryColor.withOpacity(0.2))),
                     child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.hand_thumbsup_fill,
-                                color: Colors.amberAccent,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0)
-                                    .copyWith(top: 0, bottom: 0),
-                                child: Text(
-                                  "45k",
-                                  style: GoogleFonts.monoton(
-                                      color: MetaColors.secondaryColor,
-                                      fontSize: 20),
+                        InkWell(
+                          onTap: () {
+                            PostsController.to.likePost(widget.post);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.hand_thumbsup_fill,
+                                  color:widget.post.likes?.firstWhereOrNull(
+                                            (element) =>
+                                                element.usernames ==
+                                                AuthController
+                                                    .to.user.value!.username) ==
+                                        null
+                                    ? Colors.grey
+                                    : Colors.amberAccent,
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0)
+                                      .copyWith(top: 0, bottom: 0),
+                                  child: Text(
+                                    widget.post.likeCount.toString(),
+                                    style: GoogleFonts.monoton(
+                                        color: MetaColors.secondaryColor,
+                                        fontSize: 20),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
 
@@ -281,117 +333,166 @@ class _PostTileState extends State<PostTile>
   }
 }
 
-class PostEnlargedView extends GetView {
+class PostEnlargedView extends StatefulWidget {
+  Post post;
+  PostEnlargedView(this.post);
+
+  @override
+  State<PostEnlargedView> createState() => _PostEnlargedViewState();
+}
+
+class _PostEnlargedViewState extends State<PostEnlargedView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-             
-              color: Colors.black,
-          
-              ),
+          color: Colors.black,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(0).copyWith(top: kToolbarHeight),
           child: Center(
-                child: Column(
-              children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: MetaColors.primaryColor,
+              child: Column(
+            children: [
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: MetaColors.primaryColor,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.post.myUsername ?? "",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Saransh",
-                              style: GoogleFonts.montserrat(color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "Level 2",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: double.maxFinite,
-                             
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "planted a tree",
-                                      style: GoogleFonts.sourceCodePro(
-                                          fontSize: 12,color: Colors.white,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        CupertinoIcons.tree,
-                                        color: MetaColors.secondaryGradient,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                          Text(
+                            widget.post.description ?? "",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.maxFinite,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    HomeController.to.actions.value
+                                            ?.firstWhereOrNull((element) =>
+                                                element.id ==
+                                                widget.post.action)
+                                            ?.action ??
+                                        '',
+                                    style: GoogleFonts.sourceCodePro(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  HomeController.to.actions.value
+                                              ?.firstWhereOrNull((element) =>
+                                                  element.id ==
+                                                  widget.post.action) !=
+                                          null
+                                      ? CircleAvatar(
+                                          radius: 10,
+                                          backgroundImage:
+                                              CachedNetworkImageProvider(
+                                                  HomeController
+                                                      .to.actions.value!
+                                                      .firstWhere((element) =>
+                                                          element.id ==
+                                                          widget.post.action)
+                                                      .image!),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            CupertinoIcons.tree,
+                                            color: MetaColors.secondaryGradient,
+                                          ),
+                                        ),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(child: Image.asset(MetaAssets.tourOne)),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(5, 10),
-                              color: MetaColors.secondaryColor.withOpacity(0.1),
-                              blurRadius: 10)
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                            color: MetaColors.secondaryColor.withOpacity(0.2))),
-                    child: Row(
-                      children: [
-                        Padding(
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                    child: CachedNetworkImage(
+                  imageUrl: widget.post.postUrl!,
+                  fit: BoxFit.cover,
+                  width: double.maxFinite,
+                )),
+              )),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(5, 10),
+                            color: MetaColors.secondaryColor.withOpacity(0.1),
+                            blurRadius: 10)
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                          color: MetaColors.secondaryColor.withOpacity(0.2))),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          PostsController.to.likePost(widget.post);
+                          setState(() {});
+                        },
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
                               Icon(
                                 CupertinoIcons.hand_thumbsup_fill,
-                                color: Colors.amberAccent,
+                                color: widget.post.likes?.firstWhereOrNull(
+                                            (element) =>
+                                                element.usernames ==
+                                                AuthController
+                                                    .to.user.value!.username) ==
+                                        null
+                                    ? Colors.grey
+                                    : Colors.amberAccent,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0)
                                     .copyWith(top: 0, bottom: 0),
                                 child: Text(
-                                  "45k",
+                                  widget.post.likeCount.toString(),
                                   style: GoogleFonts.monoton(
                                       color: MetaColors.secondaryColor,
                                       fontSize: 20),
@@ -400,53 +501,54 @@ class PostEnlargedView extends GetView {
                             ],
                           ),
                         ),
+                      ),
 
-                        // Obx(() => Expanded(
-                        //         child: SliderTheme(
-                        //       data: Get.theme.sliderTheme
-                        //           .copyWith(thumbShape: SliderThumbImage()),
-                        //       child: Slider(
-                        //           activeColor: MetaColors.primaryColor,
-                        //           thumbColor: MetaColors.primaryColor,
-                        //           value: value.value!,
-                        //           onChanged: (val) {
-                        //             if (enabled.value) value.value = val;
-                        //           }),
-                        //     )))
-                      ],
-                    ),
+                      // Obx(() => Expanded(
+                      //         child: SliderTheme(
+                      //       data: Get.theme.sliderTheme
+                      //           .copyWith(thumbShape: SliderThumbImage()),
+                      //       child: Slider(
+                      //           activeColor: MetaColors.primaryColor,
+                      //           thumbColor: MetaColors.primaryColor,
+                      //           value: value.value!,
+                      //           onChanged: (val) {
+                      //             if (enabled.value) value.value = val;
+                      //           }),
+                      //     )))
+                    ],
                   ),
                 ),
-                // Container(
-                //   width: double.maxFinite,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.only(
-                //           bottomLeft: Radius.circular(12),
-                //           bottomRight: Radius.circular(12)),
-                //       gradient: LinearGradient(colors: [
-                //         Colors.white,
-                //         Colors.white,
-                //         MetaColors.secondaryGradient
-                //       ])),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: Row(
-                //       children: [
-                //         Icon(
-                //           CupertinoIcons.tree,
-                //           color: MetaColors.secondaryGradient,
-                //         ),
-                //         Text(
-                //           "Planted a tree",
-                //           style: GoogleFonts.sourceCodePro(
-                //               fontSize: 18, fontWeight: FontWeight.w700),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            )),
+              ),
+              // Container(
+              //   width: double.maxFinite,
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.only(
+              //           bottomLeft: Radius.circular(12),
+              //           bottomRight: Radius.circular(12)),
+              //       gradient: LinearGradient(colors: [
+              //         Colors.white,
+              //         Colors.white,
+              //         MetaColors.secondaryGradient
+              //       ])),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Row(
+              //       children: [
+              //         Icon(
+              //           CupertinoIcons.tree,
+              //           color: MetaColors.secondaryGradient,
+              //         ),
+              //         Text(
+              //           "Planted a tree",
+              //           style: GoogleFonts.sourceCodePro(
+              //               fontSize: 18, fontWeight: FontWeight.w700),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+            ],
+          )),
         ),
       ),
     );

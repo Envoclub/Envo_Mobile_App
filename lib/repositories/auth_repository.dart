@@ -37,8 +37,9 @@ class AuthRepository {
       var response = await http.post(Uri.parse(url),
           headers: headers, body: jsonEncode(params));
       var parsedValue = jsonDecode(response.body);
+      log(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await setTokens(parsedValue["access"], parsedValue["refresh"]);
+        await setTokens(parsedValue["key"], '');
         return;
       } else {
         throw parsedValue['detail'];
@@ -50,6 +51,7 @@ class AuthRepository {
   }
 
   getUserDetails() async {
+    await initTokens();
     var headers = {
       "Authorization": "Token " + accessToken!,
       "Content-type": "application/json"

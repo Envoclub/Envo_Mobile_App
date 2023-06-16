@@ -1,17 +1,26 @@
+import 'dart:io';
+
+import 'package:envo_mobile/models/posts.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:envo_mobile/modules/home/controller.dart';
+import 'package:envo_mobile/modules/posts_module/controller.dart';
+import 'package:envo_mobile/repositories/post_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/action_model.dart';
 import '../../utils/meta_colors.dart';
 
 class CreatePostController extends GetxController {
   static CreatePostController to = Get.find<CreatePostController>();
+  PostRepository postRepository = HomeController.to.postRepository;
   ImagePicker picker = ImagePicker();
   Rxn<XFile?> image = Rxn();
-  Rxn<Action?> selectedAction = Rxn();
+  Rxn<bool> loading = Rxn(false);
+  Rxn<PostActions?> selectedAction = Rxn();
   List<Action> actions = [
     Action(name: "Plant A tree", id: "1"),
     Action(name: "CarPool", id: "2")
@@ -21,7 +30,7 @@ class CreatePostController extends GetxController {
     try {
       image.value = await picker.pickImage(source: ImageSource.camera);
       if (image.value != null) {
-        selectedAction.value = await Get.dialog<Action>(Material(
+        selectedAction.value = await Get.dialog<PostActions>(Material(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -39,7 +48,7 @@ class CreatePostController extends GetxController {
                     Expanded(
                       child: GridView.count(
                         crossAxisCount: 2,
-                        children: actions
+                        children: HomeController.to.actions.value!
                             .map((e) => Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: InkWell(
@@ -79,7 +88,7 @@ class CreatePostController extends GetxController {
                                                 width: 10,
                                               ),
                                               Text(
-                                                e.name,
+                                                e.action.toString(),
                                                 style:
                                                     GoogleFonts.sourceCodePro(
                                                         fontSize: 12,
@@ -115,7 +124,26 @@ class CreatePostController extends GetxController {
     getImage();
   }
 
-  void handlePost() async {}
+  void handlePost() async {
+    try {
+      loading.value = true;
+      await postRepository.createPost(CreatePostModel(
+          postUrl: File(image.value!.path),
+          description: "",
+          action: selectedAction.value!.id!));
+            await PostsController.to.getPosts();    loading.value = false;
+    
+      handleSuccess();
+    } catch (e) {
+      loading.value = false;
+      showSnackBar(e.toString());
+    }
+  }
+}
+
+handleSuccess() {
+ 
+  Get.back(); showSnackBar("Success", isError: false);
 }
 
 class Action {

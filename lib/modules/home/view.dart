@@ -41,13 +41,13 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),
       body: Obx(
         () {
-          return HomeController.to.currentIndex.value == 0
+          return controller.currentIndex.value == 0
               ? Center(
                   child: Container(child: PostsView()),
                 )
-              : HomeController.to.currentIndex.value == 1
+              :controller.currentIndex.value == 1
                   ? RewardsView()
-                  : HomeController.to.currentIndex.value == 2
+                  : controller.currentIndex.value == 2
                       ? Center(child: LeaderBoardView())
                       : Center(
                           child: ProfileView(),
@@ -277,7 +277,7 @@ class _FootPrintsScreenState extends State<FootPrintsScreen> {
   }
 }
 
-class CustomBottomNav extends StatelessWidget {
+class CustomBottomNav extends GetView<HomeController> {
   const CustomBottomNav({
     super.key,
   });

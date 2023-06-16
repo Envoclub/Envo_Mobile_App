@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:envo_mobile/models/posts.dart';
+import 'package:dio/dio.dart';
 
+import '../models/action_model.dart';
 import '../utils/meta_strings.dart';
 import 'auth_repository.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +12,28 @@ import 'package:http/http.dart' as http;
 class PostRepository {
   AuthRepository authRepository;
   PostRepository(this.authRepository);
+  Future<List<PostActions>> getAllPostActions() async {
+    try {
+      var headers = {
+        "Authorization": "Token " + authRepository.accessToken!,
+        "Content-type": "application/json"
+      };
+      String url = MetaStrings.baseUrl + MetaStrings.getPostActions;
+      log(url);
+
+      var response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        return (jsonDecode(response.body) as List)
+            .map((e) => PostActions.fromJson(e))
+            .toList();
+      } else {
+        throw jsonDecode(response.body)["error"];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<List<Post>> getAllPosts() async {
     try {
@@ -20,12 +44,13 @@ class PostRepository {
       log(headers.toString());
       try {
         String url = MetaStrings.baseUrl + MetaStrings.getPosts;
-        log(url);
 
         var response = await http.get(Uri.parse(url), headers: headers);
 
         if (response.statusCode == 200) {
-          return [];
+          return (jsonDecode(response.body) as List)
+              .map((e) => Post.fromJson(e))
+              .toList();
         } else {
           throw jsonDecode(response.body)["detail"];
         }
@@ -43,7 +68,7 @@ class PostRepository {
         "Authorization": "Token " + authRepository.accessToken!,
         "Content-type": "application/json"
       };
-      var params = {"pk": post.id};
+      var params = {"pk": post.pk};
       log(headers.toString());
       try {
         String url = MetaStrings.baseUrl + MetaStrings.likePost;
@@ -71,7 +96,7 @@ class PostRepository {
         "Authorization": "Token " + authRepository.accessToken!,
         "Content-type": "application/json"
       };
-      var params = {"pk": post.id};
+      var params = {"pk": post.pk};
       log(headers.toString());
       try {
         String url = MetaStrings.baseUrl + MetaStrings.unLikePost;
@@ -83,7 +108,7 @@ class PostRepository {
         if (response.statusCode == 200) {
           return true;
         } else {
-          throw jsonDecode(response.body)["detail"];
+          throw jsonDecode(response.body);
         }
       } catch (e) {
         rethrow;
@@ -93,31 +118,32 @@ class PostRepository {
     }
   }
 
-  createPost(Post post) async {
-    try {
-      var headers = {
+  createPost(CreatePostModel post) async {
+      try { var headers = {
         "Authorization": "Token " + authRepository.accessToken!,
         "Content-type": "application/json"
       };
-      var params = post;
-      log(headers.toString());
-      try {
-        String url = MetaStrings.baseUrl + MetaStrings.getPosts;
-        log(url);
 
-        var response = await http.post(Uri.parse(url),
-            headers: headers, body: jsonEncode(params));
-        log(response.body);
-        if (response.statusCode == 200) {
+      log(headers.toString());
+      final dio = Dio();
+        String url = MetaStrings.baseUrl + MetaStrings.getPosts;
+        FormData formData = FormData.fromMap({
+          "action": post.action,
+          "description": "",
+          "postUrl": await MultipartFile.fromFile(
+            post.postUrl.path,
+          )
+        });
+        var response = await dio.post(url, data: formData,options: Options(headers: headers));
+        if (response.statusCode == 200 || response.statusCode == 201) {
           return true;
         } else {
-          throw jsonDecode(response.body)["detail"];
+          log("errorr ${response.data}");
+          throw jsonDecode(response.data);
         }
       } catch (e) {
+        log(e.toString());
         rethrow;
       }
-    } catch (e) {
-      rethrow;
-    }
   }
 }

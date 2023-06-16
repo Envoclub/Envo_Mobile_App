@@ -286,7 +286,7 @@ class ProfileView extends GetView<ProfileController> {
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: () {
-                              Get.to(() => PostEnlargedView());
+                              // Get.to(() => PostEnlargedView());
                             },
                             child: Container(
                               decoration: BoxDecoration(

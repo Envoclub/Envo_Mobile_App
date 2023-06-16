@@ -47,7 +47,7 @@ class CreatePostView extends GetView<CreatePostController> {
                                     child: Text(
                                         controller.selectedAction.value != null
                                             ? controller
-                                                .selectedAction.value!.name
+                                                .selectedAction.value!.action??''
                                             : "",
                                         style: GoogleFonts.sourceCodePro(
                                             fontSize: 12,
@@ -62,7 +62,9 @@ class CreatePostView extends GetView<CreatePostController> {
                         ),
                       ),
                     ),
-                    CustomButton(handler: controller.handlePost, label: "Post")
+                    CustomButton(
+                      loading: controller.loading.value,
+                      handler: controller.handlePost, label: "Post")
                   ],
                 )
               ],
