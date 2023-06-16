@@ -10,15 +10,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../models/action_model.dart';
 import '../../utils/meta_colors.dart';
 
 class CreatePostController extends GetxController {
+  CreatePostController(this.pickVideo);
   static CreatePostController to = Get.find<CreatePostController>();
   PostRepository postRepository = HomeController.to.postRepository;
   ImagePicker picker = ImagePicker();
-  Rxn<bool> pickVideo = Rxn(false);
+  bool pickVideo = false;
   Rxn<XFile?> image = Rxn();
   Rxn<bool> loading = Rxn(false);
   Rxn<PostActions?> selectedAction = Rxn();
@@ -26,12 +28,14 @@ class CreatePostController extends GetxController {
     Action(name: "Plant A tree", id: "1"),
     Action(name: "CarPool", id: "2")
   ];
+  VideoPlayerController? controller;
 
   getImage() async {
     try {
-  
-
-      image.value = await picker.pickImage(source: ImageSource.camera);
+      image.value = pickVideo
+          ? await picker.pickVideo(
+              source: ImageSource.camera, maxDuration: Duration(seconds: 10))
+          : await picker.pickImage(source: ImageSource.camera);
       if (image.value != null) {
         selectedAction.value = await Get.dialog<PostActions>(Material(
           child: Padding(
@@ -114,6 +118,14 @@ class CreatePostController extends GetxController {
             ),
           ),
         ));
+        if (pickVideo) {
+          controller = VideoPlayerController.file(File(image.value!.path));
+
+          controller?.addListener(() {});
+          controller?.setLooping(true);
+          controller?.initialize().then((_) {});
+          controller?.play();
+        }
       }
     } catch (e) {
       showSnackBar(e.toString());
@@ -124,7 +136,14 @@ class CreatePostController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     getImage();
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 
   void handlePost() async {

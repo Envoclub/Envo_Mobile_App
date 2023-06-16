@@ -31,12 +31,27 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MetaColors.primaryColor,
-        onPressed: () {
-          Get.to(() => CreatePostView(), binding: CreatePostBinding());
-        },
-        child: Icon(Icons.camera_alt_outlined),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            backgroundColor: MetaColors.primaryColor,
+            onPressed: () {
+              Get.to(() => CreatePostView(), binding: CreatePostBinding(false));
+            },
+            child: Icon(Icons.camera_alt_outlined),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            backgroundColor: MetaColors.primaryColor,
+            onPressed: () {
+              Get.to(() => CreatePostView(), binding: CreatePostBinding(true));
+            },
+            child: Icon(Icons.video_call_sharp),
+          ),
+        ],
       ),
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),
       body: Obx(
@@ -45,7 +60,7 @@ class HomeView extends GetView<HomeController> {
               ? Center(
                   child: Container(child: PostsView()),
                 )
-              :controller.currentIndex.value == 1
+              : controller.currentIndex.value == 1
                   ? RewardsView()
                   : controller.currentIndex.value == 2
                       ? Center(child: LeaderBoardView())
@@ -313,7 +328,6 @@ class CustomBottomNav extends GetView<HomeController> {
                     child: AnimatedContainer(
                       curve: Curves.bounceInOut,
                       duration: Duration(milliseconds: 200),
-                     
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SvgPicture.asset(

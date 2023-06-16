@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../utils/meta_colors.dart';
 import 'controller.dart';
@@ -19,14 +20,28 @@ class CreatePostView extends GetView<CreatePostController> {
         child: Obx(() => Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                Container(color: Colors.black,
+                Container(
+                  color: Colors.black,
                   height: double.maxFinite,
                   width: double.maxFinite,
                   child: controller.image.value != null
-                      ? Image.file(
-                          File(controller.image.value!.path),
-                        
-                        )
+                      ? controller.pickVideo
+                          ? Container(
+                              child: AspectRatio(
+                                aspectRatio:
+                                    MediaQuery.of(context).size.aspectRatio,
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: <Widget>[
+                                    if(controller.controller!=null)
+                                    VideoPlayer(controller.controller!),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Image.file(
+                              File(controller.image.value!.path),
+                            )
                       : SizedBox.shrink(),
                 ),
                 Column(
@@ -46,8 +61,9 @@ class CreatePostView extends GetView<CreatePostController> {
                                   Expanded(
                                     child: Text(
                                         controller.selectedAction.value != null
-                                            ? controller
-                                                .selectedAction.value!.action??''
+                                            ? controller.selectedAction.value!
+                                                    .action ??
+                                                ''
                                             : "",
                                         style: GoogleFonts.sourceCodePro(
                                             fontSize: 12,
@@ -63,8 +79,9 @@ class CreatePostView extends GetView<CreatePostController> {
                       ),
                     ),
                     CustomButton(
-                      loading: controller.loading.value,
-                      handler: controller.handlePost, label: "Post")
+                        loading: controller.loading.value,
+                        handler: controller.handlePost,
+                        label: "Post")
                   ],
                 )
               ],
