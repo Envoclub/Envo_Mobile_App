@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../utils/custom_slider.dart';
 import '../../utils/meta_assets.dart';
@@ -34,7 +35,8 @@ class PostsView extends GetView<PostsController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                          backgroundImage: CachedNetworkImageProvider(AuthController.to.user.value!.photoUrl),
+                          backgroundImage: CachedNetworkImageProvider(
+                              AuthController.to.user.value!.photoUrl),
                           backgroundColor: MetaColors.primaryColor,
                           radius: 15,
                         ),
@@ -84,17 +86,30 @@ class PostTile extends StatefulWidget {
 class _PostTileState extends State<PostTile>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
+  late VideoPlayerController _controller;
+
   @override
   void initState() {
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
     )..forward();
+    if (widget.post.postUrl!.contains(".mp4")) {
+      _controller = VideoPlayerController.network(widget.post.postUrl!);
+
+      _controller.addListener(() {
+        setState(() {});
+      });
+      _controller.setLooping(true);
+      _controller.initialize().then((_) => setState(() {}));
+      _controller.play();
+    }
   }
 
   @override
   void dispose() {
     _animationController!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -137,7 +152,8 @@ class _PostTileState extends State<PostTile>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(widget.post.photoUrl),
+                            backgroundImage: CachedNetworkImageProvider(
+                                widget.post.photoUrl),
                             radius: 15,
                             backgroundColor: MetaColors.primaryColor,
                           ),
@@ -224,11 +240,13 @@ class _PostTileState extends State<PostTile>
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                      child: CachedNetworkImage(
-                    imageUrl: widget.post.postUrl!,
-                    fit: BoxFit.cover,
-                    width: double.maxFinite,
-                  )),
+                      child: widget.post.postUrl!.contains(".mp4")
+                          ? VideoPlayer(_controller)
+                          : CachedNetworkImage(
+                              imageUrl: widget.post.postUrl!,
+                              fit: BoxFit.cover,
+                              width: double.maxFinite,
+                            )),
                 )),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
@@ -256,14 +274,14 @@ class _PostTileState extends State<PostTile>
                               children: [
                                 Icon(
                                   CupertinoIcons.hand_thumbsup_fill,
-                                  color:widget.post.likes?.firstWhereOrNull(
-                                            (element) =>
-                                                element.usernames ==
-                                                AuthController
-                                                    .to.user.value!.username) ==
-                                        null
-                                    ? Colors.grey
-                                    : Colors.amberAccent,
+                                  color: widget.post.likes?.firstWhereOrNull(
+                                              (element) =>
+                                                  element.usernames ==
+                                                  AuthController.to.user.value!
+                                                      .username) ==
+                                          null
+                                      ? Colors.grey
+                                      : Colors.amberAccent,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0)

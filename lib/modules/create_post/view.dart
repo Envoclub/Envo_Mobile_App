@@ -30,13 +30,10 @@ class CreatePostView extends GetView<CreatePostController> {
                               child: AspectRatio(
                                 aspectRatio:
                                     MediaQuery.of(context).size.aspectRatio,
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: <Widget>[
-                                    if(controller.controller!=null)
-                                    VideoPlayer(controller.controller!),
-                                  ],
-                                ),
+                                child: controller.controller.value != null
+                                    ? Obx(() => VideoPlayer(
+                                        controller.controller.value!))
+                                    : SizedBox.shrink(),
                               ),
                             )
                           : Image.file(

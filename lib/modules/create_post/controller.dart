@@ -28,7 +28,7 @@ class CreatePostController extends GetxController {
     Action(name: "Plant A tree", id: "1"),
     Action(name: "CarPool", id: "2")
   ];
-  VideoPlayerController? controller;
+  Rxn<VideoPlayerController?> controller = Rxn();
 
   getImage() async {
     try {
@@ -119,12 +119,13 @@ class CreatePostController extends GetxController {
           ),
         ));
         if (pickVideo) {
-          controller = VideoPlayerController.file(File(image.value!.path));
+          controller.value =
+              VideoPlayerController.file(File(image.value!.path));
 
-          controller?.addListener(() {});
-          controller?.setLooping(true);
-          controller?.initialize().then((_) {});
-          controller?.play();
+          controller.value?.addListener(() {});
+          controller.value?.setLooping(true);
+          controller.value?.initialize().then((_) {});
+          controller.value?.play();
         }
       }
     } catch (e) {
@@ -142,8 +143,16 @@ class CreatePostController extends GetxController {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.value?.dispose();
     super.dispose();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+
+    controller.value?.dispose();
+    super.onClose();
   }
 
   void handlePost() async {
