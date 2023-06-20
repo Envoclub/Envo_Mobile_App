@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:envo_mobile/modules/home/controller.dart';
 import 'package:envo_mobile/modules/profile_module/controller.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
@@ -30,13 +31,14 @@ class SettingsView extends GetView<ProfileController> {
             children: [
               Center(
                 child: CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(controller.data.value?.photoUrl??''),
+                  backgroundImage: CachedNetworkImageProvider(
+                      controller.data.value?.photoUrl ?? ''),
                   radius: 50,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(controller.data.value?.username??'',
+                child: Text(controller.data.value?.username ?? '',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -44,7 +46,7 @@ class SettingsView extends GetView<ProfileController> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0).copyWith(top: 0),
-                child: Text(controller.data.value?.email??'',
+                child: Text(controller.data.value?.email ?? '',
                     style: TextStyle(
                       color: MetaColors.tertiaryTextColor,
                       fontSize: 10,
@@ -224,10 +226,13 @@ class SettingsView extends GetView<ProfileController> {
                   ),
                 ),
               ),
-              CustomButton(handler: () {
-                AuthController.to.logout();
-                Get.back();
-              }, label: "Log Out")
+              CustomButton(
+                  handler: () {
+                    AuthController.to.logout();
+                    HomeController.to.currentIndex.value = 0;
+                    Get.back();
+                  },
+                  label: "Log Out")
             ],
           ),
         ),
