@@ -41,16 +41,16 @@ class HomeView extends GetView<HomeController> {
             },
             child: Icon(Icons.camera_alt_outlined),
           ),
-          // SizedBox(
-          //   height: 10,
-          // ),
-          // FloatingActionButton(
-          //   backgroundColor: MetaColors.primaryColor,
-          //   onPressed: () {
-          //     Get.to(() => CreatePostView(), binding: CreatePostBinding(true));
-          //   },
-          //   child: Icon(Icons.video_call_sharp),
-          // ),
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            backgroundColor: MetaColors.primaryColor,
+            onPressed: () {
+              Get.to(() => CreatePostView(), binding: CreatePostBinding(true));
+            },
+            child: Icon(Icons.video_call_sharp),
+          ),
         ],
       ),
       bottomNavigationBar: ClipRRect(child: CustomBottomNav()),

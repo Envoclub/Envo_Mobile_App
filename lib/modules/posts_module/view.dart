@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/models/posts.dart';
 import 'package:envo_mobile/modules/home/controller.dart';
 import 'package:envo_mobile/modules/posts_module/controller.dart';
+import 'package:envo_mobile/utils/constants.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -33,8 +34,8 @@ class PostsView extends GetView<PostsController> {
                   title: Row(
                     children: [
                       InkWell(
-                        onTap: (){
-                           HomeController.to.currentIndex.value = 3;
+                        onTap: () {
+                          HomeController.to.currentIndex.value = 3;
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -95,11 +96,12 @@ class _PostTileState extends State<PostTile>
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
     )..forward();
-    if (widget.post.postUrl!.contains(".mp4")) {
+    if (isVideo(widget.post.postUrl!)) {
       _controller = VideoPlayerController.network(widget.post.postUrl!);
 
       _controller?.addListener(() {
@@ -107,9 +109,11 @@ class _PostTileState extends State<PostTile>
       });
       _controller?.setLooping(true);
       _controller?.initialize().then((_) => setState(() {}));
-      _controller?.play();
     }
   }
+
+  bool isVideo(String url) =>
+      video_types.contains(url.split(".").last.toString());
 
   @override
   void dispose() {
@@ -168,8 +172,7 @@ class _PostTileState extends State<PostTile>
                           children: [
                             Text(
                               widget.post.myUsername ?? '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                             Text(
                               widget.post.description ?? '',
@@ -245,8 +248,16 @@ class _PostTileState extends State<PostTile>
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                      child: widget.post.postUrl!.contains(".mp4")
-                          ? VideoPlayer(_controller!)
+                      child: isVideo(widget.post.postUrl!)
+                          ? Focus(
+                              onFocusChange: (value) {
+                                if (value) {
+                                  _controller?.play();
+                                } else {
+                                  _controller?.pause();
+                                }
+                              },
+                              child: VideoPlayer(_controller!))
                           : CachedNetworkImage(
                               imageUrl: widget.post.postUrl!,
                               fit: BoxFit.cover,
@@ -365,6 +376,31 @@ class PostEnlargedView extends StatefulWidget {
 }
 
 class _PostEnlargedViewState extends State<PostEnlargedView> {
+  VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    if (isVideo(widget.post.postUrl!)) {
+      _controller = VideoPlayerController.network(widget.post.postUrl!);
+
+      _controller?.addListener(() {
+        setState(() {});
+      });
+      _controller?.setLooping(true);
+      _controller?.initialize().then((_) => setState(() {}));
+      _controller?.play();
+    }
+  }
+
+  bool isVideo(String url) =>
+      video_types.contains(url.split(".").last.toString());
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -469,11 +505,13 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
-                    child: CachedNetworkImage(
-                  imageUrl: widget.post.postUrl!,
-                  fit: BoxFit.cover,
-                  width: double.maxFinite,
-                )),
+                    child: isVideo(widget.post.postUrl!)
+                        ? VideoPlayer(_controller!)
+                        : CachedNetworkImage(
+                            imageUrl: widget.post.postUrl!,
+                            fit: BoxFit.cover,
+                            width: double.maxFinite,
+                          )),
               )),
               Padding(
                 padding: const EdgeInsets.all(18.0),
