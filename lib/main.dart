@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          textTheme: GoogleFonts.ubuntuTextTheme(),
+          textTheme: GoogleFonts.rubikTextTheme(),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.transparent),
           iconTheme: IconThemeData(color: Colors.red),

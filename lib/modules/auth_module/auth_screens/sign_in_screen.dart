@@ -23,7 +23,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-  
     return Obx(
       () => Container(
           child: Form(
@@ -44,27 +43,28 @@ class _SignInScreenState extends State<SignInScreen> {
                     //       title: "Enter your Email and Password to Sign In"),
                     // ),
                     SizedBox(height: MediaQuery.of(context).size.height * .05),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            MetaAssets.logo,
-                            height: 50,
-                            width: 50,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        TitleWidget(
-                          title: "envo",
-                          isLogo: true,
-                        )
-                      ],
-                    ),
-                    SubtitleWidget(title: "Help Earth, Get Rewarded"),
+                    Image.asset(MetaAssets.envoBlueLogo, height: 80,),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     ClipRRect(
+                    //       borderRadius: BorderRadius.circular(8),
+                    //       child: Image.asset(
+                    //         MetaAssets.logo,
+                    //         height: 50,
+                    //         width: 50,
+                    //       ),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 10,
+                    //     ),
+                    //     TitleWidget(
+                    //       title: "envo",
+                    //       isLogo: true,
+                    //     )
+                    //   ],
+                    // ),
+                    // SubtitleWidget(title: "Help Earth, Get Rewarded"),
                     SizedBox(height: MediaQuery.of(context).size.height * .1),
                     FormFieldWidget(
                       enabled: !AuthController.to.authLoading.value,

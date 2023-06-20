@@ -62,7 +62,7 @@ class CreatePostView extends GetView<CreatePostController> {
                                                     .action ??
                                                 ''
                                             : "",
-                                        style: GoogleFonts.sourceCodePro(
+                                        style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w700)),
                                   ),

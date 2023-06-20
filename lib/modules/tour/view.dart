@@ -48,42 +48,43 @@ class _TourViewState extends State<TourView> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         .05),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        MetaAssets.logo,
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "envo",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 50,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white),
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Help Earth, Get Rewards",
-                                      style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   children: [
+                                //     ClipRRect(
+                                //       borderRadius: BorderRadius.circular(8),
+                                //       child: Image.asset(
+                                //         MetaAssets.logo,
+                                //         height: 50,
+                                //         width: 50,
+                                //       ),
+                                //     ),
+                                //     SizedBox(
+                                //       width: 10,
+                                //     ),
+                                //     Text(
+                                //       "envo",
+                                //       style: TextStyle(
+                                //           fontSize: 50,
+                                //           fontWeight: FontWeight.w500,
+                                //           color: Colors.white),
+                                //     )
+                                //   ],
+                                // ),
+                                Image.asset(MetaAssets.envoWhiteLogo),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: Text(
+                                //       "Help Earth, Get Rewards",
+                                //       style: TextStyle(
+                                //           color: Colors.white.withOpacity(0.7),
+                                //           fontWeight: FontWeight.w500,
+                                //           fontSize: 13),
+                                //     ),
+                                //   ),
+                                // ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         .1),

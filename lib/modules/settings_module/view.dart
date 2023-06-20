@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:envo_mobile/modules/profile_module/controller.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../utils/meta_colors.dart';
 import '../auth_module/auth_screens/auth_helper_widgets.dart';
 
-class SettingsView extends GetView {
+class SettingsView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -28,22 +30,22 @@ class SettingsView extends GetView {
             children: [
               Center(
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(MetaAssets.dummProfile),
+                  backgroundImage: CachedNetworkImageProvider(controller.data.value?.photoUrl??''),
                   radius: 50,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Saransh Hasija",
-                    style: GoogleFonts.poppins(
+                child: Text(controller.data.value?.username??'',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0).copyWith(top: 0),
-                child: Text("saransh@envo.club",
-                    style: GoogleFonts.poppins(
+                child: Text(controller.data.value?.email??'',
+                    style: TextStyle(
                       color: MetaColors.tertiaryTextColor,
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
@@ -74,7 +76,7 @@ class SettingsView extends GetView {
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("My Coins",
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(
                                         color: MetaColors.tertiaryTextColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -93,8 +95,8 @@ class SettingsView extends GetView {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Text("200",
-                                    style: GoogleFonts.monda(
+                                Text(controller.data.value!.coins.toString(),
+                                    style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
@@ -131,7 +133,7 @@ class SettingsView extends GetView {
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("Invite your Colleague",
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(
                                         color: MetaColors.tertiaryTextColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -154,7 +156,7 @@ class SettingsView extends GetView {
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("History",
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(
                                         color: MetaColors.tertiaryTextColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -177,7 +179,7 @@ class SettingsView extends GetView {
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("Reset Password",
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(
                                         color: MetaColors.tertiaryTextColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -200,7 +202,7 @@ class SettingsView extends GetView {
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text("Help",
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(
                                         color: MetaColors.tertiaryTextColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,

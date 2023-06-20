@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../models/rewards_model.dart';
 import '../../repositories/post_repository.dart';
 import '../../utils/helper_widgets.dart';
+import '../auth_module/controller.dart';
 import '../home/controller.dart';
 
 class RewardsController extends GetxController {

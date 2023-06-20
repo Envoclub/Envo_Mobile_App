@@ -147,7 +147,7 @@ class MyRankTile extends GetView<LeaderboardController> {
                               width: 8,
                             ),
                             Text("${controller.currentData.value!.reward}",
-                                style: GoogleFonts.monda(
+                                style: TextStyle(
                                   color: Colors.black.withOpacity(0.7),
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -277,7 +277,7 @@ class LeaderboardTile extends StatelessWidget {
                             width: 8,
                           ),
                           Text(data.reward.toString(),
-                              style: GoogleFonts.monda(
+                              style: TextStyle(
                                 color: Colors.black.withOpacity(0.7),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,

@@ -52,7 +52,7 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: GoogleFonts.poppins(
+      style: TextStyle(
           fontSize: isLogo ? 50 : 25,
           fontWeight: FontWeight.w500,
           color: MetaColors.secondaryColor),

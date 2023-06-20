@@ -97,7 +97,7 @@ class CreatePostController extends GetxController {
                                               Text(
                                                 e.action.toString(),
                                                 style:
-                                                    GoogleFonts.sourceCodePro(
+                                                    TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w700),

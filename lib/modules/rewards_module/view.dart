@@ -116,7 +116,7 @@ class RewardTile extends StatelessWidget {
                           width: 8,
                         ),
                         Text(data.coinrequired.toString(),
-                            style: GoogleFonts.monda(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -249,7 +249,7 @@ class RewardDetailedView extends GetView {
                                       width: 8,
                                     ),
                                     Text(data.coinrequired.toString(),
-                                        style: GoogleFonts.monda(
+                                        style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,

@@ -32,19 +32,24 @@ class PostsView extends GetView<PostsController> {
                   leadingWidth: 0,
                   title: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundImage: CachedNetworkImageProvider(
-                              AuthController.to.user.value!.photoUrl!),
-                          backgroundColor: MetaColors.primaryColor,
-                          radius: 15,
+                      InkWell(
+                        onTap: (){
+                           HomeController.to.currentIndex.value = 3;
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(
+                                AuthController.to.user.value!.photoUrl!),
+                            backgroundColor: MetaColors.primaryColor,
+                            radius: 15,
+                          ),
                         ),
                       ),
                       RichText(
                           text: TextSpan(
                               text: "Hi ",
-                              style: GoogleFonts.sourceCodePro(
+                              style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
                                   color: MetaColors.secondaryColor),
@@ -52,7 +57,7 @@ class PostsView extends GetView<PostsController> {
                             TextSpan(
                                 text:
                                     "${AuthController.to.user.value!.username ?? ''}",
-                                style: GoogleFonts.sourceCodePro(
+                                style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 16,
                                     color: MetaColors.secondaryColor))
@@ -163,12 +168,12 @@ class _PostTileState extends State<PostTile>
                           children: [
                             Text(
                               widget.post.myUsername ?? '',
-                              style: GoogleFonts.montserrat(
+                              style: TextStyle(
                                   fontWeight: FontWeight.w600),
                             ),
                             Text(
                               widget.post.description ?? '',
-                              style: GoogleFonts.montserrat(
+                              style: TextStyle(
                                   color: MetaColors.tertiaryTextColor,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600),
@@ -199,7 +204,7 @@ class _PostTileState extends State<PostTile>
                                                   widget.post.action)
                                               ?.action ??
                                           '',
-                                      style: GoogleFonts.sourceCodePro(
+                                      style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -335,7 +340,7 @@ class _PostTileState extends State<PostTile>
                 //         ),
                 //         Text(
                 //           "Planted a tree",
-                //           style: GoogleFonts.sourceCodePro(
+                //           style: TextStyle(
                 //               fontSize: 18, fontWeight: FontWeight.w700),
                 //         ),
                 //       ],
@@ -389,13 +394,13 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
                         children: [
                           Text(
                             widget.post.myUsername ?? "",
-                            style: GoogleFonts.montserrat(
+                            style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
                             widget.post.description ?? "",
-                            style: GoogleFonts.montserrat(
+                            style: TextStyle(
                                 color: Colors.white.withOpacity(0.8),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600),
@@ -419,7 +424,7 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
                                                 widget.post.action)
                                             ?.action ??
                                         '',
-                                    style: GoogleFonts.sourceCodePro(
+                                    style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700),
@@ -558,7 +563,7 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
               //         ),
               //         Text(
               //           "Planted a tree",
-              //           style: GoogleFonts.sourceCodePro(
+              //           style: TextStyle(
               //               fontSize: 18, fontWeight: FontWeight.w700),
               //         ),
               //       ],

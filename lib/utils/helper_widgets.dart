@@ -133,16 +133,16 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 }
 
-SnackbarController showSnackBar(String message, {bool isError = true}) {
-  return Get.showSnackbar(GetSnackBar(
-    duration: Duration(seconds: 2),
-    backgroundColor: Colors.transparent,
-    messageText: MessageWidget(
-      isError: isError,
-      message: message,
-    ),
-  ));
-}
+// SnackbarController showSnackBar(String message, {bool isError = true}) {
+//   return Get.showSnackbar(GetSnackBar(
+//     duration: Duration(seconds: 2),
+//     backgroundColor: Colors.transparent,
+//     messageText: MessageWidget(
+//       isError: isError,
+//       message: message,
+//     ),
+//   ));
+// }
 
 String formatDuration(Duration d) {
   var seconds = d.inSeconds;
