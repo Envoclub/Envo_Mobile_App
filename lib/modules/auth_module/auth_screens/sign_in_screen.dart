@@ -23,7 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    HomeBinding().dependencies();
+  
     return Obx(
       () => Container(
           child: Form(

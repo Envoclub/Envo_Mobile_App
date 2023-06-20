@@ -1,84 +1,65 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// To parse this JSON data, do
+//
+//     final userModel = userModelFromJson(jsonString);
+
 import 'dart:convert';
 
+List<UserModel> userModelFromJson(String str) =>
+    List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
+
+String userModelToJson(List<UserModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class UserModel {
-  String email;
+  int? id;
+  String? username;
+  String? bio;
+  String? photoUrl;
+  int? followersCount;
+  int? followCount;
+  int? postCount;
+  String? email;
+  String? phoneNumber;
+  int? Co2;
+  int? coins;
 
-  String phone_number;
-  String username;
-  String bio;
-  String photoUrl;
-  UserModel({
-    required this.email,
-    required this.phone_number,
-    required this.username,
-    required this.bio,
-    required this.photoUrl,
-  });
+  UserModel(
+      {this.id,
+      this.username,
+      this.bio,
+      this.photoUrl,
+      this.followersCount,
+      this.followCount,
+      this.postCount,
+      this.email,
+      this.phoneNumber,
+      this.Co2,
+      this.coins});
 
-  UserModel copyWith({
-    String? email,
-    String? phone_number,
-    String? username,
-    String? bio,
-    String? photoUrl,
-  }) {
-    return UserModel(
-      email: email ?? this.email,
-      phone_number: phone_number ?? this.phone_number,
-      username: username ?? this.username,
-      bio: bio ?? this.bio,
-      photoUrl: photoUrl ?? this.photoUrl,
-    );
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+      id: json["id"],
+      username: json["username"],
+      bio: json["bio"],
+      photoUrl: json["photoUrl"],
+      followersCount: json["followers_count"],
+      followCount: json["follow_count"],
+      postCount: json["post_count"],
+      email: json["email"],
+      phoneNumber: json["phone_number"],
+      Co2: json["Co2"],
+      coins: json["coins"]??0);
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'email': email,
-      'phone_number': phone_number,
-      'username': username,
-      'bio': bio,
-      'photoUrl': photoUrl,
-    };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      email: map['email'] as String,
-      phone_number: map['phone_number'] as String,
-      username: map['username'] as String,
-      bio: map['bio'] as String,
-      photoUrl: map['photoUrl'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'UserModel(email: $email, phone_number: $phone_number, username: $username, bio: $bio, photoUrl: $photoUrl)';
-  }
-
-  @override
-  bool operator ==(covariant UserModel other) {
-    if (identical(this, other)) return true;
-
-    return other.email == email &&
-        other.phone_number == phone_number &&
-        other.username == username &&
-        other.bio == bio &&
-        other.photoUrl == photoUrl;
-  }
-
-  @override
-  int get hashCode {
-    return email.hashCode ^
-        phone_number.hashCode ^
-        username.hashCode ^
-        bio.hashCode ^
-        photoUrl.hashCode;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "username": username,
+        "bio": bio,
+        "photoUrl": photoUrl,
+        "followers_count": followersCount,
+        "follow_count": followCount,
+        "post_count": postCount,
+        "email": email,
+        "phone_number": phoneNumber,
+        "Co2": Co2,
+        "coins": coins
+      };
 }

@@ -36,7 +36,7 @@ class PostsView extends GetView<PostsController> {
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
                           backgroundImage: CachedNetworkImageProvider(
-                              AuthController.to.user.value!.photoUrl),
+                              AuthController.to.user.value!.photoUrl!),
                           backgroundColor: MetaColors.primaryColor,
                           radius: 15,
                         ),
@@ -86,7 +86,7 @@ class PostTile extends StatefulWidget {
 class _PostTileState extends State<PostTile>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
 
   @override
   void initState() {
@@ -97,19 +97,19 @@ class _PostTileState extends State<PostTile>
     if (widget.post.postUrl!.contains(".mp4")) {
       _controller = VideoPlayerController.network(widget.post.postUrl!);
 
-      _controller.addListener(() {
+      _controller?.addListener(() {
         setState(() {});
       });
-      _controller.setLooping(true);
-      _controller.initialize().then((_) => setState(() {}));
-      _controller.play();
+      _controller?.setLooping(true);
+      _controller?.initialize().then((_) => setState(() {}));
+      _controller?.play();
     }
   }
 
   @override
   void dispose() {
     _animationController!.dispose();
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -241,7 +241,7 @@ class _PostTileState extends State<PostTile>
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
                       child: widget.post.postUrl!.contains(".mp4")
-                          ? VideoPlayer(_controller)
+                          ? VideoPlayer(_controller!)
                           : CachedNetworkImage(
                               imageUrl: widget.post.postUrl!,
                               fit: BoxFit.cover,

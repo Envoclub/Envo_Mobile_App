@@ -5,6 +5,8 @@ import 'package:envo_mobile/models/posts.dart';
 import 'package:dio/dio.dart';
 
 import '../models/action_model.dart';
+import '../models/leaderboard_model.dart';
+import '../models/rewards_model.dart';
 import '../utils/meta_strings.dart';
 import 'auth_repository.dart';
 import 'package:http/http.dart' as http;
@@ -42,25 +44,22 @@ class PostRepository {
         "Content-type": "application/json"
       };
       log(headers.toString());
-      try {
-        String url = MetaStrings.baseUrl + MetaStrings.getPosts;
+      String url = MetaStrings.baseUrl + MetaStrings.getPosts;
 
-        var response = await http.get(Uri.parse(url), headers: headers);
+      var response = await http.get(Uri.parse(url), headers: headers);
 
-        if (response.statusCode == 200) {
-          return (jsonDecode(response.body) as List)
-              .map((e) => Post.fromJson(e))
-              .toList();
-        } else {
-          throw jsonDecode(response.body)["detail"];
-        }
-      } catch (e) {
-        rethrow;
+      if (response.statusCode == 200) {
+        return (jsonDecode(response.body) as List)
+            .map((e) => Post.fromJson(e))
+            .toList();
+      } else {
+        throw jsonDecode(response.body)["detail"];
       }
     } catch (e) {
       rethrow;
     }
   }
+
   Future<List<Post>> getMyPosts() async {
     try {
       var headers = {
@@ -68,26 +67,21 @@ class PostRepository {
         "Content-type": "application/json"
       };
       log(headers.toString());
-      try {
-        String url = MetaStrings.baseUrl + MetaStrings.getMyPosts;
+      String url = MetaStrings.baseUrl + MetaStrings.getMyPosts;
 
-        var response = await http.get(Uri.parse(url), headers: headers);
+      var response = await http.get(Uri.parse(url), headers: headers);
 
-        if (response.statusCode == 200) {
-          return (jsonDecode(response.body) as List)
-              .map((e) => Post.fromJson(e))
-              .toList();
-        } else {
-          throw jsonDecode(response.body)["detail"];
-        }
-      } catch (e) {
-        rethrow;
+      if (response.statusCode == 200) {
+        return (jsonDecode(response.body) as List)
+            .map((e) => Post.fromJson(e))
+            .toList();
+      } else {
+        throw jsonDecode(response.body)["detail"];
       }
     } catch (e) {
       rethrow;
     }
   }
-
 
   like(Post post) async {
     try {
@@ -97,20 +91,16 @@ class PostRepository {
       };
       var params = {"pk": post.pk};
       log(headers.toString());
-      try {
-        String url = MetaStrings.baseUrl + MetaStrings.likePost;
-        log(url);
+      String url = MetaStrings.baseUrl + MetaStrings.likePost;
+      log(url);
 
-        var response = await http.post(Uri.parse(url),
-            headers: headers, body: jsonEncode(params));
-        log(response.body);
-        if (response.statusCode == 200) {
-          return true;
-        } else {
-          throw jsonDecode(response.body)["detail"];
-        }
-      } catch (e) {
-        rethrow;
+      var response = await http.post(Uri.parse(url),
+          headers: headers, body: jsonEncode(params));
+      log(response.body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)["detail"];
       }
     } catch (e) {
       rethrow;
@@ -146,31 +136,98 @@ class PostRepository {
   }
 
   createPost(CreatePostModel post) async {
-      try { var headers = {
+    try {
+      var headers = {
         "Authorization": "Token " + authRepository.accessToken!,
         "Content-type": "application/json"
       };
 
       log(headers.toString());
       final dio = Dio();
-        String url = MetaStrings.baseUrl + MetaStrings.getPosts;
-        FormData formData = FormData.fromMap({
-          "action": post.action,
-          "description": "",
-          "postUrl": await MultipartFile.fromFile(
-            post.postUrl.path,
-          )
-        });
-        var response = await dio.post(url, data: formData,options: Options(headers: headers));
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          return true;
-        } else {
-          log("errorr ${response.data}");
-          throw jsonDecode(response.data);
-        }
-      } catch (e) {
-        log(e.toString());
-        rethrow;
+      String url = MetaStrings.baseUrl + MetaStrings.getPosts;
+      FormData formData = FormData.fromMap({
+        "action": post.action,
+        "description": "",
+        "postUrl": await MultipartFile.fromFile(
+          post.postUrl.path,
+        )
+      });
+      var response = await dio.post(url,
+          data: formData, options: Options(headers: headers));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        log("errorr ${response.data}");
+        throw jsonDecode(response.data);
       }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<List<LeaderboardModel>> getLeaderBoard() async {
+    try {
+      var headers = {
+        "Authorization": "Token " + authRepository.accessToken!,
+        "Content-type": "application/json"
+      };
+      log(headers.toString());
+      String url = MetaStrings.baseUrl + MetaStrings.getLeaderBoard;
+
+      var response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        return leaderboardModelFromJson(response.body);
+      } else {
+        throw jsonDecode(response.body)["detail"];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<RewardsModel>> getRewardsList() async {
+    try {
+      var headers = {
+        "Authorization": "Token " + authRepository.accessToken!,
+        "Content-type": "application/json"
+      };
+      log(headers.toString());
+
+      String url = MetaStrings.baseUrl + MetaStrings.getRewardsList;
+      log(url);
+      var response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        return rewardsModelFromJson(response.body);
+      } else {
+        throw jsonDecode(response.body)["detail"];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> redeemData(int id) async {
+    try {
+      var headers = {
+        "Authorization": "Token " + authRepository.accessToken!,
+        "Content-type": "application/json"
+      };
+      log(headers.toString());
+
+      String url = "${MetaStrings.baseUrl}${MetaStrings.getRewardsList}/$id/redeem/";
+      log(url);
+      var response = await http.post(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["message"];
+      } else {
+        throw jsonDecode(response.body)["message"];
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }

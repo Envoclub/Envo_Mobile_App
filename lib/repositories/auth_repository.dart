@@ -9,8 +9,8 @@ import '../models/user_model.dart';
 import '../utils/meta_strings.dart';
 
 class AuthRepository {
- String? accessToken;
- String? refreshToken;
+  String? accessToken;
+  String? refreshToken;
   FlutterSecureStorage storage = FlutterSecureStorage();
   initTokens() async {
     accessToken = await storage.read(key: "accessToken");
@@ -27,10 +27,7 @@ class AuthRepository {
 
   login(String email, String password) async {
     var params = {"email": email, "password": password};
-    var headers = {
- 
-      "Content-Type": "application/json"
-    };
+    var headers = {"Content-Type": "application/json"};
     try {
       String url = MetaStrings.baseUrl + MetaStrings.loginEndPoint;
       log(url);
@@ -58,14 +55,16 @@ class AuthRepository {
     };
     log(headers.toString());
     try {
-      String url = MetaStrings.baseUrl + MetaStrings.getUserEndPoint;
+      String url = MetaStrings.baseUrl + MetaStrings.userDetails;
       log(url);
 
       FlutterSecureStorage storage = FlutterSecureStorage();
       var response = await http.get(Uri.parse(url), headers: headers);
       debugPrint(response.body);
       if (response.statusCode == 200) {
-        return UserModel.fromJson(response.body);
+        return userModelFromJson(response.body).first;
+      } else {
+        throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
       rethrow;
