@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/models/posts.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
 import 'package:envo_mobile/modules/home/controller.dart';
@@ -37,100 +38,111 @@ class CreatePostController extends GetxController {
               source: ImageSource.camera, maxDuration: Duration(seconds: 10))
           : await picker.pickImage(source: ImageSource.camera);
       if (image.value != null) {
-        selectedAction.value = await Get.dialog<PostActions>(Material(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      "Which eco-action did you take?",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Expanded(
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        children: HomeController.to.actions.value!
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.back(result: e);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: double.maxFinite,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: MetaColors.primaryColor
-                                                    .withOpacity(0.1),
-                                                spreadRadius: 5,
-                                                offset: Offset(0, 5),
-                                                blurRadius: 10)
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                CupertinoIcons.tree,
-                                                size: 80,
-                                                color: MetaColors
-                                                    .secondaryGradient,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                e.action.toString(),
-                                                style:
-                                                    TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ));
-        if (pickVideo) {
-          controller.value =
-              VideoPlayerController.file(File(image.value!.path));
-
-          controller.value?.addListener(() {});
-          controller.value?.setLooping(true);
-          controller.value?.initialize().then((_) {});
-          controller.value?.play();
-        }
+        await handleImageSelection();
       }
     } catch (e) {
       showSnackBar(e.toString());
     }
+  }
+
+  handleImageSelection() async {
+    if (image.value == null) {
+      showSnackBar("Please select an image or video");
+      return;
+    }
+    selectedAction.value = await getAction();
+    if (pickVideo) {
+      controller.value = VideoPlayerController.file(File(image.value!.path));
+
+      controller.value?.addListener(() {});
+      controller.value?.setLooping(true);
+      controller.value?.initialize().then((_) {});
+      controller.value?.play();
+    }
+  }
+
+  Future<PostActions?> getAction() async {
+    return await Get.dialog<PostActions>(Material(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  "Which eco-action did you take?",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                ),
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: HomeController.to.actions.value!
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.back(result: e);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: MetaColors.primaryColor
+                                                .withOpacity(0.1),
+                                            spreadRadius: 5,
+                                            offset: Offset(0, 5),
+                                            blurRadius: 10)
+                                      ],
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          e.image != null && e.image!.isNotEmpty
+                                              ? CachedNetworkImage(
+                                                  imageUrl: e.image!)
+                                              : Icon(
+                                                  CupertinoIcons.tree,
+                                                  size: 80,
+                                                  color: MetaColors
+                                                      .secondaryGradient,
+                                                ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            e.action.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ));
   }
 
   @override
@@ -157,6 +169,13 @@ class CreatePostController extends GetxController {
 
   void handlePost() async {
     try {
+      if (image.value == null) {
+        showSnackBar("Please select a video or image");
+        return;
+      }
+      if (selectedAction.value == null) {
+        showSnackBar("Please select an eco-action");
+      }
       loading.value = true;
       await postRepository.createPost(CreatePostModel(
           postUrl: File(image.value!.path),

@@ -13,7 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
+import '../../models/posts.dart';
+import '../../utils/constants.dart';
 import '../home/controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -36,7 +39,8 @@ class ProfileView extends GetView<ProfileController> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(controller.data.value?.photoUrl??''),
+                            backgroundImage: CachedNetworkImageProvider(
+                                controller.data.value?.photoUrl ?? ''),
                             backgroundColor: Colors.white,
                           ),
                         ),
@@ -165,7 +169,8 @@ class ProfileView extends GetView<ProfileController> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              controller.data.value!.coins.toString(),
+                                              controller.data.value!.rewards
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700),
@@ -208,7 +213,8 @@ class ProfileView extends GetView<ProfileController> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                             controller.data.value!.postCount.toString(),
+                                              controller.data.value!.postCount
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700),
@@ -251,7 +257,7 @@ class ProfileView extends GetView<ProfileController> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "${controller.data.value?.Co2??''} kG",
+                                              "${controller.data.value?.Co2 ?? ''} kG",
                                               style: TextStyle(
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700),
@@ -293,187 +299,8 @@ class ProfileView extends GetView<ProfileController> {
                           : SliverAnimatedGrid(
                               initialItemCount: controller.posts.value!.length,
                               itemBuilder: (context, index, value) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.to(() => PostEnlargedView(
-                                          controller.posts.value![index]));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: MetaColors.primaryColor
-                                                    .withOpacity(0.1),
-                                                spreadRadius: 5,
-                                                offset: Offset(0, 5),
-                                                blurRadius: 10)
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      child: Center(
-                                          child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              width: double.maxFinite,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  gradient:
-                                                      LinearGradient(colors: [
-                                                    Colors.white,
-                                                    Colors.white,
-                                                    // MetaColors.secondaryGradient
-                                                  ])),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        HomeController.to
-                                                                .actions.value
-                                                                ?.firstWhereOrNull((element) =>
-                                                                    element
-                                                                        .id ==
-                                                                    controller
-                                                                        .posts
-                                                                        .value![
-                                                                            index]
-                                                                        .action)
-                                                                ?.action ??
-                                                            '',
-                                                        style:TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    HomeController.to.actions
-                                                                .value
-                                                                ?.firstWhereOrNull((element) =>
-                                                                    element
-                                                                        .id ==
-                                                                    controller
-                                                                        .posts
-                                                                        .value![
-                                                                            index]
-                                                                        .action) !=
-                                                            null
-                                                        ? CircleAvatar(
-                                                            radius: 7,
-                                                            backgroundImage: CachedNetworkImageProvider(HomeController
-                                                                .to
-                                                                .actions
-                                                                .value!
-                                                                .firstWhere((element) =>
-                                                                    element
-                                                                        .id ==
-                                                                    controller
-                                                                        .posts
-                                                                        .value![
-                                                                            index]
-                                                                        .action)
-                                                                .image!),
-                                                          )
-                                                        : Icon(
-                                                            CupertinoIcons.tree,
-                                                            color: MetaColors
-                                                                .secondaryGradient,
-                                                          ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                              child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: ClipRRect(
-                                                child: CachedNetworkImage(
-                                              imageUrl: controller
-                                                  .posts.value![index].postUrl!,
-                                              fit: BoxFit.cover,
-                                              width: double.maxFinite,
-                                            )),
-                                          )),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        offset: Offset(5, 10),
-                                                        color: MetaColors
-                                                            .secondaryColor
-                                                            .withOpacity(0.1),
-                                                        blurRadius: 10)
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  border: Border.all(
-                                                      color: MetaColors
-                                                          .secondaryColor
-                                                          .withOpacity(0.2))),
-                                              child: Row(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          CupertinoIcons
-                                                              .hand_thumbsup_fill,
-                                                          color: Colors
-                                                              .amberAccent,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .all(8.0)
-                                                                  .copyWith(
-                                                                      top: 0,
-                                                                      bottom:
-                                                                          0),
-                                                          child: Text(
-                                                            controller
-                                                                .posts
-                                                                .value![index]
-                                                                .likeCount
-                                                                .toString(),
-                                                            style:TextStyle(
-                                                                color: MetaColors
-                                                                    .secondaryColor,
-                                                                fontSize: 13),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                    ),
-                                  ),
-                                );
+                                return ProfilePostTile(
+                                    data: controller.posts.value![index]);
                               },
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
@@ -645,5 +472,188 @@ class ProfileView extends GetView<ProfileController> {
     //     ),
     //   ),
     // );
+  }
+}
+
+class ProfilePostTile extends StatefulWidget {
+  const ProfilePostTile({super.key, required this.data});
+  final Post data;
+  @override
+  State<ProfilePostTile> createState() => _ProfilePostTileState();
+}
+
+class _ProfilePostTileState extends State<ProfilePostTile>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _animationController;
+  VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    )..forward();
+    if (isVideo(widget.data.postUrl!)) {
+      _controller = VideoPlayerController.network(widget.data.postUrl!);
+
+      _controller?.addListener(() {
+        setState(() {});
+      });
+      _controller?.setLooping(true);
+      _controller?.initialize().then((_) => setState(() {}));
+    }
+  }
+
+  bool isVideo(String url) =>
+      video_types.contains(url.split(".").last.toString());
+
+  @override
+  void dispose() {
+    _animationController!.dispose();
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          Get.to(() => PostEnlargedView(widget.data));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: MetaColors.primaryColor.withOpacity(0.1),
+                    spreadRadius: 5,
+                    offset: Offset(0, 5),
+                    blurRadius: 10)
+              ],
+              borderRadius: BorderRadius.circular(12)),
+          child: Center(
+              child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(colors: [
+                        Colors.white,
+                        Colors.white,
+                        // MetaColors.secondaryGradient
+                      ])),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            HomeController.to.actions.value
+                                    ?.firstWhereOrNull((element) =>
+                                        element.id == widget.data.action)
+                                    ?.action ??
+                                '',
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        HomeController.to.actions.value?.firstWhereOrNull(
+                                    (element) =>
+                                        element.id == widget.data.action) !=
+                                null
+                            ? CircleAvatar(
+                                radius: 7,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    HomeController.to.actions.value!
+                                        .firstWhere((element) =>
+                                            element.id == widget.data.action)
+                                        .image!),
+                              )
+                            : Icon(
+                                CupertinoIcons.tree,
+                                color: MetaColors.secondaryGradient,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                    child: isVideo(widget.data.postUrl!)
+                        ? Focus(
+                            focusNode: FocusNode(canRequestFocus: true),
+                            onFocusChange: (value) {
+                              if (value) {
+                                _controller?.play();
+                              } else {
+                                _controller?.pause();
+                              }
+                            },
+                            child: VideoPlayer(_controller!))
+                        : CachedNetworkImage(
+                            imageUrl: widget.data.postUrl!,
+                            fit: BoxFit.cover,
+                            width: double.maxFinite,
+                          )),
+              )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(5, 10),
+                            color: MetaColors.secondaryColor.withOpacity(0.1),
+                            blurRadius: 10)
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: MetaColors.secondaryColor.withOpacity(0.2))),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.hand_thumbsup_fill,
+                              color: Colors.amberAccent,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0)
+                                  .copyWith(top: 0, bottom: 0),
+                              child: Text(
+                                widget.data.likeCount.toString(),
+                                style: TextStyle(
+                                    color: MetaColors.secondaryColor,
+                                    fontSize: 13),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
+        ),
+      ),
+    );
   }
 }

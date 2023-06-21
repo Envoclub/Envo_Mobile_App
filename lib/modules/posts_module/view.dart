@@ -250,6 +250,7 @@ class _PostTileState extends State<PostTile>
                   child: ClipRRect(
                       child: isVideo(widget.post.postUrl!)
                           ? Focus(
+                            focusNode: FocusNode(canRequestFocus: true),
                               onFocusChange: (value) {
                                 if (value) {
                                   _controller?.play();

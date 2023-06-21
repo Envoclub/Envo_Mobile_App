@@ -35,6 +35,7 @@ class HomeView extends GetView<HomeController> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: 'photo',
             backgroundColor: MetaColors.primaryColor,
             onPressed: () {
               Get.to(() => CreatePostView(), binding: CreatePostBinding(false));
@@ -45,6 +46,7 @@ class HomeView extends GetView<HomeController> {
             height: 10,
           ),
           FloatingActionButton(
+            heroTag: 'video',
             backgroundColor: MetaColors.primaryColor,
             onPressed: () {
               Get.to(() => CreatePostView(), binding: CreatePostBinding(true));

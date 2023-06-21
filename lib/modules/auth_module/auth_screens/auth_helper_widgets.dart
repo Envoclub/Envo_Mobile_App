@@ -67,7 +67,7 @@ class CustomButton extends StatelessWidget {
     required this.handler,
     required this.label,
   }) : super(key: key);
-  final VoidCallback handler;
+  final VoidCallback? handler;
   final String label;
   final bool? loading;
   @override
@@ -77,7 +77,8 @@ class CustomButton extends StatelessWidget {
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-          color: MetaColors.primaryColor,
+          color:
+              handler == null ? Colors.grey.shade500 : MetaColors.primaryColor,
           boxShadow: [
             BoxShadow(
                 color: MetaColors.primaryColor.withOpacity(0.3),
@@ -110,7 +111,7 @@ class CustomButton extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                          color: handler == null ?Colors.white30 : Colors.white),
                     ),
                   ),
                 ),
@@ -128,7 +129,8 @@ class FormFieldWidget extends StatelessWidget {
       this.readOnly = false,
       this.isPhone = false,
       required this.label,
-      this.obscureText = false,this.isUnderLineStyle=false,
+      this.obscureText = false,
+      this.isUnderLineStyle = false,
       this.onTap,
       required this.validator})
       : super(key: key);
@@ -159,7 +161,9 @@ class FormFieldWidget extends StatelessWidget {
         style: MetaStyles.labelStyle,
         cursorColor: Colors.black,
         obscureText: obscureText!,
-        decoration: isUnderLineStyle?MetaStyles.formFieldUnderLineDecoration(label): MetaStyles.formFieldDecoration(label),
+        decoration: isUnderLineStyle
+            ? MetaStyles.formFieldUnderLineDecoration(label)
+            : MetaStyles.formFieldDecoration(label),
       ),
     );
   }
