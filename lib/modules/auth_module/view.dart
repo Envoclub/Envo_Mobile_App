@@ -12,7 +12,7 @@ class AuthView extends GetView<AuthController> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Obx(() => controller.loading.value
-        ? Scaffold(body: Loader())
+        ? Scaffold(backgroundColor: Colors.white, body: Loader())
         : !controller.isTourDone.value
             ? TourView()
             : controller.user.value != null

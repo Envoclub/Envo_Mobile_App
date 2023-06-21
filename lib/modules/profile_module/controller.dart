@@ -24,8 +24,9 @@ class ProfileController extends GetxController {
       posts.value = await postRepository.getAllPosts();
       loading.value = false;
     } catch (e) {
-      var showSnackBar2 = showSnackBar;
-      showSnackBar2(e.toString());
+  loading.value = false;
+posts.value=[];
+      showSnackBar(e.toString());
     }
   }
 }

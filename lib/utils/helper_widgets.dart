@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:envo_mobile/utils/meta_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class MessageWidget extends StatefulWidget {
   MessageWidget(
@@ -19,15 +21,15 @@ class MessageWidget extends StatefulWidget {
 }
 
 class Loader extends StatelessWidget {
-  const Loader({super.key});
+  Loader({super.key, this.isWhite = false});
 
+  bool isWhite;
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: const CircularProgressIndicator(
-        color: MetaColors.primaryColor,
-      ),
-    );
+        child: isWhite
+            ? Lottie.asset(MetaAssets.loaderWhite)
+            : Lottie.asset(MetaAssets.loaderBlue));
   }
 }
 

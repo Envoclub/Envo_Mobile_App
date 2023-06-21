@@ -293,9 +293,11 @@ class ProfileView extends GetView<ProfileController> {
                     padding: EdgeInsets.all(8),
                     sliver: Obx(
                       () => controller.loading.value!
-                          ? Center(
-                              child: Loader(),
-                            )
+                          ? SliverToBoxAdapter(
+                            child: Center(
+                                child: Loader(),
+                              ),
+                          )
                           : SliverAnimatedGrid(
                               initialItemCount: controller.posts.value!.length,
                               itemBuilder: (context, index, value) {

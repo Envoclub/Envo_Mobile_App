@@ -16,6 +16,7 @@ class LeaderBoardView extends GetView<LeaderboardController> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
@@ -65,104 +66,115 @@ class MyRankTile extends GetView<LeaderboardController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          offset: Offset(5, 10),
-                          color: MetaColors.secondaryColor.withOpacity(0.1),
-                          blurRadius: 10)
-                    ],
-                    border: Border.all(
-                        width: 2,
-                        color: MetaColors.secondaryColor.withOpacity(0.8)),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text((controller.currentRank.value! + 1).toString()),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: MetaColors.primaryColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Your current rank ",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                    "${controller.currentData.value!.postCount} Actions",
-                                    style: TextStyle(
-                                        color: Colors.white.withOpacity(0.8),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500)),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.asset(
-                                    MetaAssets.logo,
-                                    height: 15,
-                                    width: 15,
+      () => controller.currentData.value == null
+          ? Center(
+              child: Loader(),
+            )
+          : Container(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(5, 10),
+                                color:
+                                    MetaColors.secondaryColor.withOpacity(0.1),
+                                blurRadius: 10)
+                          ],
+                          border: Border.all(
+                              width: 2,
+                              color:
+                                  MetaColors.secondaryColor.withOpacity(0.8)),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            (controller.currentRank.value! + 1).toString()),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: MetaColors.primaryColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Your current rank ",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                          "${controller.currentData.value!.postCount} Actions",
+                                          style: TextStyle(
+                                              color:
+                                                  Colors.white.withOpacity(0.8),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500)),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text("${controller.currentData.value!.reward}",
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ))
-                          ],
-                        )
-                      ],
+                              Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.asset(
+                                          MetaAssets.logo,
+                                          height: 15,
+                                          width: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                      "${controller.currentData.value!.reward}",
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.7),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -227,9 +239,12 @@ class LeaderboardTile extends StatelessWidget {
                               border: Border.all(
                                   color: MetaColors.secondaryColor
                                       .withOpacity(0.2))),
-                          child: CachedNetworkImage(
-                            imageUrl: data.photoUrl ?? '',
-                            fit: BoxFit.fill,
+                          child:ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                            child: CachedNetworkImage(
+                              imageUrl: data.photoUrl ?? '',
+                              fit: BoxFit.fill,
+                            ),
                           )),
                       Expanded(
                         child: Padding(
@@ -354,11 +369,17 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                         border: Border.all(
                                             color: MetaColors.secondaryColor
                                                 .withOpacity(0.2))),
-                                    child: CachedNetworkImage(
-                                      imageUrl: controller
-                                              .leadersList.value![1].photoUrl ??
-                                          '',
-                                      fit: BoxFit.fill,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: CachedNetworkImage(
+                                          imageUrl: controller.leadersList
+                                                  .value![1].photoUrl ??
+                                              '',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
                                     )),
                               ),
                               Text(
@@ -417,11 +438,17 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                 border: Border.all(
                                     color: MetaColors.secondaryColor
                                         .withOpacity(0.2))),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  controller.leadersList.value![0].photoUrl ??
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller
+                                          .leadersList.value![0].photoUrl ??
                                       '',
-                              fit: BoxFit.fill,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -471,11 +498,17 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                         border: Border.all(
                                             color: MetaColors.secondaryColor
                                                 .withOpacity(0.2))),
-                                    child: CachedNetworkImage(
-                                      imageUrl: controller
-                                              .leadersList.value![2].photoUrl ??
-                                          '',
-                                      fit: BoxFit.fill,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: CachedNetworkImage(
+                                          imageUrl: controller.leadersList
+                                                  .value![2].photoUrl ??
+                                              '',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
                                     )),
                               ),
                               Text(

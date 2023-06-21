@@ -23,4 +23,7 @@ class MetaAssets {
 
   static const String envoWhiteLogo = 'assets/envo_white.png';
   static const String envoBlueLogo = 'assets/envo_blue_cropped.png';
+
+  static const String loaderBlue = 'assets/loader_blue.json';
+  static const String loaderWhite = 'assets/loader_white.json';
 }

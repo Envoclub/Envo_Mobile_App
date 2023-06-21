@@ -162,7 +162,7 @@ class _PostTileState extends State<PostTile>
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
                             backgroundImage: CachedNetworkImageProvider(
-                                widget.post.photoUrl),
+                                widget.post.photoUrl??''),
                             radius: 15,
                             backgroundColor: MetaColors.primaryColor,
                           ),

@@ -1,6 +1,8 @@
+import 'package:envo_mobile/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../utils/meta_colors.dart';
 import '../../../utils/meta_styles.dart';
@@ -95,11 +97,8 @@ class CustomButton extends StatelessWidget {
         child: loading!
             ? Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
+                    padding: const EdgeInsets.all(18.0),
+                    child: Lottie.asset(MetaAssets.loaderWhite,)),
               )
             : InkWell(
                 onTap: handler,
@@ -111,7 +110,8 @@ class CustomButton extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: handler == null ?Colors.white30 : Colors.white),
+                          color:
+                              handler == null ? Colors.white30 : Colors.white),
                     ),
                   ),
                 ),
