@@ -39,9 +39,15 @@ class ProfileView extends GetView<ProfileController> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(
-                                controller.data.value?.photoUrl ?? ''),
-                            backgroundColor: Colors.white,
+                            backgroundColor: MetaColors.primaryColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: CircleAvatar(
+                                backgroundImage: CachedNetworkImageProvider(
+                                    controller.data.value?.photoUrl ?? ''),
+                                backgroundColor: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       )
@@ -507,8 +513,8 @@ class _ProfilePostTileState extends State<ProfilePostTile>
     }
   }
 
-  bool isVideo(String url) =>
-      video_types.contains(url.split(".").last.toString());
+   bool isVideo(String url) =>
+    url.contains(".mp4");
 
   @override
   void dispose() {

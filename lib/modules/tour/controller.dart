@@ -12,44 +12,95 @@ class TourController extends GetxController {
   Rxn<List<TourPage>> tourPages = Rxn([
     TourPage(
         imageUrl: MetaAssets.tourOne,
+        suffix: "Everyday I:",
         survey: Rxn(Survey(
-            question: "Which statement is most accurate for you?",
-            selectionIndex: 0,
+            question: "How do you get around?",
+            selectionIndex: [0],
+            multiChoice: false,
+            emmissions: [
+              0,
+              0,
+              0,
+            ],
             options: [
-              "I live in an energy efficient building",
-              "I live in an energy efficient building",
-              "I live in a normal building."
+              "Use a car",
+              "Bike or walk",
+              "Use public transportation"
             ])),
-        title: "Lets do it Together"),
+        title: "Let's start with Mobility 🚗"),
     TourPage(
         imageUrl: MetaAssets.tourTwo,
         survey: Rxn(Survey(
-            question: "Which Means of transport do you use for travelling ?",
-            selectionIndex: 0,
-            options: [
-              "I almost always go by public transport.",
-              "I almost always go by  cycle or by walk.",
-              "I almost always drive by car."
-            ])),
-        title: "Lets do it Together"),
+            multiChoice: false,
+            emmissions: [
+              0,
+              0,
+              0,
+            ],
+            question: "How many flights approximately do you take in a year?",
+            selectionIndex: [0],
+            options: ["0-5", "5-10", "10+."])),
+        title: "Flights ✈"),
     TourPage(
         imageUrl: MetaAssets.tourOne,
         survey: Rxn(Survey(
-            question: "Which statement is most accurate for you?",
-            selectionIndex: 0,
+            multiChoice: false,
+            emmissions: [0, 0, 0, 0],
+            question: "How often do you include meat in your diet?",
+            selectionIndex: [0],
             options: [
-              "I only eat vegetarian food.",
-              "I eat meat 2 to 3 times a week.",
-              "I eat meat almost every day."
+              "I eat meat every day",
+              "I eat meat a few times a week",
+              "I am a vegetarian",
+              "I am vegan (excludes all animal products)"
             ])),
-        title: "Lets do it Together")
+        title: "Diet 🍞"),
+    TourPage(
+        imageUrl: MetaAssets.tourOne,
+        survey: Rxn(Survey(
+            multiChoice: true,
+            emmissions: [
+              0,
+              0,
+              0,
+            ],
+            question: "What type of energy sources do you use at home?",
+            selectionIndex: [0],
+            options: [
+              "Electricity (from the grid)",
+              "Natural Gas",
+              "Renewable/Green Energy"
+            ])),
+        title: "Energy 🏠"),
+    TourPage(
+        imageUrl: MetaAssets.tourOne,
+        survey: Rxn(Survey(
+            multiChoice: true,
+            emmissions: [0, 0, 0, 0],
+            question: "How do you typically handle waste disposal?",
+            selectionIndex: [0],
+            options: [
+              "Recycling",
+              "Composting",
+              "Landfill",
+              "My waste disposal service takes care of this"
+            ])),
+        title: "Waste Disposal ♻️"),
   ]);
+  void completeSurvey() {
+    AuthController.to.completeSurvey();
+  }
 
   void onChanged(int? value) {}
 
-  void handleNext() {
+  void handleNext(int index) {
+    if (tourPages.value![index].survey.value!.selectionIndex.isEmpty) {
+      showSnackBar("Please select an option");
+      return;
+    }
+
     if (pageController.page == tourPages.value!.length - 1) {
-      AuthController.to.completeTour();
+      AuthController.to.completeSplash();
     } else {
       pageController.nextPage(
           duration: Duration(milliseconds: 500), curve: Curves.easeIn);

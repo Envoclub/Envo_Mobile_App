@@ -26,4 +26,8 @@ class MetaAssets {
 
   static const String loaderBlue = 'assets/loader_blue.json';
   static const String loaderWhite = 'assets/loader_white.json';
+
+  //survey
+  static const String surveyImageOne = 'assets/survey_image_one.png';
+  static const String surveyImageTwo = 'assets/survey_image_two.png';
 }

@@ -113,7 +113,7 @@ class _PostTileState extends State<PostTile>
   }
 
   bool isVideo(String url) =>
-      video_types.contains(url.split(".").last.toString());
+    url.contains(".mp4");
 
   @override
   void dispose() {
@@ -124,6 +124,7 @@ class _PostTileState extends State<PostTile>
 
   @override
   Widget build(BuildContext context) {
+    log(widget.post.postUrl.toString());
     Rxn<double> value = Rxn(0.0);
     RxBool enabled = true.obs;
     return ScaleTransition(
@@ -393,8 +394,8 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
     }
   }
 
-  bool isVideo(String url) =>
-      video_types.contains(url.split(".").last.toString());
+    bool isVideo(String url) =>
+    url.contains(".mp4");
 
   @override
   void dispose() {

@@ -8,10 +8,12 @@ class TourPage {
   String imageUrl;
   Rxn<Survey> survey;
   String title;
+  String? suffix;
   TourPage({
     required this.imageUrl,
     required this.survey,
     required this.title,
+    this.suffix
   });
 
   

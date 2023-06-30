@@ -19,246 +19,349 @@ class TourView extends StatefulWidget {
 
 class _TourViewState extends State<TourView> {
   bool start = false;
+  bool end = false;
   @override
   Widget build(BuildContext context) {
     TourController controller = TourController.to;
     return Scaffold(
       body: !start
-          ? Container(
-              child: Stack(
+          ? Scaffold(
+              appBar: AppBar(),
+              body: Stack(
                 children: [
-                  DecoratedBox(
-                      position: DecorationPosition.foreground,
-                      decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                              radius: 1.5,
-                              colors: [Colors.transparent, Colors.black87])),
-                      child: SplashVideo()),
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Expanded(
-                              child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        .05),
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.center,
-                                //   children: [
-                                //     ClipRRect(
-                                //       borderRadius: BorderRadius.circular(8),
-                                //       child: Image.asset(
-                                //         MetaAssets.logo,
-                                //         height: 50,
-                                //         width: 50,
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 10,
-                                //     ),
-                                //     Text(
-                                //       "envo",
-                                //       style: TextStyle(
-                                //           fontSize: 50,
-                                //           fontWeight: FontWeight.w500,
-                                //           color: Colors.white),
-                                //     )
-                                //   ],
-                                // ),
-                                Image.asset(MetaAssets.envoWhiteLogo),
-                                // Padding(
-                                //   padding: const EdgeInsets.all(8.0),
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8.0),
-                                //     child: Text(
-                                //       "Help Earth, Get Rewards",
-                                //       style: TextStyle(
-                                //           color: Colors.white.withOpacity(0.7),
-                                //           fontWeight: FontWeight.w500,
-                                //           fontSize: 13),
-                                //     ),
-                                //   ),
-                                // ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        .1),
-                              ],
-                            ),
-                          )),
-                          CustomButton(
-                              handler: () {
-                                setState(() {
-                                  start = true;
-                                });
-                              },
-                              label: "Let's Start")
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : Obx(() => PageView.builder(
-              controller: controller.pageController,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.tourPages.value!.length,
-              itemBuilder: (context, pageIndex) {
-                return Scaffold(
-                  appBar: AppBar(),
-                  body: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  controller.tourPages.value![pageIndex].title,
+                  Container(
+                    width: double.maxFinite,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Welcome to the Envo Club 😊",
                                   style: TextStyle(
-                                      fontSize: 24,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                Expanded(
-                                    child: Padding(
-                                  padding: const EdgeInsets.all(30.0),
-                                  child: Image.asset(controller
-                                      .tourPages.value![pageIndex].imageUrl),
-                                )),
-                                Obx(
-                                  () => Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0)
-                                          .copyWith(bottom: 20),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: Text(
+                                  "We'd like to ask you a few questions to help us better understand your average yearly carbon footprint!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: MetaColors.tertiaryTextColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Image.asset(MetaAssets.surveyImageOne),
+                            CustomButton(
+                                handler: () {
+                                  setState(() {
+                                    start = true;
+                                  });
+                                },
+                                label: "Let's get Started")
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ))
+          : end
+              ? Scaffold(
+                  appBar: AppBar(),
+                  body: Stack(
+                    children: [
+                      Container(
+                        width: double.maxFinite,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Thanks for the info! 😃",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Text(
+                                      "Your total avg emissions are approximately",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: MetaColors.tertiaryTextColor),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Text(
+                                      "10 tCo2",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),  Image.asset(MetaAssets.surveyImageTwo),
+                            Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                              
+                                CustomButton(handler: () {
+                                  controller.completeSurvey();
+                                }, label: "Continue")
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ))
+              : Obx(() => PageView.builder(
+                  controller: controller.pageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: controller.tourPages.value!.length,
+                  itemBuilder: (context, pageIndex) {
+                    return Scaffold(
+                      appBar: AppBar(),
+                      body: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(18.0)
+                                          .copyWith(bottom: 30),
                                       child: Text(
-                                        controller.tourPages.value![pageIndex]
-                                            .survey.value!.question,
+                                        controller
+                                            .tourPages.value![pageIndex].title,
                                         style: TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Column(
-                                      children: List.generate(
-                                          controller.tourPages.value![pageIndex]
-                                              .survey.value!.options.length,
-                                          (index) => InkWell(
-                                                onTap: () {
-                                                  controller
-                                                      .tourPages
-                                                      .value![pageIndex]
-                                                      .survey
-                                                      .value!
-                                                      .selectionIndex = index;
-                                                  setState(() {});
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    Radio(
-                                                      fillColor: MaterialStateColor
-                                                          .resolveWith((states) =>
-                                                              MetaColors
-                                                                  .primaryColor),
-                                                      value: index,
-                                                      groupValue: controller
+                                    Obx(
+                                      () => Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0)
+                                              .copyWith(bottom: 20),
+                                          child: Text(
+                                            controller
+                                                .tourPages
+                                                .value![pageIndex]
+                                                .survey
+                                                .value!
+                                                .question,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    if (controller.tourPages.value![pageIndex]
+                                            .suffix !=
+                                        null)
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0)
+                                            .copyWith(left: 16),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            controller.tourPages
+                                                .value![pageIndex].suffix!,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ),
+                                      ),
+                                    Obx(
+                                      () => Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: List.generate(
+                                              controller
+                                                  .tourPages
+                                                  .value![pageIndex]
+                                                  .survey
+                                                  .value!
+                                                  .options
+                                                  .length,
+                                              (index) => InkWell(
+                                                    onTap: () {
+                                                      if (!controller
                                                           .tourPages
                                                           .value![pageIndex]
                                                           .survey
                                                           .value!
-                                                          .selectionIndex,
-                                                      onChanged:
-                                                          (selectedIndex) {
+                                                          .selectionIndex
+                                                          .contains(index)) {
+                                                        if (controller
+                                                            .tourPages
+                                                            .value![pageIndex]
+                                                            .survey
+                                                            .value!
+                                                            .multiChoice) {
+                                                          controller
+                                                              .tourPages
+                                                              .value![pageIndex]
+                                                              .survey
+                                                              .value!
+                                                              .selectionIndex
+                                                              .add(index);
+                                                        } else {
+                                                          controller
+                                                              .tourPages
+                                                              .value![pageIndex]
+                                                              .survey
+                                                              .value!
+                                                              .selectionIndex = [
+                                                            index
+                                                          ];
+                                                        }
+                                                      } else {
                                                         controller
+                                                            .tourPages
+                                                            .value![pageIndex]
+                                                            .survey
+                                                            .value!
+                                                            .selectionIndex
+                                                            .remove(index);
+                                                        log(controller
+                                                            .tourPages
+                                                            .value![pageIndex]
+                                                            .survey
+                                                            .value!
+                                                            .selectionIndex
+                                                            .toString());
+                                                      }
+                                                      setState(() {});
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        Checkbox(
+                                                            value: controller
                                                                 .tourPages
-                                                                .value![pageIndex]
+                                                                .value![
+                                                                    pageIndex]
                                                                 .survey
                                                                 .value!
-                                                                .selectionIndex =
-                                                            selectedIndex!;
-                                                        setState(() {});
-                                                      },
+                                                                .selectionIndex
+                                                                .contains(
+                                                                    index),
+                                                            onChanged: (value) {
+                                                              if (value!) {
+                                                                if (controller
+                                                                    .tourPages
+                                                                    .value![
+                                                                        pageIndex]
+                                                                    .survey
+                                                                    .value!
+                                                                    .multiChoice) {
+                                                                  controller
+                                                                      .tourPages
+                                                                      .value![
+                                                                          pageIndex]
+                                                                      .survey
+                                                                      .value!
+                                                                      .selectionIndex
+                                                                      .add(
+                                                                          index);
+                                                                } else {
+                                                                  controller
+                                                                      .tourPages
+                                                                      .value![
+                                                                          pageIndex]
+                                                                      .survey
+                                                                      .value!
+                                                                      .selectionIndex = [
+                                                                    index
+                                                                  ];
+                                                                }
+                                                              } else {
+                                                                controller
+                                                                    .tourPages
+                                                                    .value![
+                                                                        pageIndex]
+                                                                    .survey
+                                                                    .value!
+                                                                    .selectionIndex
+                                                                    .remove(
+                                                                        index);
+                                                                log(controller
+                                                                    .tourPages
+                                                                    .value![
+                                                                        pageIndex]
+                                                                    .survey
+                                                                    .value!
+                                                                    .selectionIndex
+                                                                    .toString());
+                                                              }
+                                                              setState(() {});
+                                                            }),
+                                                        Text(
+                                                          controller
+                                                              .tourPages
+                                                              .value![pageIndex]
+                                                              .survey
+                                                              .value!
+                                                              .options[index],
+                                                          style: TextStyle(
+                                                              fontSize: 18),
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .tourPages
-                                                          .value![pageIndex]
-                                                          .survey
-                                                          .value!
-                                                          .options[index],
-                                                      style: TextStyle(
-                                                          fontSize: 15),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ))),
-                                )
-                              ],
-                            ),
+                                                  ))),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              CustomButton(
+                                  handler: pageIndex ==
+                                          controller.tourPages.value!.length - 1
+                                      ? () {
+                                          setState(() {
+                                            end = true;
+                                          });
+                                        }
+                                      : () {
+                                          controller.handleNext(pageIndex);
+                                        },
+                                  label: "Next")
+                            ],
                           ),
-                          CustomButton(
-                              handler: controller.handleNext, label: "Next")
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              })),
-    );
-  }
-}
-
-class SplashVideo extends StatefulWidget {
-  @override
-  _SplashVideoState createState() => _SplashVideoState();
-}
-
-class _SplashVideoState extends State<SplashVideo> {
-  late VideoPlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset(MetaAssets.splashVideo);
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.setLooping(true);
-    _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: AspectRatio(
-          aspectRatio: MediaQuery.of(context).size.aspectRatio,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              VideoPlayer(_controller),
-            ],
-          ),
-        ),
-      ),
+                    );
+                  })),
     );
   }
 }

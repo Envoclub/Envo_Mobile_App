@@ -11,7 +11,8 @@ import '../../models/user_model.dart';
 
 class AuthController extends GetxController {
   static AuthController to = Get.find<AuthController>();
-  RxBool isTourDone = false.obs;
+  RxBool isFirstTime = false.obs;
+  RxBool surveyComplete = false.obs;
   PageController pageController = PageController();
   RxBool loading = false.obs;
   RxBool authLoading = false.obs;
@@ -27,11 +28,15 @@ class AuthController extends GetxController {
   authenticate() async {
     try {
       loading.value = true;
-      isTourDone.value = ((await storage.read(key: "isTourDone")) != null);
-      if (!isTourDone.value) {
+      isFirstTime.value = !((await storage.read(key: "isFirstTime")) != null);
+      surveyComplete.value =
+          ((await storage.read(key: "surveyComplete")) != null);
+
+      if (isFirstTime.value) {
         loading.value = false;
+      }
+      if (!surveyComplete.value) {
         TourBinding().dependencies();
-        return;
       }
       String? token = await storage.read(key: "accessToken");
       log("current access $token refresh");
@@ -73,9 +78,18 @@ class AuthController extends GetxController {
     }
   }
 
-  completeTour() async {
+  completeSplash() async {
     try {
-      await storage.write(key: "isTourDone", value: "done");
+      await storage.write(key: "isFirstTime", value: "done");
+      await authenticate();
+    } catch (e) {
+      showSnackBar(e.toString());
+    }
+  }
+
+  completeSurvey() async {
+    try {
+      await storage.write(key: "surveyComplete", value: "done");
       await authenticate();
     } catch (e) {
       showSnackBar(e.toString());

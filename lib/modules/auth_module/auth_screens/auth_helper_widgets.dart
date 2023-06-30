@@ -98,7 +98,7 @@ class CustomButton extends StatelessWidget {
             ? Center(
                 child: Padding(
                     padding: const EdgeInsets.all(18.0),
-                    child: Lottie.asset(MetaAssets.loaderWhite,)),
+                    child: CircularProgressIndicator(color: Colors.white)),
               )
             : InkWell(
                 onTap: handler,

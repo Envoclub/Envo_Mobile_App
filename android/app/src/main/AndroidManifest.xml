@@ -1,11 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.envo_mobile">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="envo_mobile"
-        android:name="${applicationName}"
+        android:name="${applicationName}" 
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
+            
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
