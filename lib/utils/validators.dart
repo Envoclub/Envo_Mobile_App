@@ -19,11 +19,15 @@ String? validatePassword(String? value) {
     return "Please enter password";
     // } else if (!EmailValidator.validate(value.trim())) {
     //   return "Please enter valid Email Id";
-  } else if (!RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)')
-      .hasMatch(value.trim())) {
-    return "Please enter valid password:\n\u2022 Password must be 8 or more characters in length.\n\u2022Password must contain 1 or more uppercase characters.\n\u2022 Password must contain 1 or more digit characters.\n\u2022Password must contain 1 or more special characters.";
-  } else
+  }
+  //  else if (!RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)')
+  //     .hasMatch(value.trim())) {
+  //   return "Please enter valid password:\n\u2022 Password must be 8 or more characters in length.\n\u2022Password must contain 1 or more uppercase characters.\n\u2022 Password must contain 1 or more digit characters.\n\u2022Password must contain 1 or more special characters.";
+  // }
+
+  else {
     return null;
+  }
 }
 
 String? validateConfirmPassword(String? value, String compareValue) {

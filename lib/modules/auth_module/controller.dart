@@ -19,6 +19,7 @@ class AuthController extends GetxController {
   Rxn<UserModel?> user = Rxn();
   AuthRepository authRepository = AuthRepository();
   FlutterSecureStorage storage = FlutterSecureStorage();
+  Rxn<bool> obscurePassword = Rxn(false);
   @override
   void onInit() {
     super.onInit();
@@ -87,9 +88,10 @@ class AuthController extends GetxController {
     }
   }
 
-  completeSurvey() async {
+  completeSurvey(double value) async {
     try {
-      await storage.write(key: "surveyComplete", value: "done");
+      user.value = await authRepository.updateUserCo2(value, user.value!.id!);
+
       await authenticate();
     } catch (e) {
       showSnackBar(e.toString());

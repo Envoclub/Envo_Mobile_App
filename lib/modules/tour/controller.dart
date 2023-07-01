@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:envo_mobile/models/survey_model.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
@@ -9,6 +11,8 @@ import '../../models/tour_page_model.dart';
 class TourController extends GetxController {
   static TourController to = Get.find<TourController>();
   PageController pageController = PageController();
+  Rxn<double> co2EValue = Rxn(0.0);
+  Rxn<bool> loading = Rxn(false);
   Rxn<List<TourPage>> tourPages = Rxn([
     TourPage(
         imageUrl: MetaAssets.tourOne,
@@ -18,9 +22,9 @@ class TourController extends GetxController {
             selectionIndex: [0],
             multiChoice: false,
             emmissions: [
+              0.7272,
               0,
-              0,
-              0,
+              0.45,
             ],
             options: [
               "Use a car",
@@ -33,9 +37,9 @@ class TourController extends GetxController {
         survey: Rxn(Survey(
             multiChoice: false,
             emmissions: [
-              0,
-              0,
-              0,
+              0.87,
+              1.65,
+              5.28,
             ],
             question: "How many flights approximately do you take in a year?",
             selectionIndex: [0],
@@ -45,7 +49,7 @@ class TourController extends GetxController {
         imageUrl: MetaAssets.tourOne,
         survey: Rxn(Survey(
             multiChoice: false,
-            emmissions: [0, 0, 0, 0],
+            emmissions: [4.5, 3.375, 2.5, 1.7],
             question: "How often do you include meat in your diet?",
             selectionIndex: [0],
             options: [
@@ -59,17 +63,14 @@ class TourController extends GetxController {
         imageUrl: MetaAssets.tourOne,
         survey: Rxn(Survey(
             multiChoice: true,
-            emmissions: [
-              0,
-              0,
-              0,
-            ],
+            emmissions: [.53, .78, 0.45, 1.7, 0.18],
             question: "What type of energy sources do you use at home?",
             selectionIndex: [0],
             options: [
               "Electricity (from the grid)",
               "Natural Gas",
-              "Renewable/Green Energy"
+              "Renewable/Green Energy",
+              "Other ( Solar )"
             ])),
         title: "Energy 🏠"),
     TourPage(
@@ -87,8 +88,22 @@ class TourController extends GetxController {
             ])),
         title: "Waste Disposal ♻️"),
   ]);
-  void completeSurvey() {
-    AuthController.to.completeSurvey();
+  void completeSurvey() async {
+    loading.value = true;
+    await AuthController.to.completeSurvey(co2EValue.value!);
+    loading.value = false;
+  }
+
+  void calculateData() {
+    double co2E = 0;
+    tourPages.value!.forEach((question) {
+      double questionValue = 0;
+      question.survey.value!.selectionIndex.forEach((element) {
+        questionValue += question.survey.value!.emmissions[element];
+      });
+      co2E += (questionValue / question.survey.value!.selectionIndex.length);
+    });
+    co2EValue.value = co2E;
   }
 
   void onChanged(int? value) {}

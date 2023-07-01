@@ -97,7 +97,7 @@ class SettingsView extends GetView<ProfileController> {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Text(controller.data.value!.rewards.toString(),
+                                Text(controller.data.value!.reward.toString(),
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,

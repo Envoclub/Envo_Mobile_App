@@ -132,6 +132,7 @@ class FormFieldWidget extends StatelessWidget {
       this.obscureText = false,
       this.isUnderLineStyle = false,
       this.onTap,
+      this.suffix,
       required this.validator})
       : super(key: key);
   final String label;
@@ -143,6 +144,7 @@ class FormFieldWidget extends StatelessWidget {
   final bool? isPhone;
   VoidCallback? onTap;
   final bool isUnderLineStyle;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +165,8 @@ class FormFieldWidget extends StatelessWidget {
         obscureText: obscureText!,
         decoration: isUnderLineStyle
             ? MetaStyles.formFieldUnderLineDecoration(label)
-            : MetaStyles.formFieldDecoration(label),
+                .copyWith(suffix: suffix)
+            : MetaStyles.formFieldDecoration(label).copyWith(suffix: suffix),
       ),
     );
   }

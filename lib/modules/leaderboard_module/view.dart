@@ -443,6 +443,7 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: CachedNetworkImage(
+                              
                                   imageUrl: controller
                                           .leadersList.value![0].photoUrl ??
                                       '',

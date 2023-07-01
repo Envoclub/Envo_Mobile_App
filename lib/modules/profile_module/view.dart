@@ -175,7 +175,7 @@ class ProfileView extends GetView<ProfileController> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              controller.data.value!.rewards
+                                              controller.data.value!.reward
                                                   .toString(),
                                               style: TextStyle(
                                                   fontSize: 19,

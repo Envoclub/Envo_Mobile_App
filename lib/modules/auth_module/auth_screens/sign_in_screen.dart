@@ -1,5 +1,6 @@
 import 'package:envo_mobile/modules/auth_module/controller.dart';
 import 'package:envo_mobile/modules/home/binding.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     //       title: "Enter your Email and Password to Sign In"),
                     // ),
                     SizedBox(height: MediaQuery.of(context).size.height * .05),
-                    Image.asset(MetaAssets.envoBlueLogo, height: 80,),
+                    Image.asset(
+                      MetaAssets.envoBlueLogo,
+                      height: 80,
+                    ),
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.center,
                     //   children: [
@@ -73,12 +77,24 @@ class _SignInScreenState extends State<SignInScreen> {
                       validator: validateEmail,
                     ),
 
-                    FormFieldWidget(
-                      enabled: !AuthController.to.authLoading.value,
-                      textController: passwordController,
-                      label: "Password",
-                      obscureText: true,
-                      validator: validatePassword,
+                    Obx(
+                      () => FormFieldWidget(
+                        enabled: !AuthController.to.authLoading.value,
+                        textController: passwordController,
+                        label: "Password",
+                        obscureText: AuthController.to.obscurePassword.value,
+                        suffix: InkWell(
+                          onTap: () {
+                            AuthController.to.obscurePassword.value =
+                                !AuthController.to.obscurePassword.value!;
+                          },
+                          child: Obx(() =>
+                              AuthController.to.obscurePassword.value!
+                                  ? Icon(CupertinoIcons.eye,color: MetaColors.primaryColor,)
+                                  : Icon(CupertinoIcons.eye_slash,color: MetaColors.primaryColor,)),
+                        ),
+                        validator: validatePassword,
+                      ),
                     ),
 
                     CustomButton(

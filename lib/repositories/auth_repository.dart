@@ -47,6 +47,34 @@ class AuthRepository {
     }
   }
 
+  updateUserCo2(double value, int id) async {
+    await storage.write(key: "surveyComplete", value: "done");
+    await initTokens();
+    var headers = {
+      "Authorization": "Token ${accessToken!}",
+      "Content-type": "application/json",
+    };
+    log(headers.toString());
+    var params = {"co2": value};
+
+    try {
+      String url = "${MetaStrings.baseUrl}${MetaStrings.updateCo2}$id/values/";
+      log(url);
+      var response = await http.put(Uri.parse(url),
+          headers: headers, body: jsonEncode(params));
+      var parsedValue = jsonDecode(response.body);
+      log(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return UserModel.fromJson(jsonDecode(response.body));
+      } else {
+        throw parsedValue['detail'];
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   getUserDetails() async {
     await initTokens();
     var headers = {

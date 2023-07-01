@@ -142,14 +142,15 @@ class RewardTile extends StatelessWidget {
                         child: Slider(
                             activeColor: MetaColors.primaryColor,
                             thumbColor: MetaColors.primaryColor,
-                            value: AuthController.to.user.value!.rewards! /
-                                data.coinrequired!,
+                            value: AuthController.to.user.value!.reward! /
+                                data.coinrequired!<=1? AuthController.to.user.value!.reward! /
+                                data.coinrequired!:1,
                             onChanged: (val) {}),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0).copyWith(top: 0),
                         child: Text(
-                          "${AuthController.to.user.value!.rewards.toString()} / ${data.coinrequired}",
+                          "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
                           style: const TextStyle(
                               fontSize: 10,
                               color: MetaColors.tertiaryTextColor,
@@ -276,15 +277,17 @@ class RewardDetailedView extends GetView {
                                         activeColor: MetaColors.primaryColor,
                                         thumbColor: MetaColors.primaryColor,
                                         value: AuthController
-                                                .to.user.value!.rewards! /
-                                            data.coinrequired!,
+                                                .to.user.value!.reward! /
+                                            data.coinrequired!<=1? AuthController
+                                                .to.user.value!.reward! /
+                                            data.coinrequired!:1,
                                         onChanged: (val) {}),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0)
                                         .copyWith(top: 0),
                                     child: Text(
-                                      "${AuthController.to.user.value!.rewards.toString()} / ${data.coinrequired}",
+                                      "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
                                       style: TextStyle(
                                           fontSize: 10,
                                           color: MetaColors.tertiaryTextColor,
@@ -320,7 +323,7 @@ class RewardDetailedView extends GetView {
                       ),
                     ),
                   ),
-                  if (AuthController.to.user.value!.rewards! >=
+                  if (AuthController.to.user.value!.reward! >=
                       data.coinrequired!)
                     CustomButton(
                         handler: () {

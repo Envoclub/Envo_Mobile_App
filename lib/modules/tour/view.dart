@@ -38,6 +38,7 @@ class _TourViewState extends State<TourView> {
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -115,25 +116,30 @@ class _TourViewState extends State<TourView> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(18.0),
-                                    child: Text(
-                                      "10 tCo2",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green),
+                                    child: Obx(
+                                      () => Text(
+                                        "${(controller.co2EValue.value! * 1000).toStringAsFixed(2)} kgCo2",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),  Image.asset(MetaAssets.surveyImageTwo),
+                            ),
+                            Image.asset(MetaAssets.surveyImageTwo),
                             Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
-                              
-                                CustomButton(handler: () {
-                                  controller.completeSurvey();
-                                }, label: "Continue")
+                                CustomButton(
+                                    loading: controller.loading.value,
+                                    handler: () {
+                                      controller.completeSurvey();
+                                    },
+                                    label: "Continue")
                               ],
                             )
                           ],
@@ -147,7 +153,24 @@ class _TourViewState extends State<TourView> {
                   itemCount: controller.tourPages.value!.length,
                   itemBuilder: (context, pageIndex) {
                     return Scaffold(
-                      appBar: AppBar(),
+                      appBar: AppBar(
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            if (pageIndex == 0) {
+                              setState(() {
+                                start = false;
+                              });
+                            }
+                            controller.pageController.previousPage(
+                                duration: Duration(milliseconds: 400),
+                                curve: Curves.easeIn);
+                          },
+                        ),
+                      ),
                       body: Container(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -327,15 +350,18 @@ class _TourViewState extends State<TourView> {
                                                               }
                                                               setState(() {});
                                                             }),
-                                                        Text(
-                                                          controller
-                                                              .tourPages
-                                                              .value![pageIndex]
-                                                              .survey
-                                                              .value!
-                                                              .options[index],
-                                                          style: TextStyle(
-                                                              fontSize: 18),
+                                                        Expanded(
+                                                          child: Text(
+                                                            controller
+                                                                .tourPages
+                                                                .value![
+                                                                    pageIndex]
+                                                                .survey
+                                                                .value!
+                                                                .options[index],
+                                                            style: TextStyle(
+                                                                fontSize: 18),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -351,6 +377,7 @@ class _TourViewState extends State<TourView> {
                                           setState(() {
                                             end = true;
                                           });
+                                          controller.calculateData();
                                         }
                                       : () {
                                           controller.handleNext(pageIndex);
