@@ -97,6 +97,16 @@ class AuthController extends GetxController {
       showSnackBar(e.toString());
     }
   }
+
+  refreshUserData() async {
+    try {
+      UserModel? userModel = await authRepository.getUserDetails();
+      user.value = userModel;
+      HomeBinding().dependencies();
+    } catch (e) {
+      showSnackBar(e.toString());
+    }
+  }
 }
 
 showSnackBar(String message, {bool isError = true}) {

@@ -28,7 +28,7 @@ class RewardsController extends GetxController {
     try {
       loading.value = true;
       String message = await postRepository.redeemData(data.id!);
-
+      AuthController.to.refreshUserData();
       loading.value = false;
       Get.back();
       showSnackBar(message, isError: false);
