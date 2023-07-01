@@ -243,7 +243,7 @@ class LeaderboardTile extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                             child: CachedNetworkImage(
                               imageUrl: data.photoUrl ?? '',
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           )),
                       Expanded(
@@ -333,7 +333,7 @@ class TopThreeWidget extends GetView<LeaderboardController> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16)),
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * .2,
+          height: MediaQuery.of(context).size.height * .25,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -377,7 +377,8 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                           imageUrl: controller.leadersList
                                                   .value![1].photoUrl ??
                                               '',
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
+                                          width: double.maxFinite,
                                         ),
                                       ),
                                     )),
@@ -447,7 +448,7 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                   imageUrl: controller
                                           .leadersList.value![0].photoUrl ??
                                       '',
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -507,7 +508,7 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                                           imageUrl: controller.leadersList
                                                   .value![2].photoUrl ??
                                               '',
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     )),
