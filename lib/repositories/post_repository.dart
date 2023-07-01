@@ -217,7 +217,7 @@ class PostRepository {
       };
       log(headers.toString());
 
-      String url = "${MetaStrings.baseUrl}${MetaStrings.getRewardsList}/$id/redeem/";
+      String url = "${MetaStrings.baseUrl}${MetaStrings.getRewardsList}$id/redeem/";
       log(url);
       var response = await http.post(Uri.parse(url), headers: headers);
 
