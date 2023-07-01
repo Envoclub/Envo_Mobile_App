@@ -20,7 +20,7 @@ class UserModel {
   int? postCount;
   String? email;
   String? phoneNumber;
-  int? Co2;
+  double? Co2;
   int? reward;
 
   UserModel(

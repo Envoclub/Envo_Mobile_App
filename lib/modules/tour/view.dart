@@ -91,8 +91,7 @@ class _TourViewState extends State<TourView> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                              child: Column(
+                            Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -129,8 +128,9 @@ class _TourViewState extends State<TourView> {
                                   ),
                                 ],
                               ),
-                            ),
-                            Image.asset(MetaAssets.surveyImageTwo),
+                            
+                            Expanded(child: Image.asset(MetaAssets.surveyImageTwo),),
+                            
                             Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
