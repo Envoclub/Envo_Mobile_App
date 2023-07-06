@@ -227,11 +227,15 @@ class ProfileView extends GetView<ProfileController> {
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                            Text(
-                                              "Eco Actions",
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600),
+                                            FittedBox(
+                                              fit: BoxFit.fitWidth,
+                                              child: Text(
+                                                "Eco Actions",
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w600),
+                                                    
+                                              ),
                                             ),
                                           ],
                                         ),
