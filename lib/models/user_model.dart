@@ -22,6 +22,7 @@ class UserModel {
   String? phoneNumber;
   double? Co2;
   int? reward;
+  bool? surveyCompleted;
 
   UserModel(
       {this.id,
@@ -34,6 +35,7 @@ class UserModel {
       this.email,
       this.phoneNumber,
       this.Co2,
+      this.surveyCompleted,
       this.reward});
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -47,7 +49,8 @@ class UserModel {
       email: json["email"],
       phoneNumber: json["phone_number"],
       Co2: json["Co2"],
-      reward: json["reward"]??0);
+      surveyCompleted: json["survey_completed"] ?? false,
+      reward: json["reward"] ?? 0);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -60,6 +63,7 @@ class UserModel {
         "email": email,
         "phone_number": phoneNumber,
         "Co2": Co2,
-        "reward": reward
+        "reward": reward,
+        "survey_completed": surveyCompleted
       };
 }

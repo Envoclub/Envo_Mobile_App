@@ -46,6 +46,8 @@ class AuthController extends GetxController {
       if (token != null) {
         UserModel? userModel = await authRepository.getUserDetails();
         user.value = userModel;
+        // surveyComplete.value = user.value!.surveyCompleted!;
+
         HomeBinding().dependencies();
       } else {
         user.value = null;
@@ -113,7 +115,7 @@ class AuthController extends GetxController {
   updateUserData(String? bio, XFile? file) async {
     try {
       bool? done = await authRepository.updateUserDetails(
-          user.value!.id.toString(),bio, File(file!.path));
+          user.value!.id.toString(), bio, File(file!.path));
       if (done!) {
         refreshUserData();
         return done;
