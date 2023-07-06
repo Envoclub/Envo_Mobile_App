@@ -15,7 +15,7 @@ class TourController extends GetxController {
   Rxn<bool> loading = Rxn(false);
   Rxn<List<TourPage>> tourPages = Rxn([
     TourPage(
-        imageUrl: MetaAssets.tourOne,
+        imageUrl: MetaAssets.carImage,
         suffix: "Everyday I:",
         survey: Rxn(Survey(
             question: "How do you get around?",
@@ -33,7 +33,7 @@ class TourController extends GetxController {
             ])),
         title: "Let's start with Mobility 🚗"),
     TourPage(
-        imageUrl: MetaAssets.tourTwo,
+        imageUrl: MetaAssets.airplaneImage,
         survey: Rxn(Survey(
             multiChoice: false,
             emmissions: [
@@ -46,7 +46,7 @@ class TourController extends GetxController {
             options: ["0-5", "5-10", "10+."])),
         title: "Flights ✈"),
     TourPage(
-        imageUrl: MetaAssets.tourOne,
+        imageUrl: MetaAssets.dietImage,
         survey: Rxn(Survey(
             multiChoice: false,
             emmissions: [4.5, 3.375, 2.5, 1.7],
@@ -60,7 +60,7 @@ class TourController extends GetxController {
             ])),
         title: "Diet 🍞"),
     TourPage(
-        imageUrl: MetaAssets.tourOne,
+        imageUrl: MetaAssets.energyImage,
         survey: Rxn(Survey(
             multiChoice: true,
             emmissions: [.53, .78, 0.45, 1.7, 0.18],
@@ -73,20 +73,20 @@ class TourController extends GetxController {
               "Other ( Solar )"
             ])),
         title: "Energy 🏠"),
-    TourPage(
-        imageUrl: MetaAssets.tourOne,
-        survey: Rxn(Survey(
-            multiChoice: true,
-            emmissions: [0, 0, 0, 0],
-            question: "How do you typically handle waste disposal?",
-            selectionIndex: [0],
-            options: [
-              "Recycling",
-              "Composting",
-              "Landfill",
-              "My waste disposal service takes care of this"
-            ])),
-        title: "Waste Disposal ♻️"),
+    // TourPage(
+    //     imageUrl: MetaAssets.tourOne,
+    //     survey: Rxn(Survey(
+    //         multiChoice: true,
+    //         emmissions: [0, 0, 0, 0],
+    //         question: "How do you typically handle waste disposal?",
+    //         selectionIndex: [0],
+    //         options: [
+    //           "Recycling",
+    //           "Composting",
+    //           "Landfill",
+    //           "My waste disposal service takes care of this"
+    //         ])),
+    //     title: "Waste Disposal ♻️"),
   ]);
   void completeSurvey() async {
     loading.value = true;

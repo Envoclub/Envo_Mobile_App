@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:envo_mobile/modules/home/binding.dart';
 import 'package:envo_mobile/modules/tour/binding.dart';
@@ -6,11 +7,12 @@ import 'package:envo_mobile/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models/user_model.dart';
 
 class AuthController extends GetxController {
-  static AuthController to = Get.find<AuthController>();
+  static AuthController get to => Get.find<AuthController>();
   RxBool isFirstTime = false.obs;
   RxBool surveyComplete = false.obs;
   PageController pageController = PageController();
@@ -103,6 +105,19 @@ class AuthController extends GetxController {
       UserModel? userModel = await authRepository.getUserDetails();
       user.value = userModel;
       HomeBinding().dependencies();
+    } catch (e) {
+      showSnackBar(e.toString());
+    }
+  }
+
+  updateUserData(String? bio, XFile? file) async {
+    try {
+      bool? done = await authRepository.updateUserDetails(
+          user.value!.id.toString(),bio, File(file!.path));
+      if (done!) {
+        refreshUserData();
+        return done;
+      }
     } catch (e) {
       showSnackBar(e.toString());
     }

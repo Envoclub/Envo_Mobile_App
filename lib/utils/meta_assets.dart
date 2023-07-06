@@ -30,4 +30,10 @@ class MetaAssets {
   //survey
   static const String surveyImageOne = 'assets/survey_image_one.png';
   static const String surveyImageTwo = 'assets/survey_image_two.png';
+
+  //quiz
+  static const String carImage = 'assets/car_image.png';
+  static const String dietImage = 'assets/diet_image.png';
+  static const String airplaneImage = 'assets/airplane_image.png';
+  static const String energyImage = 'assets/energy_image.png';
 }

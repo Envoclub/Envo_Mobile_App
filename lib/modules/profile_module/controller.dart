@@ -8,7 +8,7 @@ import '../../utils/helper_widgets.dart';
 import '../home/controller.dart';
 
 class ProfileController extends GetxController {
-  static ProfileController to = Get.find<ProfileController>();
+  static ProfileController get to => Get.find<ProfileController>();
   Rxn<List<Post>> posts = Rxn([]);
   Rxn<UserModel?> get data => AuthController.to.user; 
   Rxn<bool> loading = Rxn(false);

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
 import 'package:envo_mobile/modules/posts_module/view.dart';
 import 'package:envo_mobile/modules/profile_module/controller.dart';
+import 'package:envo_mobile/modules/settings_module/binding.dart';
 import 'package:envo_mobile/modules/settings_module/view.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
@@ -34,7 +35,8 @@ class ProfileView extends GetView<ProfileController> {
                     actions: [
                       InkWell(
                         onTap: () {
-                          Get.to(() => SettingsView());
+                          Get.to(() => SettingsView(),
+                              binding: SettingsBinding());
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -300,10 +302,10 @@ class ProfileView extends GetView<ProfileController> {
                     sliver: Obx(
                       () => controller.loading.value!
                           ? SliverToBoxAdapter(
-                            child: Center(
+                              child: Center(
                                 child: Loader(),
                               ),
-                          )
+                            )
                           : SliverAnimatedGrid(
                               initialItemCount: controller.posts.value!.length,
                               itemBuilder: (context, index, value) {
@@ -513,8 +515,7 @@ class _ProfilePostTileState extends State<ProfilePostTile>
     }
   }
 
-   bool isVideo(String url) =>
-    url.contains(".mp4");
+  bool isVideo(String url) => url.contains(".mp4");
 
   @override
   void dispose() {

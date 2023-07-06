@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -95,6 +97,38 @@ class AuthRepository {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  updateUserDetails(String id, String? bio, File? file) async {
+    await initTokens();
+    var headers = {
+      "Authorization": "Token " + accessToken!,
+      // "Content-type": "application/json"
+    };
+    log(headers.toString());
+    try {
+      String url = MetaStrings.baseUrl + MetaStrings.userDetailsUpload + "$id/";
+      log(url);
+      final dio = Dio();
+      FormData formData = FormData.fromMap({
+        "bio": bio,
+        if (file != null)
+          "photoUrl": await MultipartFile.fromFile(
+            file.path,
+          )
+      });
+      var response = await dio.post(url,
+          data: formData, options: Options(headers: headers));
+      log(response.statusCode.toString());
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw jsonDecode(response.data)['message'];
+      }
+    } catch (e) {
+      log(e.toString());
       rethrow;
     }
   }
