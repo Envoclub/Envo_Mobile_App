@@ -119,7 +119,7 @@ class AuthRepository {
             file.path,
           )
       });
-      var response = await dio.post(url,
+      var response = await dio.put(url,
           data: formData, options: Options(headers: headers));
       log(response.statusCode.toString());
       if (response.statusCode == 200) {
