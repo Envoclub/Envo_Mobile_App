@@ -50,7 +50,7 @@ class PostsView extends GetView<PostsController> {
                       RichText(
                           text: TextSpan(
                               text: "Hi ",
-                              style: TextStyle(
+                              style: GoogleFonts.rubik(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
                                   color: MetaColors.secondaryColor),
@@ -65,16 +65,21 @@ class PostsView extends GetView<PostsController> {
                           ])),
                     ],
                   )),
-              body: Padding(
-                padding: const EdgeInsets.only(bottom: 80),
-                child: PageView.builder(
-                  padEnds: false,
-                  controller: controller.pageController,
-                  scrollDirection: Axis.vertical,
-                  itemCount: controller.posts.value!.length,
-                  itemBuilder: (context, index) {
-                    return PostTile(post: controller.posts.value![index]);
-                  },
+              body: RefreshIndicator(
+                onRefresh: () {
+                  return controller.getPosts();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  child: PageView.builder(
+                    padEnds: false,
+                    controller: controller.pageController,
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.posts.value!.length,
+                    itemBuilder: (context, index) {
+                      return PostTile(post: controller.posts.value![index]);
+                    },
+                  ),
                 ),
               ),
             ),
@@ -112,8 +117,7 @@ class _PostTileState extends State<PostTile>
     }
   }
 
-  bool isVideo(String url) =>
-    url.contains(".mp4");
+  bool isVideo(String url) => url.contains(".mp4");
 
   @override
   void dispose() {
@@ -163,7 +167,7 @@ class _PostTileState extends State<PostTile>
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
                             backgroundImage: CachedNetworkImageProvider(
-                                widget.post.photoUrl??''),
+                                widget.post.photoUrl ?? ''),
                             radius: 15,
                             backgroundColor: MetaColors.primaryColor,
                           ),
@@ -251,7 +255,7 @@ class _PostTileState extends State<PostTile>
                   child: ClipRRect(
                       child: isVideo(widget.post.postUrl!)
                           ? Focus(
-                            focusNode: FocusNode(canRequestFocus: true),
+                              focusNode: FocusNode(canRequestFocus: true),
                               onFocusChange: (value) {
                                 if (value) {
                                   _controller?.play();
@@ -394,8 +398,7 @@ class _PostEnlargedViewState extends State<PostEnlargedView> {
     }
   }
 
-    bool isVideo(String url) =>
-    url.contains(".mp4");
+  bool isVideo(String url) => url.contains(".mp4");
 
   @override
   void dispose() {
