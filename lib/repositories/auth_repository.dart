@@ -13,7 +13,11 @@ import '../utils/meta_strings.dart';
 class AuthRepository {
   String? accessToken;
   String? refreshToken;
-  FlutterSecureStorage storage = FlutterSecureStorage();
+  FlutterSecureStorage storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+  );
   initTokens() async {
     accessToken = await storage.read(key: "accessToken");
     refreshToken = await storage.read(key: "refreshToken");
@@ -88,7 +92,11 @@ class AuthRepository {
       String url = MetaStrings.baseUrl + MetaStrings.userDetails;
       log(url);
 
-      FlutterSecureStorage storage = FlutterSecureStorage();
+      FlutterSecureStorage storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+  );
       var response = await http.get(Uri.parse(url), headers: headers);
       debugPrint(response.body);
       if (response.statusCode == 200) {

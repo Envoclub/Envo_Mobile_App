@@ -20,7 +20,11 @@ class AuthController extends GetxController {
   RxBool authLoading = false.obs;
   Rxn<UserModel?> user = Rxn();
   AuthRepository authRepository = AuthRepository();
-  FlutterSecureStorage storage = FlutterSecureStorage();
+  FlutterSecureStorage storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+  );
   Rxn<bool> obscurePassword = Rxn(false);
   @override
   void onInit() {

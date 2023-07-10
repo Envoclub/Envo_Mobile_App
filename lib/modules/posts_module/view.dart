@@ -21,7 +21,6 @@ import '../auth_module/controller.dart';
 class PostsView extends GetView<PostsController> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
 
     return Obx(
       () => controller.loading.value!
