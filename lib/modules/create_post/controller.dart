@@ -15,12 +15,14 @@ import 'package:video_player/video_player.dart';
 
 import '../../models/action_model.dart';
 import '../../utils/meta_colors.dart';
+import '../profile_module/controller.dart';
 
 class CreatePostController extends GetxController {
   CreatePostController(this.pickVideo);
-  static CreatePostController to = Get.find<CreatePostController>();
+  static CreatePostController get to => Get.find<CreatePostController>();
   PostRepository postRepository = HomeController.to.postRepository;
   ImagePicker picker = ImagePicker();
+  final profileController = ProfileController.to;
   bool pickVideo = false;
   Rxn<XFile?> image = Rxn();
   Rxn<bool> loading = Rxn(false);
@@ -190,11 +192,12 @@ class CreatePostController extends GetxController {
       showSnackBar(e.toString());
     }
   }
-}
 
-handleSuccess() {
-  Get.back();
-  showSnackBar("Success", isError: false);
+  handleSuccess() {
+    profileController.getPosts();
+    Get.back();
+    showSnackBar("Success", isError: false);
+  }
 }
 
 class Action {

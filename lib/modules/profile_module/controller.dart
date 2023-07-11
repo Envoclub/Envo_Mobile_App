@@ -10,7 +10,7 @@ import '../home/controller.dart';
 class ProfileController extends GetxController {
   static ProfileController get to => Get.find<ProfileController>();
   Rxn<List<Post>> posts = Rxn([]);
-  Rxn<UserModel?> get data => AuthController.to.user; 
+  Rxn<UserModel?> get data => AuthController.to.user;
   Rxn<bool> loading = Rxn(false);
   PostRepository postRepository = HomeController.to.postRepository;
   @override
@@ -21,11 +21,11 @@ class ProfileController extends GetxController {
   getPosts() async {
     try {
       loading.value = true;
-      posts.value = await postRepository.getAllPosts();
+      posts.value = await postRepository.getMyPosts();
       loading.value = false;
     } catch (e) {
-  loading.value = false;
-posts.value=[];
+      loading.value = false;
+      posts.value = [];
       showSnackBar(e.toString());
     }
   }
