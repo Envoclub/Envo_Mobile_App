@@ -6,6 +6,7 @@ import 'package:envo_mobile/modules/home/controller.dart';
 import 'package:envo_mobile/modules/profile_module/controller.dart';
 import 'package:envo_mobile/utils/helper_widgets.dart';
 import 'package:envo_mobile/utils/meta_assets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -33,143 +34,257 @@ class SettingsView extends GetView<SettingsController> {
                 child: Loader(),
               )
             : controller.isEditing.value!
-                ? Container(
-                    child: Form(
-                    key: controller.formKey,
-                    child: SingleChildScrollView(
-                        child: Center(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: MetaColors.primaryColor, width: 2),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      MediaQuery.of(context).size.width * .15),
-                                  child: InkWell(
-                                    radius:
-                                        MediaQuery.of(context).size.width * .15,
-                                    onTap: () {
-                                      controller.pickImage();
+                ? controller.isReset.value!
+                    ? Container(
+                        child: Form(
+                        key: controller.formKey,
+                        child: SingleChildScrollView(
+                            child: Center(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                              Text("Reset Password",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  )),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FormFieldWidget(
+                                    obscureText:
+                                        controller.obscurePassword.value!,
+                                    enabled: !controller.loading.value!,
+                                    textController:
+                                        controller.passwordCOntroller,
+                                    label: "New Password",
+                                    validator: (val) {
+                                      if (val!.trim().length > 8) {
+                                        return null;
+                                      } else {
+                                        return "Please Enter a valid password, atleast 8 characters";
+                                      }
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            MediaQuery.of(context).size.width *
-                                                .15),
+                                    suffix: InkWell(
+                                        onTap: () {
+                                          controller.obscurePassword.value =
+                                              !controller
+                                                  .obscurePassword.value!;
+                                        },
                                         child: Obx(() => controller
-                                                    .pickedImage.value ==
-                                                null
-                                            ? controller.profileController.data
-                                                            .value?.photoUrl !=
-                                                        null &&
-                                                    controller
-                                                        .profileController
-                                                        .data
-                                                        .value!
-                                                        .photoUrl!
-                                                        .isNotEmpty
-                                                ? Image.network(
-                                                    controller.profileController
-                                                        .data.value!.photoUrl!,
-                                                    fit: BoxFit.cover,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .3,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .3,
-                                                  )
-                                                : Image.asset(
-                                                    MetaAssets
-                                                        .userDetailsBackground,
-                                                    fit: BoxFit.cover,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .3,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            .3,
-                                                  )
-                                            : Image.file(
-                                                File(
-                                                  controller
-                                                      .pickedImage.value!.path,
-                                                ),
-                                                fit: BoxFit.cover,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .3,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .3,
+                                                .obscurePassword.value!
+                                            ? Icon(
+                                                CupertinoIcons.eye,
+                                                color: MetaColors.primaryColor,
+                                              )
+                                            : Icon(
+                                                CupertinoIcons.eye_slash,
+                                                color: MetaColors.primaryColor,
+                                              )))),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FormFieldWidget(
+                                  enabled: !controller.loading.value!,
+                                  obscureText:
+                                      controller.obscurePassword.value!,
+                                  textController:
+                                      controller.resetpasswordCOntroller,
+                                  label: "Confirm Password",
+                                  validator: (val) {
+                                    if (val!.trim() !=
+                                        controller.passwordCOntroller.text
+                                            .trim())
+                                      return "Passwords not matching";
+                                    if (val.trim().length > 8) {
+                                      return null;
+                                    } else {
+                                      return "Please Enter a valid password, atleast 8 characters";
+                                    }
+                                  },
+                                  suffix: InkWell(
+                                    onTap: () {
+                                      controller.obscurePassword.value =
+                                          !controller.obscurePassword.value!;
+                                    },
+                                    child: Obx(
+                                        () => controller.obscurePassword.value!
+                                            ? Icon(
+                                                CupertinoIcons.eye,
+                                                color: MetaColors.primaryColor,
+                                              )
+                                            : Icon(
+                                                CupertinoIcons.eye_slash,
+                                                color: MetaColors.primaryColor,
                                               )),
-                                      ),
-                                    ),
                                   ),
                                 ),
-                              )),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: FormFieldWidget(
-                          //     enabled: !AuthController.to.authLoading.value,
-                          //     textController: controller.nameController,
-                          //     label: "User Name",
-                          //     validator: (val) {
-                          //       if (val!.trim().isNotEmpty) {
-                          //         return null;
-                          //       } else {
-                          //         return "Please Enter a valid name";
-                          //       }
-                          //     },
-                          //   ),
-                          // ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomButton(
+                                  handler: () {
+                                    controller.resetPassword();
+                                  },
+                                  label: "Update")
+                            ]))),
+                      ))
+                    : Container(
+                        child: Form(
+                        key: controller.formKey,
+                        child: SingleChildScrollView(
+                            child: Center(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: MetaColors.primaryColor,
+                                          width: 2),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          MediaQuery.of(context).size.width *
+                                              .15),
+                                      child: InkWell(
+                                        radius:
+                                            MediaQuery.of(context).size.width *
+                                                .15,
+                                        onTap: () {
+                                          controller.pickImage();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .15),
+                                            child: Obx(() => controller
+                                                        .pickedImage.value ==
+                                                    null
+                                                ? controller
+                                                                .profileController
+                                                                .data
+                                                                .value
+                                                                ?.photoUrl !=
+                                                            null &&
+                                                        controller
+                                                            .profileController
+                                                            .data
+                                                            .value!
+                                                            .photoUrl!
+                                                            .isNotEmpty
+                                                    ? Image.network(
+                                                        controller
+                                                            .profileController
+                                                            .data
+                                                            .value!
+                                                            .photoUrl!,
+                                                        fit: BoxFit.cover,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                      )
+                                                    : Image.asset(
+                                                        MetaAssets
+                                                            .userDetailsBackground,
+                                                        fit: BoxFit.cover,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                      )
+                                                : Image.file(
+                                                    File(
+                                                      controller.pickedImage
+                                                          .value!.path,
+                                                    ),
+                                                    fit: BoxFit.cover,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                  )),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: FormFieldWidget(
+                              //     enabled: !AuthController.to.authLoading.value,
+                              //     textController: controller.nameController,
+                              //     label: "User Name",
+                              //     validator: (val) {
+                              //       if (val!.trim().isNotEmpty) {
+                              //         return null;
+                              //       } else {
+                              //         return "Please Enter a valid name";
+                              //       }
+                              //     },
+                              //   ),
+                              // ),
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: FormFieldWidget(
-                              enabled: !AuthController.to.authLoading.value,
-                              textController: controller.bioCOntroller,
-                              label: "Bio",
-                              validator: (val) {
-                                if (val!.trim().isNotEmpty) {
-                                  return null;
-                                } else {
-                                  return "Please Enter a valid bio";
-                                }
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomButton(
-                              handler: () {
-                                controller.updateData();
-                              },
-                              label: "Update")
-                        ]))),
-                  ))
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FormFieldWidget(
+                                  enabled: !AuthController.to.authLoading.value,
+                                  textController: controller.bioCOntroller,
+                                  label: "Bio",
+                                  validator: (val) {
+                                    if (val!.trim().isNotEmpty) {
+                                      return null;
+                                    } else {
+                                      return "Please Enter a valid bio";
+                                    }
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomButton(
+                                  handler: () {
+                                    controller.updateData();
+                                  },
+                                  label: "Update")
+                            ]))),
+                      ))
                 : Container(
                     width: double.maxFinite,
                     child: SingleChildScrollView(
@@ -350,25 +465,32 @@ class SettingsView extends GetView<SettingsController> {
                                       indent: 10,
                                       endIndent: 10,
                                     ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text("Reset Password",
-                                                  style: TextStyle(
-                                                    color: MetaColors
-                                                        .tertiaryTextColor,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w600,
-                                                  ))),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_circle_right_outlined,
-                                          color: MetaColors.primaryColor,
-                                        )
-                                      ],
+                                    InkWell(
+                                      onTap: () {
+                                        controller.isReset.value = true;
+                                        controller.isEditing.value = true;
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text("Reset Password",
+                                                    style: TextStyle(
+                                                      color: MetaColors
+                                                          .tertiaryTextColor,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ))),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_circle_right_outlined,
+                                            color: MetaColors.primaryColor,
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       color: MetaColors.secondaryColor,

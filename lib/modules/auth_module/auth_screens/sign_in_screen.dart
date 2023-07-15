@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/meta_assets.dart';
 import '../../../utils/meta_colors.dart';
+import '../../../utils/meta_strings.dart';
 import '../../../utils/validators.dart';
 import '../../home/view.dart';
 import 'auth_helper_widgets.dart';
@@ -88,10 +90,16 @@ class _SignInScreenState extends State<SignInScreen> {
                             AuthController.to.obscurePassword.value =
                                 !AuthController.to.obscurePassword.value!;
                           },
-                          child: Obx(() =>
-                              AuthController.to.obscurePassword.value!
-                                  ? Icon(CupertinoIcons.eye,color: MetaColors.primaryColor,)
-                                  : Icon(CupertinoIcons.eye_slash,color: MetaColors.primaryColor,)),
+                          child:
+                              Obx(() => AuthController.to.obscurePassword.value!
+                                  ? Icon(
+                                      CupertinoIcons.eye,
+                                      color: MetaColors.primaryColor,
+                                    )
+                                  : Icon(
+                                      CupertinoIcons.eye_slash,
+                                      color: MetaColors.primaryColor,
+                                    )),
                         ),
                         validator: validatePassword,
                       ),
@@ -114,8 +122,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
-                            onTap: () {
-                              widget.pageController.jumpToPage(2);
+                            onTap: () async {
+                              final Uri url = Uri.parse(MetaStrings.baseUrl +
+                                  MetaStrings.forgotPassword);
+                              if (!await launchUrl(url)) {
+                                showSnackBar(
+                                    "Something went wrong Please try again later");
+                              }
                             },
                             child: Text(
                               "Forgot Password?",

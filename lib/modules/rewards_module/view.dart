@@ -143,20 +143,25 @@ class RewardTile extends StatelessWidget {
                             activeColor: MetaColors.primaryColor,
                             thumbColor: MetaColors.primaryColor,
                             value: AuthController.to.user.value!.reward! /
-                                data.coinrequired!<=1? AuthController.to.user.value!.reward! /
-                                data.coinrequired!:1,
+                                        data.coinrequired! <=
+                                    1
+                                ? AuthController.to.user.value!.reward! /
+                                    data.coinrequired!
+                                : 1,
                             onChanged: (val) {}),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0).copyWith(top: 0),
-                        child: Text(
-                          "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
-                          style: const TextStyle(
-                              fontSize: 10,
-                              color: MetaColors.tertiaryTextColor,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      )
+                      if (AuthController.to.user.value!.reward! <
+                          data.coinrequired!)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0).copyWith(top: 0),
+                          child: Text(
+                            "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
+                            style: const TextStyle(
+                                fontSize: 10,
+                                color: MetaColors.tertiaryTextColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        )
                     ],
                   ),
                   decoration: BoxDecoration(
@@ -276,24 +281,29 @@ class RewardDetailedView extends GetView {
                                     child: Slider(
                                         activeColor: MetaColors.primaryColor,
                                         thumbColor: MetaColors.primaryColor,
-                                        value: AuthController
-                                                .to.user.value!.reward! /
-                                            data.coinrequired!<=1? AuthController
-                                                .to.user.value!.reward! /
-                                            data.coinrequired!:1,
+                                        value: AuthController.to.user.value!
+                                                        .reward! /
+                                                    data.coinrequired! <=
+                                                1
+                                            ? AuthController
+                                                    .to.user.value!.reward! /
+                                                data.coinrequired!
+                                            : 1,
                                         onChanged: (val) {}),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0)
-                                        .copyWith(top: 0),
-                                    child: Text(
-                                      "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          color: MetaColors.tertiaryTextColor,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  )
+                                  if (AuthController.to.user.value!.reward! <
+                                      data.coinrequired!)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0)
+                                          .copyWith(top: 0),
+                                      child: Text(
+                                        "${AuthController.to.user.value!.reward.toString()} / ${data.coinrequired}",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            color: MetaColors.tertiaryTextColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
                                 ],
                               ),
                               decoration: BoxDecoration(

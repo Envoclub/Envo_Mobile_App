@@ -93,10 +93,10 @@ class AuthRepository {
       log(url);
 
       FlutterSecureStorage storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
-    ),
-  );
+        aOptions: AndroidOptions(
+          encryptedSharedPreferences: true,
+        ),
+      );
       var response = await http.get(Uri.parse(url), headers: headers);
       debugPrint(response.body);
       if (response.statusCode == 200) {
@@ -105,6 +105,31 @@ class AuthRepository {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  updateUserSurvey(String id, String? bio, File? file) async {
+    await initTokens();
+    var headers = {
+      "Authorization": "Token " + accessToken!,
+      // "Content-type": "application/json"
+    };
+    log(headers.toString());
+    try {
+      String url = MetaStrings.baseUrl + MetaStrings.userDetailsUpload + "$id/";
+      var params = {
+        "survey_completed": true,
+      };
+      var response = await http.put(Uri.parse(url),
+          body: jsonEncode(params), headers: headers);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      log(e.toString());
       rethrow;
     }
   }
@@ -134,6 +159,31 @@ class AuthRepository {
         return true;
       } else {
         throw jsonDecode(response.data)['message'];
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  updatePassword(String password) async {
+    await initTokens();
+    var headers = {
+      "Authorization": "Token " + accessToken!,
+      "Content-type": "application/json"
+    };
+    log(headers.toString());
+    try {
+      String url = "${MetaStrings.baseUrl}${MetaStrings.resetPassword}";
+      log(url);
+      var params = {"new_password1": password, "new_password2": password};
+      var response = await http.post(Uri.parse(url),
+          headers: headers, body: jsonEncode(params));
+      var parsedValue = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw jsonDecode(response.body).toString();
       }
     } catch (e) {
       log(e.toString());

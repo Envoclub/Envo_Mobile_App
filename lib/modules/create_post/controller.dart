@@ -184,6 +184,7 @@ class CreatePostController extends GetxController {
           description: "",
           action: selectedAction.value!.id!));
       await PostsController.to.getPosts();
+      await ProfileController.to.getPosts();
       loading.value = false;
 
       handleSuccess();

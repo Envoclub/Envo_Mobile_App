@@ -2,7 +2,8 @@ class MetaStrings {
   static const String baseUrl = 'https://envo-d9c588a9830e.herokuapp.com';
   static const String loginEndPoint = '/accounts/login/';
   static const String getUserEndPoint = '/accounts/user/';
-
+  static const String resetPassword='/api/rest-auth/password/change/';
+static const String forgotPassword='/account/password/reset/';
   static const String getPosts = '/activities/';
   static const String getMyPosts = '/activities/users/2/posts';
   static const String getLeaderBoard = '/accounts/leaders/';

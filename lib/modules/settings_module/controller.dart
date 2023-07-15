@@ -5,11 +5,16 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SettingsController extends GetxController {
+  Rxn<bool> obscurePassword = Rxn(false);
+
   ProfileController get profileController => ProfileController.to;
   AuthController get authController => AuthController.to;
   Rxn<bool> isEditing = Rxn(false);
+  Rxn<bool> isReset = Rxn(false);
   // TextEditingController nameController = TextEditingController();
   TextEditingController bioCOntroller = TextEditingController();
+  TextEditingController passwordCOntroller = TextEditingController();
+  TextEditingController resetpasswordCOntroller = TextEditingController();
   final formKey = GlobalKey<FormState>();
   Rxn<XFile?> pickedImage = Rxn();
   ImagePicker imagePicker = ImagePicker();
@@ -47,7 +52,30 @@ class SettingsController extends GetxController {
         showSnackBar("User Details updated successfully", isError: false);
       }
     } catch (e) {
-      loading.value=false;
+      loading.value = false;
+      showSnackBar(e.toString());
+    }
+  }
+
+  void resetPassword() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    try {
+      loading.value = true;
+      bool? value = await authController.updatePassword(
+        passwordCOntroller.text.trim(),
+      );
+      loading.value = false;
+
+      if (value!) {
+        isEditing.value = false;
+        isReset.value = false;
+        showSnackBar("Password updated successfully", isError: false);
+      }
+    } catch (e) {
+      loading.value = false;
       showSnackBar(e.toString());
     }
   }

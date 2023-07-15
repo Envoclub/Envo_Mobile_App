@@ -39,17 +39,19 @@ class AuthController extends GetxController {
       surveyComplete.value =
           ((await storage.read(key: "surveyComplete")) != null);
 
-      if (isFirstTime.value) {
-        loading.value = false;
-      }
-      if (!surveyComplete.value) {
-        TourBinding().dependencies();
-      }
       String? token = await storage.read(key: "accessToken");
       log("current access $token refresh");
       if (token != null) {
         UserModel? userModel = await authRepository.getUserDetails();
         user.value = userModel;
+        isFirstTime.value = !(user.value?.surveyCompleted ?? false);
+        surveyComplete.value = user.value!.surveyCompleted ?? false;
+        if (isFirstTime.value) {
+          loading.value = false;
+        }
+        if (!surveyComplete.value) {
+          TourBinding().dependencies();
+        }
         // surveyComplete.value = user.value!.surveyCompleted!;
 
         HomeBinding().dependencies();
@@ -120,6 +122,18 @@ class AuthController extends GetxController {
     try {
       bool? done = await authRepository.updateUserDetails(
           user.value!.id.toString(), bio, File(file!.path));
+      if (done!) {
+        refreshUserData();
+        return done;
+      }
+    } catch (e) {
+      showSnackBar(e.toString());
+    }
+  }
+
+  updatePassword(String password) async {
+    try {
+      bool? done = await authRepository.updatePassword(password);
       if (done!) {
         refreshUserData();
         return done;
