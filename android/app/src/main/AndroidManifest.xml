@@ -2,10 +2,10 @@
     package="com.example.envo_mobile">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="envo_mobile"
+        android:label="envo"
         android:name="${applicationName}" 
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             

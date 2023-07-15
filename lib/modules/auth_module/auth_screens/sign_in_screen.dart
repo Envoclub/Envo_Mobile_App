@@ -119,22 +119,24 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                            onTap: () async {
-                              final Uri url = Uri.parse(MetaStrings.baseUrl +
-                                  MetaStrings.forgotPassword);
-                              if (!await launchUrl(url)) {
-                                showSnackBar(
-                                    "Something went wrong Please try again later");
-                              }
-                            },
-                            child: Text(
+                      child: InkWell(
+                        onTap: () async {
+                            final Uri url = Uri.parse(MetaStrings.baseUrl +
+                                MetaStrings.forgotPassword);
+                            if (!await launchUrl(url,
+                                mode: LaunchMode.externalApplication)) {
+                              showSnackBar(
+                                  "Something went wrong Please try again later");
+                            }
+                          },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
                               "Forgot Password?",
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.w600),
-                            )),
+                            ),
+                        ),
                       ),
                     ),
                     SizedBox(

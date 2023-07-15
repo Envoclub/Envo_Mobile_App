@@ -197,7 +197,8 @@ class CreatePostController extends GetxController {
   handleSuccess() {
     profileController.getPosts();
     Get.back();
-    showSnackBar("Success", isError: false);
+    showSnackBar("Success, Your post will be reviewed and posted shortly",
+        isError: false);
   }
 }
 
