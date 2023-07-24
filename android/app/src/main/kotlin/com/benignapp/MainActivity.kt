@@ -1,4 +1,4 @@
-package com.example.envo_mobile
+package com.benignapp
 
 import io.flutter.embedding.android.FlutterActivity
 
