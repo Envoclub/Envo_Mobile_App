@@ -1,5 +1,5 @@
-import 'package:envo_mobile/modules/auth_module/binding.dart';
-import 'package:envo_mobile/modules/auth_module/view.dart';
+import 'package:com.benignapp/modules/auth_module/binding.dart';
+import 'package:com.benignapp/modules/auth_module/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,9 +16,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Envo Club',
         theme: ThemeData(
-      
           textTheme: GoogleFonts.rubikTextTheme(),
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.transparent),
@@ -41,4 +40,3 @@ class MyApp extends StatelessWidget {
         home: AuthView());
   }
 }
-

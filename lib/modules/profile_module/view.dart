@@ -1,14 +1,14 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
-import 'package:envo_mobile/modules/posts_module/view.dart';
-import 'package:envo_mobile/modules/profile_module/controller.dart';
-import 'package:envo_mobile/modules/settings_module/binding.dart';
-import 'package:envo_mobile/modules/settings_module/view.dart';
-import 'package:envo_mobile/utils/helper_widgets.dart';
-import 'package:envo_mobile/utils/meta_assets.dart';
-import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:com.benignapp/modules/auth_module/auth_screens/auth_helper_widgets.dart';
+import 'package:com.benignapp/modules/posts_module/view.dart';
+import 'package:com.benignapp/modules/profile_module/controller.dart';
+import 'package:com.benignapp/modules/settings_module/binding.dart';
+import 'package:com.benignapp/modules/settings_module/view.dart';
+import 'package:com.benignapp/utils/helper_widgets.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
+import 'package:com.benignapp/utils/meta_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -233,8 +233,8 @@ class ProfileView extends GetView<ProfileController> {
                                                 "Eco Actions",
                                                 style: TextStyle(
                                                     fontSize: 13,
-                                                    fontWeight: FontWeight.w600),
-                                                    
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],

@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
-import 'package:envo_mobile/modules/tour/controller.dart';
-import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:com.benignapp/modules/auth_module/auth_screens/auth_helper_widgets.dart';
+import 'package:com.benignapp/modules/tour/controller.dart';
+import 'package:com.benignapp/utils/meta_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -204,12 +204,8 @@ class _TourViewState extends State<TourView> {
                                         padding: const EdgeInsets.all(8.0)
                                             .copyWith(bottom: 20),
                                         child: Text(
-                                          controller
-                                              .tourPages
-                                              .value![pageIndex]
-                                              .survey
-                                              .value!
-                                              .question,
+                                          controller.tourPages.value![pageIndex]
+                                              .survey.value!.question,
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600),
@@ -217,8 +213,8 @@ class _TourViewState extends State<TourView> {
                                       ),
                                     ),
                                   ),
-                                  if (controller.tourPages.value![pageIndex]
-                                          .suffix !=
+                                  if (controller
+                                          .tourPages.value![pageIndex].suffix !=
                                       null)
                                     Padding(
                                       padding: const EdgeInsets.all(8.0)
@@ -226,8 +222,8 @@ class _TourViewState extends State<TourView> {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          controller.tourPages
-                                              .value![pageIndex].suffix!,
+                                          controller.tourPages.value![pageIndex]
+                                              .suffix!,
                                           style: TextStyle(fontSize: 18),
                                         ),
                                       ),
@@ -299,13 +295,11 @@ class _TourViewState extends State<TourView> {
                                                       Checkbox(
                                                           value: controller
                                                               .tourPages
-                                                              .value![
-                                                                  pageIndex]
+                                                              .value![pageIndex]
                                                               .survey
                                                               .value!
                                                               .selectionIndex
-                                                              .contains(
-                                                                  index),
+                                                              .contains(index),
                                                           onChanged: (value) {
                                                             if (value!) {
                                                               if (controller
@@ -322,8 +316,7 @@ class _TourViewState extends State<TourView> {
                                                                     .survey
                                                                     .value!
                                                                     .selectionIndex
-                                                                    .add(
-                                                                        index);
+                                                                    .add(index);
                                                               } else {
                                                                 controller
                                                                     .tourPages
@@ -360,8 +353,7 @@ class _TourViewState extends State<TourView> {
                                                         child: Text(
                                                           controller
                                                               .tourPages
-                                                              .value![
-                                                                  pageIndex]
+                                                              .value![pageIndex]
                                                               .survey
                                                               .value!
                                                               .options[index],

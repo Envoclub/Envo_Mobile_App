@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envo_mobile/modules/auth_module/controller.dart';
-import 'package:envo_mobile/modules/home/controller.dart';
-import 'package:envo_mobile/modules/profile_module/controller.dart';
-import 'package:envo_mobile/utils/helper_widgets.dart';
-import 'package:envo_mobile/utils/meta_assets.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
+import 'package:com.benignapp/modules/home/controller.dart';
+import 'package:com.benignapp/modules/profile_module/controller.dart';
+import 'package:com.benignapp/utils/helper_widgets.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';

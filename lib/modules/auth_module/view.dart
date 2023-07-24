@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:envo_mobile/modules/auth_module/auth_screens/auth_screens.dart';
-import 'package:envo_mobile/modules/auth_module/controller.dart';
-import 'package:envo_mobile/modules/home/view.dart';
-import 'package:envo_mobile/modules/tour/view.dart';
-import 'package:envo_mobile/utils/helper_widgets.dart';
+import 'package:com.benignapp/modules/auth_module/auth_screens/auth_screens.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
+import 'package:com.benignapp/modules/home/view.dart';
+import 'package:com.benignapp/modules/tour/view.dart';
+import 'package:com.benignapp/utils/helper_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';

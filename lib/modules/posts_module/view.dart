@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envo_mobile/models/posts.dart';
-import 'package:envo_mobile/modules/home/controller.dart';
-import 'package:envo_mobile/modules/posts_module/controller.dart';
-import 'package:envo_mobile/utils/constants.dart';
-import 'package:envo_mobile/utils/helper_widgets.dart';
+import 'package:com.benignapp/models/posts.dart';
+import 'package:com.benignapp/modules/home/controller.dart';
+import 'package:com.benignapp/modules/posts_module/controller.dart';
+import 'package:com.benignapp/utils/constants.dart';
+import 'package:com.benignapp/utils/helper_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,6 @@ import '../auth_module/controller.dart';
 class PostsView extends GetView<PostsController> {
   @override
   Widget build(BuildContext context) {
-
     return Obx(
       () => controller.loading.value!
           ? Center(

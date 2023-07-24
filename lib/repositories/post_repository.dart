@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:envo_mobile/models/posts.dart';
+import 'package:com.benignapp/models/posts.dart';
 import 'package:dio/dio.dart';
 
 import '../models/action_model.dart';
@@ -217,7 +217,8 @@ class PostRepository {
       };
       log(headers.toString());
 
-      String url = "${MetaStrings.baseUrl}${MetaStrings.getRewardsList}$id/redeem/";
+      String url =
+          "${MetaStrings.baseUrl}${MetaStrings.getRewardsList}$id/redeem/";
       log(url);
       var response = await http.post(Uri.parse(url), headers: headers);
 
@@ -226,9 +227,6 @@ class PostRepository {
       } else {
         throw jsonDecode(response.body)["message"];
       }
-
-      
-
     } catch (e) {
       rethrow;
     }

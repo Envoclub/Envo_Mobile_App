@@ -1,4 +1,4 @@
-import 'package:envo_mobile/modules/create_post/controller.dart';
+import 'package:com.benignapp/modules/create_post/controller.dart';
 import 'package:get/get.dart';
 
 class CreatePostBinding extends Bindings {

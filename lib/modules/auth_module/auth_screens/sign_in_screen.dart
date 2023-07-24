@@ -1,5 +1,5 @@
-import 'package:envo_mobile/modules/auth_module/controller.dart';
-import 'package:envo_mobile/modules/home/binding.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
+import 'package:com.benignapp/modules/home/binding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,21 +121,21 @@ class _SignInScreenState extends State<SignInScreen> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: () async {
-                            final Uri url = Uri.parse(MetaStrings.baseUrl +
-                                MetaStrings.forgotPassword);
-                            if (!await launchUrl(url,
-                                mode: LaunchMode.externalApplication)) {
-                              showSnackBar(
-                                  "Something went wrong Please try again later");
-                            }
-                          },
+                          final Uri url = Uri.parse(
+                              MetaStrings.baseUrl + MetaStrings.forgotPassword);
+                          if (!await launchUrl(url,
+                              mode: LaunchMode.externalApplication)) {
+                            showSnackBar(
+                                "Something went wrong Please try again later");
+                          }
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w600),
-                            ),
+                            "Forgot Password?",
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
                     ),

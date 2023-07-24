@@ -1,4 +1,4 @@
-import 'package:envo_mobile/repositories/post_repository.dart';
+import 'package:com.benignapp/repositories/post_repository.dart';
 import 'package:get/get.dart';
 
 import '../../models/action_model.dart';
@@ -18,7 +18,8 @@ class HomeController extends GetxController {
       showSnackBar(e.toString());
     }
   }
-  @override 
+
+  @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();

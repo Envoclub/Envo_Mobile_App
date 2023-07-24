@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envo_mobile/modules/auth_module/auth_screens/auth_helper_widgets.dart';
+import 'package:com.benignapp/modules/auth_module/auth_screens/auth_helper_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';

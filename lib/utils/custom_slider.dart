@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:com.benignapp/utils/meta_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,9 @@ class SliderThumbImage extends SliderComponentShape {
     textPainter.text = TextSpan(
         text: String.fromCharCode(icon.codePoint),
         style: TextStyle(
-            fontSize: 20.0, fontFamily: icon.fontFamily, color: MetaColors.secondaryColor));
+            fontSize: 20.0,
+            fontFamily: icon.fontFamily,
+            color: MetaColors.secondaryColor));
     textPainter.layout();
     textPainter.paint(canvas, imageOffset);
   }

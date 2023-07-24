@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:envo_mobile/modules/home/binding.dart';
-import 'package:envo_mobile/modules/tour/binding.dart';
-import 'package:envo_mobile/repositories/auth_repository.dart';
+import 'package:com.benignapp/modules/home/binding.dart';
+import 'package:com.benignapp/modules/tour/binding.dart';
+import 'package:com.benignapp/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';

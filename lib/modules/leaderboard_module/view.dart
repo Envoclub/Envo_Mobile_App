@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envo_mobile/utils/helper_widgets.dart';
-import 'package:envo_mobile/utils/meta_assets.dart';
+import 'package:com.benignapp/utils/helper_widgets.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -239,8 +239,8 @@ class LeaderboardTile extends StatelessWidget {
                               border: Border.all(
                                   color: MetaColors.secondaryColor
                                       .withOpacity(0.2))),
-                          child:ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
                             child: CachedNetworkImage(
                               imageUrl: data.photoUrl ?? '',
                               fit: BoxFit.cover,
@@ -444,7 +444,6 @@ class TopThreeWidget extends GetView<LeaderboardController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: CachedNetworkImage(
-                              
                                   imageUrl: controller
                                           .leadersList.value![0].photoUrl ??
                                       '',

@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:envo_mobile/models/survey_model.dart';
-import 'package:envo_mobile/modules/auth_module/controller.dart';
-import 'package:envo_mobile/utils/meta_assets.dart';
+import 'package:com.benignapp/models/survey_model.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

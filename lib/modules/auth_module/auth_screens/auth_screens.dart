@@ -1,5 +1,5 @@
-import 'package:envo_mobile/modules/auth_module/auth_screens/user_details_update.dart';
-import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:com.benignapp/modules/auth_module/auth_screens/user_details_update.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -24,12 +24,12 @@ class AuthScreens extends GetView<AuthController> {
             controller: controller.pageController,
             children: [
               SignInScreen(pageController: controller.pageController),
-              
               SignUpScreen(pageController: controller.pageController),
               ForgotPassword(
                 pageController: controller.pageController,
               ),
-              ResetPassword(pageController: controller.pageController),UserDetailsUpdateScreen(),
+              ResetPassword(pageController: controller.pageController),
+              UserDetailsUpdateScreen(),
             ],
           ),
         ),

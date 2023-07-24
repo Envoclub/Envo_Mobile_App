@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:envo_mobile/utils/meta_assets.dart';
-import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
+import 'package:com.benignapp/utils/meta_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';

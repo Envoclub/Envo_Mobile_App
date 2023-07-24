@@ -1,4 +1,4 @@
-import 'package:envo_mobile/utils/meta_assets.dart';
+import 'package:com.benignapp/utils/meta_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';

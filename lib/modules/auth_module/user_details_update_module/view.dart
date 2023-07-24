@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:envo_mobile/modules/auth_module/user_details_update_module/binding.dart';
-import 'package:envo_mobile/modules/auth_module/user_details_update_module/controller.dart';
-import 'package:envo_mobile/modules/home/binding.dart';
-import 'package:envo_mobile/modules/home/view.dart';
-import 'package:envo_mobile/utils/meta_colors.dart';
+import 'package:com.benignapp/modules/auth_module/user_details_update_module/binding.dart';
+import 'package:com.benignapp/modules/auth_module/user_details_update_module/controller.dart';
+import 'package:com.benignapp/modules/home/binding.dart';
+import 'package:com.benignapp/modules/home/view.dart';
+import 'package:com.benignapp/utils/meta_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

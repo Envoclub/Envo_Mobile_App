@@ -1,4 +1,4 @@
-import 'package:envo_mobile/utils/meta_strings.dart';
+import 'package:com.benignapp/utils/meta_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,9 +31,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () async {
-               
-              },
+              onTap: () async {},
               child: Card(
                 shadowColor: MetaColors.formFieldColor,
                 elevation: 10,

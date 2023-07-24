@@ -1,4 +1,4 @@
-import 'package:envo_mobile/modules/auth_module/controller.dart';
+import 'package:com.benignapp/modules/auth_module/controller.dart';
 import 'package:get/get.dart';
 
 import '../../models/leaderboard_model.dart';
