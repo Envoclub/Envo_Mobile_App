@@ -29,7 +29,7 @@ class RewardsModel {
 
     factory RewardsModel.fromJson(Map<String, dynamic> json) => RewardsModel(
         id: json["id"],
-        company: json["company"],
+        company: json["company"].toString(),
         banner: json["banner"],
         title: json["title"],
         description: json["description"],

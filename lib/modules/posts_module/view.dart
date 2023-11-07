@@ -21,7 +21,6 @@ import '../auth_module/controller.dart';
 class PostsView extends GetView<PostsController> {
   @override
   Widget build(BuildContext context) {
-
     return Obx(
       () => controller.loading.value!
           ? Center(
@@ -40,7 +39,7 @@ class PostsView extends GetView<PostsController> {
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
                             backgroundImage: CachedNetworkImageProvider(
-                                AuthController.to.user.value!.photoUrl!),
+                                AuthController.to.user.value?.photoUrl ?? ''),
                             backgroundColor: MetaColors.primaryColor,
                             radius: 15,
                           ),

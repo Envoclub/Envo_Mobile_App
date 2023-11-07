@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envo_mobile/models/posts.dart';
 import 'package:envo_mobile/modules/auth_module/controller.dart';
 import 'package:envo_mobile/modules/home/controller.dart';
+import 'package:envo_mobile/modules/leaderboard_module/controller.dart';
 import 'package:envo_mobile/modules/posts_module/controller.dart';
 import 'package:envo_mobile/repositories/post_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -185,6 +186,8 @@ class CreatePostController extends GetxController {
           action: selectedAction.value!.id!));
       await PostsController.to.getPosts();
       await ProfileController.to.getPosts();
+      await LeaderboardController.to.getData();
+      
       loading.value = false;
 
       handleSuccess();

@@ -40,13 +40,16 @@ class AuthController extends GetxController {
           ((await storage.read(key: "surveyComplete")) != null);
 
       String? token = await storage.read(key: "accessToken");
+    
       log("current access $token refresh");
       if (token != null) {
         UserModel? userModel = await authRepository.getUserDetails();
         user.value = userModel;
-        isFirstTime.value = !(user.value?.surveyCompleted ?? false);
+     
+        // isFirstTime.value = !(user.value?.surveyCompleted ?? false);
         surveyComplete.value = user.value!.surveyCompleted ?? false;
         if (isFirstTime.value) {
+         
           loading.value = false;
         }
         if (!surveyComplete.value) {
@@ -58,6 +61,7 @@ class AuthController extends GetxController {
       } else {
         user.value = null;
       }
+     
       loading.value = false;
     } catch (e) {
       loading.value = false;
