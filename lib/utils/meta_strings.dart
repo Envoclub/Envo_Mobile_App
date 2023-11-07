@@ -6,7 +6,7 @@ class MetaStrings {
   static const String resetPassword = '/api/rest-auth/password/change/';
   static const String forgotPassword = '/account/password/reset/';
   static const String getPosts = '/activities/';
-  static const String getMyPosts = '/activities/users/2/posts';
+  static const String getMyPosts = '/activities/users/';
   static const String getLeaderBoard = '/accounts/leaders/';
   static const String likePost = '/activities/like/';
   static const String unLikePost = '/activities/unlike/';

@@ -21,7 +21,7 @@ class ProfileController extends GetxController {
   getPosts() async {
     try {
       loading.value = true;
-      posts.value = await postRepository.getMyPosts();
+      posts.value = await postRepository.getMyPosts(data.value!.id!);
       loading.value = false;
     } catch (e) {
       loading.value = false;

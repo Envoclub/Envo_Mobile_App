@@ -60,14 +60,14 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>> getMyPosts() async {
+  Future<List<Post>> getMyPosts(int id) async {
     try {
       var headers = {
         "Authorization": "Token " + authRepository.accessToken!,
         "Content-type": "application/json"
       };
       log(headers.toString());
-      String url = MetaStrings.baseUrl + MetaStrings.getMyPosts;
+      String url = MetaStrings.baseUrl + MetaStrings.getMyPosts+id.toString()+"/posts";
 
       var response = await http.get(Uri.parse(url), headers: headers);
 
