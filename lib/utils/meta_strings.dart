@@ -15,4 +15,5 @@ class MetaStrings {
   static const String updateCo2 = '/activities/';
   static const String getRewardsList = '/game/rewards/';
   static const String userDetailsUpload = '/accounts/update-user/';
+  
 }
